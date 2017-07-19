@@ -12,7 +12,8 @@ public class n_MaxDepartmentSalary {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("PersistenceUnit");
         EntityManager em = emf.createEntityManager();
 
-        Query queryMaxSalaries = em.createQuery("SELECT d.name, max(e.salary) FROM Department AS d " +
+        Query queryMaxSalaries = em.createQuery("" +
+                "SELECT d.name, max(e.salary) FROM Department AS d " +
                 "INNER JOIN Employee AS e " +
                 "ON e.department.id = d.id " +
                 "GROUP BY d.name " +
