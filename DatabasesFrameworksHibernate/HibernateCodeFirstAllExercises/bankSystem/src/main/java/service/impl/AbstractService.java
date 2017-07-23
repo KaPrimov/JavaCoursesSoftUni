@@ -1,32 +1,25 @@
-package app.service.impl;
+package service.impl;
 
-import app.dao.api.Dao;
-import app.dao.impl.AuthorsDaoImpl;
-import app.dao.impl.BookDaoImpl;
-import app.dao.impl.CategoriesDaoImpl;
-import app.service.api.AuthorService;
-import app.service.api.BookService;
-import app.service.api.CategoryService;
-import app.service.api.Service;
-import app.transaction.Command;
-import app.transaction.MultiCommand;
+import dao.api.Dao;
+import dao.impl.CheckingAccountDaoImpl;
+import dao.impl.SavingsAccountDaoImpl;
+import service.api.Service;
+import service.transactions.Command;
+import service.transactions.MultiCommand;
+import service.transactions.VoidCommand;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Optional;
 
 public abstract class AbstractService<E, K> implements Service<E, K> {
 
     protected Dao<E, K> dao;
 
-    public AbstractService() {
-        if (this instanceof BookService) {
-            dao = new BookDaoImpl();
-        } else if (this instanceof AuthorService) {
-            dao = new AuthorsDaoImpl();
-        } else if (this instanceof CategoryService) {
-            dao = new CategoriesDaoImpl();
+    protected AbstractService(EntityManager em) {
+        if (this instanceof CheckingAccountServiceImpl) {
+            dao = new CheckingAccountDaoImpl(em);
+        } else if (this instanceof SavingsAccountServiceImpl) {
+            dao = new SavingsAccountDaoImpl(em);
         }
     }
 
@@ -41,7 +34,7 @@ public abstract class AbstractService<E, K> implements Service<E, K> {
     }
 
     @Override
-    public E findById(Class<E> entityClass, K id) {
+    public E findByAccountNumber(Class<E> entityClass, K id) {
         return runInTransaction(() -> dao.findById(entityClass, id));
     }
 
@@ -76,11 +69,25 @@ public abstract class AbstractService<E, K> implements Service<E, K> {
         }
     }
 
-    public static void main(String[] args) {
-        List<BigDecimal> list = new ArrayList<>();
-        Optional<BigDecimal> optional = list.stream()
-                .sorted((a,b) -> b.compareTo(a))
-                .findFirst();
+    @Override
+    public void runInTransaction(VoidCommand command) {
+        try {
+            dao.beginTransaction();
+            command.execute();
+            dao.commit();
+        } catch (Exception e) {
+            dao.rollback();
+            throw e;
+        }
+    }
 
+    @Override
+    public void begin() {
+        this.dao.beginTransaction();
+    }
+
+    @Override
+    public void commit() {
+        this.dao.commit();
     }
 }
