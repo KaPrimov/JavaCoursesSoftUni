@@ -56,15 +56,19 @@ public class ConsoleRunner implements CommandLineRunner {
         shampoo.setIngredients(new HashSet<>(Arrays.asList(i1, i2)));
         shampoo.setLabel(classicLabel);
         shampoo.setBatch(productionBatch);
+        shampoo.setBrand("H and S");
 
         BasicShampoo shampoo2 = new PinkPanther();
         shampoo2.setIngredients(new HashSet<>(Collections.singletonList(i2)));
         shampoo2.setBatch(productionBatch);
         shampoo2.setLabel(classicLabel);
+        shampoo2.setBrand("H and S");
 
         this.ingredientService.save(i1);
         this.ingredientService.save(i2);
         this.shampooService.save(shampoo);
         this.shampooService.save(shampoo2);
+
+        System.out.println(this.shampooService.findAllByBrand("H and S"));
     }
 }

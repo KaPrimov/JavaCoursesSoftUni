@@ -44,4 +44,9 @@ public class ShampooServiceImpl implements ShampooService<BasicShampoo, Long> {
     public void save(BasicShampoo object) {
         this.dao.save(object);
     }
+
+    @Override
+    public List<BasicShampoo> findAllByBrand(String brand) {
+        return this.dao.findAllByBrand(brand);
+    }
 }

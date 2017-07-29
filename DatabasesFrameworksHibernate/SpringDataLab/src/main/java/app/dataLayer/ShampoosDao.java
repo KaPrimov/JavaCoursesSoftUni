@@ -14,4 +14,5 @@ public interface ShampoosDao extends JpaRepository<BasicShampoo, Long> {
     @Query("SELECT b FROM BasicShampoo b JOIN b.ingredients i WHERE i.name = :ingredientName")
     List<BasicShampoo> shampoosWithIngredient(@Param("ingredientName") String ingredientName);
 
+    List<BasicShampoo> findAllByBrand(String brand);
 }
