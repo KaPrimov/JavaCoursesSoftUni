@@ -1,6 +1,7 @@
 package app.gamestore;
 
 import app.gamestore.command.Executable;
+import app.gamestore.factories.CommandFactory;
 import app.gamestore.services.api.GameService;
 import app.gamestore.services.api.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

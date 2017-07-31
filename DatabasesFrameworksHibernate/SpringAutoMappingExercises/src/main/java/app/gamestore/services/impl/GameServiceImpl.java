@@ -2,6 +2,7 @@ package app.gamestore.services.impl;
 
 import app.gamestore.dto.bindingDtos.game.AddGame;
 import app.gamestore.dto.bindingDtos.game.EditGame;
+import app.gamestore.dto.bindingDtos.game.ShoppingCartGame;
 import app.gamestore.dto.viewDtos.game.GameDetailView;
 import app.gamestore.dto.viewDtos.game.GameModelView;
 import app.gamestore.dto.viewDtos.game.SingleBoughtGameView;
@@ -77,5 +78,15 @@ public class GameServiceImpl implements GameService {
         }
 
         return singleBoughtGameViews;
+    }
+
+    @Override
+    public ShoppingCartGame shopByTitle(String title) {
+        Game game = this.gameRepository.findByTitle(title);
+        if (game == null) {
+            return null;
+        }
+        return ModelParser.getInstance().map(game, ShoppingCartGame.class);
+
     }
 }

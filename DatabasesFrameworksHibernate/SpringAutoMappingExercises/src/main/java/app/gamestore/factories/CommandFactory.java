@@ -1,4 +1,4 @@
-package app.gamestore;
+package app.gamestore.factories;
 
 import app.gamestore.command.Executable;
 import app.gamestore.command.commands.*;
@@ -34,8 +34,13 @@ public class CommandFactory {
                 return new GameDetailsCommand(this.userService, this.gameService);
             case "ownedgames":
                 return new BoughtGamesCommand(this.userService, this.gameService);
+            case "addtoshoppingcart":
+                return new AddToShoppingCart(this.userService, this.gameService);
+            case "removefromshoppingcart":
+                return new RemoveFromShoppingCart(this.userService, this.gameService);
+            case "buygames":
+                return new BuyGamesCommand(this.userService, this.gameService);
         }
         return null;
     }
-
 }
