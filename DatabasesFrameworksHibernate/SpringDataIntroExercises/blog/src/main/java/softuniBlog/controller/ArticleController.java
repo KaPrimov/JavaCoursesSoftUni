@@ -18,10 +18,14 @@ import softuniBlog.repository.UserRepository;
 @Controller
 public class ArticleController {
 
+    private final ArticleRepository articleRepository;
+    private final UserRepository userRepository;
+
     @Autowired
-    private ArticleRepository articleRepository;
-    @Autowired
-    private UserRepository userRepository;
+    public ArticleController(ArticleRepository articleRepository, UserRepository userRepository) {
+        this.articleRepository = articleRepository;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/article/create")
     @PreAuthorize("isAuthenticated()")
@@ -101,7 +105,6 @@ public class ArticleController {
     @PreAuthorize("isAuthenticated()")
     public String delete(Model model, @PathVariable Integer id) {
 
-
         if (!this.articleRepository.exists(id)) {
             return "redirect:/";
         }
@@ -111,11 +114,9 @@ public class ArticleController {
         model.addAttribute("article", article);
 
         return "base-layout";
-
-
     }
 
-    @PostMapping("/article/delete{id}")
+    @PostMapping("/article/delete/{id}")
     @PreAuthorize("isAuthenticated()")
     public String deleteProcess(@PathVariable Integer id) {
         if (!this.articleRepository.exists(id)) {

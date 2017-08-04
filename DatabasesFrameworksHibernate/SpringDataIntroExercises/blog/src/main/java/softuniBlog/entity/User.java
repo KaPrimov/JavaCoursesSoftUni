@@ -42,6 +42,7 @@ public class User {
     }
 
     @Column(name = "email", unique = true, nullable = false)
+
     public String getEmail() {
         return email;
     }
@@ -90,4 +91,6 @@ public class User {
     public void setArticles(Set<Article> articles) {
         this.articles = articles;
     }
+
+
 }

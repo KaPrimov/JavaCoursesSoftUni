@@ -1,5 +1,6 @@
 package softuniBlog.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,10 +14,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service("blogUserDetailsService")
-    public class BlogUserDetailsService implements UserDetailsService {
+public class BlogUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+    @Autowired
     public BlogUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
@@ -32,7 +34,9 @@ import java.util.stream.Collectors;
                     .map(role -> new SimpleGrantedAuthority(role.getName()))
                     .collect(Collectors.toSet());
 
-            return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), grantedAuthorities);
+            return new org.springframework.security.core
+                    .userdetails
+                    .User(user.getEmail(), user.getPassword(), grantedAuthorities);
         }
     }
 }

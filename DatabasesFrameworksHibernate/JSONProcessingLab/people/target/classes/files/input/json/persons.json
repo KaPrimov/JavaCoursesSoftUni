@@ -1,0 +1,36 @@
+[
+  {
+    "firstName": "Ssvilen",
+    "lastName": "Georgiev",
+    "addressImportDto": {
+      "country": "Bulgaria",
+      "city": "Sofia",
+      "street": "Mladost"
+    },
+    "phoneJsonDtos": [
+      {
+        "number": "5425325"
+      },
+      {
+        "number": "54262152"
+      }
+    ]
+  },
+  {
+    "firstName": "Milcho",
+    "lastName": "Georgiev",
+    "addressImportDto": {
+      "country": "Bulgaria",
+      "city": "Sofia",
+      "street": "Mladost"
+    },
+    "phoneJsonDtos": [
+      {
+        "number": "5425325"
+      },
+      {
+        "number": "54262152"
+      }
+    ]
+  }
+]

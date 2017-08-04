@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<personJsonDto>
+    <id>1</id>
+    <firstName>Ivan</firstName>
+    <lastName>Georgiev</lastName>
+    <address>
+        <country>Bulgaria</country>
+        <city>Sofia</city>
+        <street>Mladost</street>
+    </address>
+    <phoneNumbers>
+        <phoneNumbers>
+            <number>54262152</number>
+        </phoneNumbers>
+    </phoneNumbers>
+</personJsonDto>

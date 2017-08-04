@@ -1,0 +1,534 @@
+[
+  {
+    "id": 29,
+    "name": "Louann Holzworth",
+    "birthDate": "1960-10-01T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 21,
+        "discount": 0.15,
+        "customerName": "Louann Holzworth",
+        "carModel": "W203"
+      },
+      {
+        "id": 29,
+        "discount": 0.05,
+        "customerName": "Louann Holzworth",
+        "carModel": "C5"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "name": "Donnetta Soliz",
+    "birthDate": "1963-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": []
+  },
+  {
+    "id": 17,
+    "name": "Rema Revelle",
+    "birthDate": "1970-05-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 34,
+        "discount": 0.1,
+        "customerName": "Rema Revelle",
+        "carModel": "250 GTO"
+      },
+      {
+        "id": 45,
+        "discount": 0.3,
+        "customerName": "Rema Revelle",
+        "carModel": "Caprice"
+      },
+      {
+        "id": 11,
+        "discount": 0.2,
+        "customerName": "Rema Revelle",
+        "carModel": "Mii"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "name": "Carri Knapik",
+    "birthDate": "1972-02-02T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 2,
+        "discount": 0.05,
+        "customerName": "Carri Knapik",
+        "carModel": "Tacoma"
+      },
+      {
+        "id": 36,
+        "discount": 0.0,
+        "customerName": "Carri Knapik",
+        "carModel": "Toledo"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "name": "Garret Capron",
+    "birthDate": "1975-07-01T00:00:00",
+    "isYoungDriver": false,
+    "sales": []
+  },
+  {
+    "id": 8,
+    "name": "Teddy Hobby",
+    "birthDate": "1975-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 37,
+        "discount": 0.05,
+        "customerName": "Teddy Hobby",
+        "carModel": "Yaris"
+      },
+      {
+        "id": 42,
+        "discount": 0.05,
+        "customerName": "Teddy Hobby",
+        "carModel": "C5"
+      },
+      {
+        "id": 25,
+        "discount": 0.15,
+        "customerName": "Teddy Hobby",
+        "carModel": "Altima"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "name": "Audrea Cardinal",
+    "birthDate": "1976-10-01T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 39,
+        "discount": 0.3,
+        "customerName": "Audrea Cardinal",
+        "carModel": "Toledo"
+      },
+      {
+        "id": 15,
+        "discount": 0.0,
+        "customerName": "Audrea Cardinal",
+        "carModel": "M6 E63"
+      },
+      {
+        "id": 3,
+        "discount": 0.0,
+        "customerName": "Audrea Cardinal",
+        "carModel": "Kadet"
+      },
+      {
+        "id": 43,
+        "discount": 0.05,
+        "customerName": "Audrea Cardinal",
+        "carModel": "Yaris"
+      },
+      {
+        "id": 1,
+        "discount": 0.0,
+        "customerName": "Audrea Cardinal",
+        "carModel": "X6 M"
+      },
+      {
+        "id": 28,
+        "discount": 0.4,
+        "customerName": "Audrea Cardinal",
+        "carModel": "Berlingo"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "name": "Francis Mckim",
+    "birthDate": "1977-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": []
+  },
+  {
+    "id": 14,
+    "name": "Brett Brickley",
+    "birthDate": "1980-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 8,
+        "discount": 0.15,
+        "customerName": "Brett Brickley",
+        "carModel": "Astra"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "name": "Kristian Engberg",
+    "birthDate": "1981-10-03T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 50,
+        "discount": 0.05,
+        "customerName": "Kristian Engberg",
+        "carModel": "Freemont"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "name": "Hipolito Lamoreaux",
+    "birthDate": "1982-08-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": []
+  },
+  {
+    "id": 4,
+    "name": "Zada Attwood",
+    "birthDate": "1982-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 31,
+        "discount": 0.05,
+        "customerName": "Zada Attwood",
+        "carModel": "Prius"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "name": "Sylvie Mcelravy",
+    "birthDate": "1983-10-01T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 38,
+        "discount": 0.1,
+        "customerName": "Sylvie Mcelravy",
+        "carModel": "C4"
+      },
+      {
+        "id": 4,
+        "discount": 0.1,
+        "customerName": "Sylvie Mcelravy",
+        "carModel": "Impala"
+      },
+      {
+        "id": 12,
+        "discount": 0.05,
+        "customerName": "Sylvie Mcelravy",
+        "carModel": "C3"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "Rico Peer",
+    "birthDate": "1984-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 18,
+        "discount": 0.4,
+        "customerName": "Rico Peer",
+        "carModel": "Rogue"
+      },
+      {
+        "id": 49,
+        "discount": 0.05,
+        "customerName": "Rico Peer",
+        "carModel": "156"
+      },
+      {
+        "id": 48,
+        "discount": 0.0,
+        "customerName": "Rico Peer",
+        "carModel": "Enzo"
+      },
+      {
+        "id": 24,
+        "discount": 0.4,
+        "customerName": "Rico Peer",
+        "carModel": "Corolla"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "Hai Everton",
+    "birthDate": "1985-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 47,
+        "discount": 0.0,
+        "customerName": "Hai Everton",
+        "carModel": "Citigo"
+      },
+      {
+        "id": 9,
+        "discount": 0.4,
+        "customerName": "Hai Everton",
+        "carModel": "Malibu"
+      },
+      {
+        "id": 23,
+        "discount": 0.0,
+        "customerName": "Hai Everton",
+        "carModel": "500 (2007) Abarth 695 Tributo Maserati"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "Lino Subia",
+    "birthDate": "1985-12-21T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 19,
+        "discount": 0.4,
+        "customerName": "Lino Subia",
+        "carModel": "M6 E63"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "name": "Jimmy Grossi",
+    "birthDate": "1986-07-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 6,
+        "discount": 0.3,
+        "customerName": "Jimmy Grossi",
+        "carModel": "Wraith"
+      },
+      {
+        "id": 16,
+        "discount": 0.5,
+        "customerName": "Jimmy Grossi",
+        "carModel": "Daytona"
+      },
+      {
+        "id": 46,
+        "discount": 0.0,
+        "customerName": "Jimmy Grossi",
+        "carModel": "Rapid"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "name": "Carole Witman",
+    "birthDate": "1987-10-01T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 14,
+        "discount": 0.0,
+        "customerName": "Carole Witman",
+        "carModel": "Fabia"
+      },
+      {
+        "id": 27,
+        "discount": 0.0,
+        "customerName": "Carole Witman",
+        "carModel": "Clio IV"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "name": "Oren Perlman",
+    "birthDate": "1988-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": []
+  },
+  {
+    "id": 2,
+    "name": "Natalie Poli",
+    "birthDate": "1990-10-04T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 33,
+        "discount": 0.0,
+        "customerName": "Natalie Poli",
+        "carModel": "156"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "Marcelle Griego",
+    "birthDate": "1990-10-04T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 7,
+        "discount": 0.5,
+        "customerName": "Marcelle Griego",
+        "carModel": "Versa"
+      },
+      {
+        "id": 44,
+        "discount": 0.15,
+        "customerName": "Marcelle Griego",
+        "carModel": "Corolla"
+      },
+      {
+        "id": 41,
+        "discount": 0.15,
+        "customerName": "Marcelle Griego",
+        "carModel": "Freemont"
+      },
+      {
+        "id": 10,
+        "discount": 0.15,
+        "customerName": "Marcelle Griego",
+        "carModel": "Captur"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "name": "Yvonne Mccalla",
+    "birthDate": "1992-03-02T00:00:00",
+    "isYoungDriver": true,
+    "sales": []
+  },
+  {
+    "id": 30,
+    "name": "Ann Mcenaney",
+    "birthDate": "1992-03-02T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 17,
+        "discount": 0.05,
+        "customerName": "Ann Mcenaney",
+        "carModel": "Astra"
+      },
+      {
+        "id": 40,
+        "discount": 0.3,
+        "customerName": "Ann Mcenaney",
+        "carModel": "C3"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "name": "Cinthia Lasala",
+    "birthDate": "1992-11-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": []
+  },
+  {
+    "id": 1,
+    "name": "Emmitt Benally",
+    "birthDate": "1993-11-20T00:00:00",
+    "isYoungDriver": true,
+    "sales": [
+      {
+        "id": 22,
+        "discount": 0.0,
+        "customerName": "Emmitt Benally",
+        "carModel": "Toledo"
+      },
+      {
+        "id": 20,
+        "discount": 0.0,
+        "customerName": "Emmitt Benally",
+        "carModel": "156"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "name": "Nisha Markwell",
+    "birthDate": "1994-04-04T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 5,
+        "discount": 0.0,
+        "customerName": "Nisha Markwell",
+        "carModel": "Omega"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "name": "Faustina Burgher",
+    "birthDate": "1994-06-01T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 13,
+        "discount": 0.3,
+        "customerName": "Faustina Burgher",
+        "carModel": "308"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "name": "Taina Achenbach",
+    "birthDate": "1994-10-01T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 26,
+        "discount": 0.5,
+        "customerName": "Taina Achenbach",
+        "carModel": "Fabia"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "name": "Johnette Derryberry",
+    "birthDate": "1995-10-01T00:00:00",
+    "isYoungDriver": true,
+    "sales": []
+  },
+  {
+    "id": 22,
+    "name": "Daniele Zarate",
+    "birthDate": "1995-10-05T00:00:00",
+    "isYoungDriver": false,
+    "sales": [
+      {
+        "id": 30,
+        "discount": 0.2,
+        "customerName": "Daniele Zarate",
+        "carModel": "GT-R"
+      },
+      {
+        "id": 35,
+        "discount": 0.05,
+        "customerName": "Daniele Zarate",
+        "carModel": "275"
+      },
+      {
+        "id": 32,
+        "discount": 0.0,
+        "customerName": "Daniele Zarate",
+        "carModel": "Citigo"
+      }
+    ]
+  }
+]
