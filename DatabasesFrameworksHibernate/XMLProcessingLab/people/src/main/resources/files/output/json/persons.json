@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "firstName": "Ssvilen",
+    "lastName": "Georgiev",
+    "addressImportDto": {
+      "country": "Bulgaria",
+      "city": "Sofia",
+      "street": "Mladost"
+    },
+    "phoneJsonDtos": [
+      {
+        "number": "54262152"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "firstName": "Milcho",
+    "lastName": "Georgiev",
+    "addressImportDto": {
+      "country": "Bulgaria",
+      "city": "Sofia",
+      "street": "Mladost"
+    },
+    "phoneJsonDtos": [
+      {
+        "number": "54262152"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "firstName": "Ssvilen",
+    "lastName": "Georgiev",
+    "addressImportDto": {
+      "country": "Bulgaria",
+      "city": "Sofia",
+      "street": "Mladost"
+    },
+    "phoneJsonDtos": [
+      {
+        "number": "54262152"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "firstName": "Ssvilen",
+    "lastName": "Georgiev",
+    "addressImportDto": {
+      "country": "Bulgaria",
+      "city": "Sofia",
+      "street": "Mladost"
+    },
+    "phoneJsonDtos": [
+      {
+        "number": "54262152"
+      }
+    ]
+  }
+]

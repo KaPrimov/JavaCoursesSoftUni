@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<person>
+    <id>1</id>
+    <first_name>Ssvilen</first_name>
+    <last_name>Georgiev</last_name>
+    <address>
+        <country>Bulgaria</country>
+        <city>Sofia</city>
+        <street>Mladost</street>
+    </address>
+    <phone_numbers>
+        <phone_number>
+            <number>54262152</number>
+        </phone_number>
+    </phone_numbers>
+</person>

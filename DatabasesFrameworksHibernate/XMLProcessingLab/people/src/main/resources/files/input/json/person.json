@@ -1,0 +1,17 @@
+{
+  "firstName": null,
+  "lastName": "Georgiev",
+  "addressImportDto": {
+    "country": null,
+    "city": "Sofia",
+    "street": "Mladost"
+  },
+  "phoneJsonDtos": [
+    {
+      "number": "5425325"
+    },
+    {
+      "number": null
+    }
+  ]
+}

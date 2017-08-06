@@ -1,6 +1,5 @@
 package app.io;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.xml.bind.JAXBContext;
@@ -9,27 +8,8 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import java.io.*;
 
-@Component("XmlParser")
-public class XmlParser implements Serializer{
-
-    @Autowired
-    private FileParser fileParser;
-
-    //public <T> void writeXML(T object, String fileName) throws JAXBException, IOException {
-    //    String path = System.getProperty("user.dir") + File.separator + fileName;
-    //    File f = new File(path);
-    //    if(!f.exists()) {
-    //        f.getParentFile().mkdirs();
-    //        f.createNewFile();
-    //    }
-//
-    //    JAXBContext jaxbContext = JAXBContext.newInstance(object.getClass());
-    //    Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-    //    jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-    //    OutputStream outputStream = new FileOutputStream(fileName);
-    //    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-    //    jaxbMarshaller.marshal(object, bufferedWriter);
-    //}
+@Component
+public class XmlParser implements Serializer {
 
     @Override
     public <T> void serialize(T t, String fileName) {
@@ -56,7 +36,7 @@ public class XmlParser implements Serializer{
     }
 
     @Override
-    public <T> T deserialize(Class<T> tClass, String fileName) {
+    public <T> T deserialize (Class<T> tClass, String fileName) {
         try {
             JAXBContext jaxbContext = JAXBContext.newInstance(tClass);
             Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
@@ -72,5 +52,6 @@ public class XmlParser implements Serializer{
         } catch (IOException e) {
             throw new SerializeException("Could not deserialize to class" + tClass + " unable to read from " + fileName , e);
         }
+
     }
 }

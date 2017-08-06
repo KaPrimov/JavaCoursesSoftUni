@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<persons>
+    <person>
+        <first_name>Ssvilen</first_name>
+        <last_name>Georgiev</last_name>
+        <address>
+            <country>Bulgaria</country>
+            <city>Sofia</city>
+            <street>Mladost</street>
+        </address>
+        <phone_numbers>
+            <phone_number>
+                <number>542</number>
+            </phone_number>
+            <phone_number>
+                <number>54262152</number>
+            </phone_number>
+        </phone_numbers>
+    </person>
+
+    <person>
+        <first_name>Ivan</first_name>
+        <last_name>Ivanov</last_name>
+        <address>
+            <country>Israel</country>
+            <city>Vitleem</city>
+            <street>Mladost</street>
+        </address>
+        <phone_numbers>
+            <phone_number>
+                <number>5212312342</number>
+            </phone_number>
+            <phone_number>
+                <number>5426d2152</number>
+            </phone_number>
+        </phone_numbers>
+    </person>
+</persons>
