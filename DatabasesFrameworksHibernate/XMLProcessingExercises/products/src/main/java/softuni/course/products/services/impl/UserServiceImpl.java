@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import softuni.course.products.dtos.binding.UserDto;
 import softuni.course.products.dtos.binding.add.UserAddDto;
 import softuni.course.products.dtos.view.*;
+import softuni.course.products.dtos.view.xmlViews.UsersWithSoldProductsXmlWrapper;
 import softuni.course.products.entities.User;
 import softuni.course.products.repositories.UserRepository;
 import softuni.course.products.services.api.ProductService;
@@ -70,5 +71,13 @@ public class UserServiceImpl implements UserService {
         }
         AllUsersWIthSoldProducts allUsersWIthSoldProducts = new AllUsersWIthSoldProducts(userWithSoldProductsDtos.size(),userWithSoldProductsDtos);
         return allUsersWIthSoldProducts ;
+    }
+
+    @Override
+    public UsersWithSoldProductsXmlWrapper getAllWithSoldProductsXml() {
+        List<UserWithSoldProductView> allUsersWithSoldProducts = this.findAllUsersWithSoldProducts();
+        UsersWithSoldProductsXmlWrapper usersWithSoldProductsXmlWrapper = new UsersWithSoldProductsXmlWrapper();
+        usersWithSoldProductsXmlWrapper.setUserWithSoldProductViews(allUsersWithSoldProducts);
+        return usersWithSoldProductsXmlWrapper;
     }
 }

@@ -4,6 +4,8 @@ import com.car_dealer.dtos.binding.add.CarAddDto;
 import com.car_dealer.dtos.binding.relations.CarDto;
 import com.car_dealer.dtos.view.CarMakerView;
 import com.car_dealer.dtos.view.CarPartsView;
+import com.car_dealer.dtos.view.xmlWrappers.CarsPartsXmlWrapper;
+import com.car_dealer.dtos.view.xmlWrappers.MakerCarsXmlWrapper;
 import com.car_dealer.entities.Car;
 import com.car_dealer.repositories.CarRepository;
 import com.car_dealer.services.apis.CarService;
@@ -55,6 +57,14 @@ public class CarServiceImpl implements CarService<Car, Long> {
     }
 
     @Override
+    public MakerCarsXmlWrapper findAllCarsByMakerXml(String make) {
+        List<CarMakerView> carMakerViews = this.findAllCarsByMaker(make);
+        MakerCarsXmlWrapper xmlWrapper = new MakerCarsXmlWrapper();
+        xmlWrapper.setCarMakerViewList(carMakerViews);
+        return xmlWrapper;
+    }
+
+    @Override
     public List<CarPartsView> findAllCarsWithParts() {
         List<Car> cars = this.carRepository.findAll();
         List<CarPartsView> carPartsViews = new ArrayList<>();
@@ -63,5 +73,13 @@ public class CarServiceImpl implements CarService<Car, Long> {
             carPartsViews.add(ModelParser.getInstance().map(car, CarPartsView.class));
         }
         return carPartsViews;
+    }
+
+    @Override
+    public CarsPartsXmlWrapper findAllCarsWithPartsXml() {
+        List<CarPartsView> allCarsWithParts = this.findAllCarsWithParts();
+        CarsPartsXmlWrapper carsPartsXmlWrapper = new CarsPartsXmlWrapper();
+        carsPartsXmlWrapper.setCarPartsViews(allCarsWithParts);
+        return carsPartsXmlWrapper;
     }
 }

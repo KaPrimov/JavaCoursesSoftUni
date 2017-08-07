@@ -1,5 +1,6 @@
 package softuni.course.products.io;
 
+
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -29,12 +30,10 @@ public class FileParser {
             f.getParentFile().mkdirs();
             f.createNewFile();
         }
-        try (OutputStream os = new FileOutputStream(fileName); // add true as second parameter to append
+        try (OutputStream os = new FileOutputStream(fileName);
              BufferedWriter bfw = new BufferedWriter(new OutputStreamWriter(os))
         ) {
             bfw.write(String.valueOf(content));
         }
     }
-
-
 }

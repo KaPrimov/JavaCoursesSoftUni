@@ -1,5 +1,6 @@
 package com.car_dealer.io;
 
+
 import org.springframework.stereotype.Component;
 
 import java.io.*;
@@ -25,16 +26,14 @@ public class FileParser {
     public void writeFile(String fileName, String content) throws IOException {
         String path = System.getProperty("user.dir") + File.separator + fileName;
         File f = new File(path);
-        if(!f.exists()) {
-            f.getParentFile().mkdirs();
-            f.createNewFile();
-        }
-        try (OutputStream os = new FileOutputStream(fileName); // add true as second parameter to append
+//        if(!f.exists()) {
+//            f.getParentFile().mkdirs();
+//            f.createNewFile();
+//        }
+        try (OutputStream os = new FileOutputStream(fileName);
              BufferedWriter bfw = new BufferedWriter(new OutputStreamWriter(os))
         ) {
             bfw.write(String.valueOf(content));
         }
     }
-
-
 }

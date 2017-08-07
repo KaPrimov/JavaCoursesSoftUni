@@ -2,12 +2,20 @@ package com.car_dealer.dtos.view;
 
 import com.google.gson.annotations.Expose;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+
+@XmlAccessorType(XmlAccessType.FIELD)
 public class LocalSupplierView {
     @Expose
+    @XmlAttribute(name = "id")
     private Long id;
     @Expose
+    @XmlAttribute(name = "name")
     private String name;
     @Expose
+    @XmlAttribute(name = "parts-count")
     private Integer partsCount;
 
     public LocalSupplierView(Long id, String name, Integer partsCount) {

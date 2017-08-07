@@ -5,6 +5,7 @@ import softuni.course.products.dtos.binding.add.ProductAddDto;
 import softuni.course.products.dtos.view.ProductViewDto;
 import softuni.course.products.dtos.view.SoldProductView;
 import softuni.course.products.dtos.view.SoldProducts;
+import softuni.course.products.dtos.view.xmlViews.ProductsXmlViewDto;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,4 +19,6 @@ public interface ProductService {
     List<SoldProductView> getAllBySellerLastNameAndBuyerNotNull(String name);
 
     SoldProducts getAllSoldProductsBySellerName(String lastName);
+
+    ProductsXmlViewDto findAllProductsFromXmlWithPriceBetween(BigDecimal from, BigDecimal to);
 }

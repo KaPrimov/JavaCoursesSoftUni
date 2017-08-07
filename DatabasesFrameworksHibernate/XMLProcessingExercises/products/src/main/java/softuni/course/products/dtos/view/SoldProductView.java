@@ -2,17 +2,27 @@ package softuni.course.products.dtos.view;
 
 import com.google.gson.annotations.Expose;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 
+@XmlRootElement(name = "product")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SoldProductView {
 
     @Expose
+    @XmlElement(name = "name")
     private String name;
     @Expose
+    @XmlElement(name = "price")
     private BigDecimal price;
     @Expose
+    @XmlElement(name = "buyer-first-name")
     private String buyerFirstName;
     @Expose
+    @XmlElement(name = "buyer-last-name")
     private String buyerLastName;
 
     public SoldProductView() {

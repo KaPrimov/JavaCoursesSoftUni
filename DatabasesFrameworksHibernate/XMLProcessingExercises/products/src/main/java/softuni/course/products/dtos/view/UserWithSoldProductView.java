@@ -2,15 +2,21 @@ package softuni.course.products.dtos.view;
 
 import com.google.gson.annotations.Expose;
 
+import javax.xml.bind.annotation.*;
 import java.util.List;
 
+@XmlRootElement(name = "user")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class UserWithSoldProductView {
 
     @Expose
+    @XmlAttribute(name = "first-name")
     private String firstName;
     @Expose
+    @XmlAttribute(name = "last-name")
     private String lastName;
     @Expose
+    @XmlElementWrapper(name = "sold-products")
     private List<SoldProductView> soldProducts;
 
     public UserWithSoldProductView() {

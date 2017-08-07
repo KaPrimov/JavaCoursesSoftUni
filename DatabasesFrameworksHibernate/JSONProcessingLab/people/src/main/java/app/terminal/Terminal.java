@@ -5,6 +5,11 @@ import app.domain.dto.json.PersonJsonDto;
 import app.domain.model.Person;
 import app.io.Serializer;
 import app.serviceImpl.PersonServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 @Component

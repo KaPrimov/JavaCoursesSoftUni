@@ -8,6 +8,7 @@ import softuni.course.products.dtos.view.ProductDto;
 import softuni.course.products.dtos.view.ProductViewDto;
 import softuni.course.products.dtos.view.SoldProductView;
 import softuni.course.products.dtos.view.SoldProducts;
+import softuni.course.products.dtos.view.xmlViews.ProductsXmlViewDto;
 import softuni.course.products.entities.Product;
 import softuni.course.products.repositories.ProductRepository;
 import softuni.course.products.services.api.ProductService;
@@ -70,5 +71,24 @@ public class ProductServiceImpl implements ProductService {
     public SoldProducts getAllSoldProductsBySellerName(String lastName) {
         List<ProductDto> products = this.productRepository.findAllBySeller(lastName);
         return new SoldProducts(products.size(),products);
+    }
+
+    @Override
+    public ProductsXmlViewDto findAllProductsFromXmlWithPriceBetween(BigDecimal from, BigDecimal to) {
+        List<Product> products = this.productRepository.findAllProductsWithPriceBetween(from, to);
+        List<ProductViewDto> productViewDtoList = new ArrayList<>();
+        ProductsXmlViewDto productsImportXmlDto = new ProductsXmlViewDto();
+
+        for (Product product : products) {
+            ProductViewDto productViewDto = new ProductViewDto();
+            productViewDto.setName(product.getName());
+            productViewDto.setPrice(product.getPrice());
+            productViewDto.setSeller(String.format("%s %s", product.getSeller().getFirstName() == null ? "" : product.getSeller().getFirstName(), product.getSeller().getLastName()).trim());
+            productViewDtoList.add(productViewDto);
+        }
+
+        productsImportXmlDto.setProductViewDtos(productViewDtoList);
+
+        return productsImportXmlDto;
     }
 }

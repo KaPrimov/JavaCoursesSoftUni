@@ -3,6 +3,7 @@ package com.car_dealer.services.impls;
 import com.car_dealer.dtos.binding.add.SupplierAddDto;
 import com.car_dealer.dtos.binding.relations.SupplierDto;
 import com.car_dealer.dtos.view.LocalSupplierView;
+import com.car_dealer.dtos.view.xmlWrappers.DomesticSuppliersXmlWrapper;
 import com.car_dealer.entities.Supplier;
 import com.car_dealer.repositories.SupplierRepository;
 import com.car_dealer.services.apis.SupplierService;
@@ -44,5 +45,13 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public List<LocalSupplierView> findAllLocalSuppliers() {
         return this.supplierRepository.findAllLocalSuppliers();
+    }
+
+    @Override
+    public DomesticSuppliersXmlWrapper findAllLocalSuppliersXml() {
+        List<LocalSupplierView> allLocalSuppliers = this.findAllLocalSuppliers();
+        DomesticSuppliersXmlWrapper domesticSuppliersXmlWrapper = new DomesticSuppliersXmlWrapper();
+        domesticSuppliersXmlWrapper.setLocalSupplierViews(allLocalSuppliers);
+        return domesticSuppliersXmlWrapper;
     }
 }

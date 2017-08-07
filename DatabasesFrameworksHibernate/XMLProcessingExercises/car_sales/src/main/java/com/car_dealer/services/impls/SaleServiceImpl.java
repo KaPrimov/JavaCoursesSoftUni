@@ -2,6 +2,7 @@ package com.car_dealer.services.impls;
 
 import com.car_dealer.dtos.binding.add.SaleAddDto;
 import com.car_dealer.dtos.view.SaleWithCarView;
+import com.car_dealer.dtos.view.xmlWrappers.SaleWithDiscountXmlWrapper;
 import com.car_dealer.entities.Sale;
 import com.car_dealer.repositories.SaleRepository;
 import com.car_dealer.services.apis.SaleService;
@@ -17,6 +18,7 @@ import java.util.List;
 @Service
 @Transactional
 public class SaleServiceImpl implements SaleService<Sale, Long> {
+
     private final SaleRepository saleRepository;
 
     @Autowired
@@ -41,5 +43,13 @@ public class SaleServiceImpl implements SaleService<Sale, Long> {
             saleWithCarViews.add(saleWithCarView);
         }
         return saleWithCarViews;
+    }
+
+    @Override
+    public SaleWithDiscountXmlWrapper saleWithCarsXml() {
+        List<SaleWithCarView> saleWithCarViews = this.saleWithCars();
+        SaleWithDiscountXmlWrapper saleWithDiscountXmlWrapper = new SaleWithDiscountXmlWrapper();
+        saleWithDiscountXmlWrapper.setSaleWithCarViews(saleWithCarViews);
+        return saleWithDiscountXmlWrapper;
     }
 }

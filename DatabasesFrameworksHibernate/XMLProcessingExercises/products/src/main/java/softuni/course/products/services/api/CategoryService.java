@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import softuni.course.products.dtos.binding.CategoryDto;
 import softuni.course.products.dtos.binding.add.CategoryAddDto;
 import softuni.course.products.dtos.view.CategoryStatisticView;
+import softuni.course.products.dtos.view.xmlViews.CategoriesStatisticsXmlWrapper;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface CategoryService {
     List<CategoryDto> findAllDtos();
 
     List<CategoryStatisticView> findAllByProductsCount();
+
+    CategoriesStatisticsXmlWrapper findAllByProductsCountXml();
 }

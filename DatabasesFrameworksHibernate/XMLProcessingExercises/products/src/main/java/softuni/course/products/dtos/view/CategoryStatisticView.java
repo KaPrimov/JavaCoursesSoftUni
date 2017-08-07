@@ -2,16 +2,21 @@ package softuni.course.products.dtos.view;
 
 import com.google.gson.annotations.Expose;
 
+import javax.xml.bind.annotation.*;
 import java.math.BigDecimal;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class CategoryStatisticView {
     @Expose
+    @XmlAttribute(name = "name")
     private String category;
     @Expose
+    @XmlElement(name = "products-count")
     private int productsCount;
     @Expose
+    @XmlElement(name = "average-price")
     private Double averagePrice;
     @Expose
+    @XmlElement(name = "total-revenue")
     private BigDecimal totalRevenue;
 
     public CategoryStatisticView(String category, int productsCount, Double averagePrice, BigDecimal totalRevenue) {

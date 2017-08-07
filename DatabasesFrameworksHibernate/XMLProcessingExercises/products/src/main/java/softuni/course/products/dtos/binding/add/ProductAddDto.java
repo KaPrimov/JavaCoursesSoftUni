@@ -4,14 +4,21 @@ import com.google.gson.annotations.Expose;
 import softuni.course.products.dtos.binding.CategoryDto;
 import softuni.course.products.dtos.binding.UserDto;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 import java.util.Set;
-
+@XmlRootElement(name = "category")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ProductAddDto {
 
     @Expose
+    @XmlElement(name = "name")
     private String name;
     @Expose
+    @XmlElement(name = "price")
     private BigDecimal price;
     private UserDto seller;
     private UserDto buyer;
