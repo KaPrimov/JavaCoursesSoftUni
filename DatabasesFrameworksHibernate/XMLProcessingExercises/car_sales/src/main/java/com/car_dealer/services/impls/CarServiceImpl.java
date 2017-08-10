@@ -30,7 +30,6 @@ public class CarServiceImpl implements CarService<Car, Long> {
     @Override
     public void saveDto(CarAddDto carAddDto) {
         Car car = ModelParser.getInstance().map(carAddDto, Car.class);
-        String deb = "";
         this.carRepository.saveAndFlush(car);
     }
 

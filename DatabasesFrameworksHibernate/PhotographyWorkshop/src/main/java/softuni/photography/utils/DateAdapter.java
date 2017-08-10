@@ -1,8 +1,8 @@
-package com.car_dealer.utils;
+package softuni.photography.utils;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
 
 public class DateAdapter extends XmlAdapter<String, Date> {
 
