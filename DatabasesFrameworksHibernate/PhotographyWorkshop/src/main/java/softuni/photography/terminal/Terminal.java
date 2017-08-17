@@ -11,6 +11,7 @@ import softuni.photography.dto.bindingModels.add.AddLensJsonDto;
 import softuni.photography.dto.bindingModels.add.AddPhotographerJsonDto;
 import softuni.photography.dto.bindingModels.add.xmlWrappers.AccessoryXmlWrapper;
 import softuni.photography.dto.bindingModels.add.xmlWrappers.WorkshopXmlWrapper;
+import softuni.photography.dto.viewModels.LocationsDtoXmlWrapper;
 import softuni.photography.dto.viewModels.PhotographerXmlSameCamera;
 import softuni.photography.dto.viewModels.PhotographersWrapperSameCamera;
 import softuni.photography.entities.Camera;
@@ -27,7 +28,7 @@ import java.util.List;
 @Component
 @Transactional
 public class Terminal implements CommandLineRunner {
-    public static final String OUT_PATH = "src\\main\\resources\\out\\";
+    public static final String OUT_PATH = "src/main/resources/out/";
 
 
     private final Serializer jsonParser;
@@ -53,11 +54,11 @@ public class Terminal implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        //importLenses();
-        //importCameras();
-        //importPhotographers();
-        //importAccessoires();
-        //importWorkshops();
+//        importLenses();
+//        importCameras();
+//        importPhotographers();
+//        importAccessoires();
+//        importWorkshops();
 
         //1st Query
         //List<OrderedPhotographerDto> orderedPhotographersDtos = this.photographerService.findAllPhotographersOrderedByFirstNameAscLastNameDesc();
@@ -68,7 +69,12 @@ public class Terminal implements CommandLineRunner {
         //this.jsonParser.serialize(landscapePhotographers, OUT_PATH + "landscape-photographers.json");
 
         //3rd Query
-        exportPhotographersWithSameCameras();
+        //exportPhotographersWithSameCameras();
+
+        //4th Query
+        LocationsDtoXmlWrapper locations = this.workshopService.workshopsByLocation();
+        this.xmlParser.serialize(locations, OUT_PATH + "workshops-by-location.xml");
+        String debug = "";
     }
 
     private void exportPhotographersWithSameCameras() {
