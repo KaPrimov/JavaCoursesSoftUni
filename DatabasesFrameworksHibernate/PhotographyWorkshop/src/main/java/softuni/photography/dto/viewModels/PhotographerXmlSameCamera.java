@@ -1,10 +1,10 @@
 package softuni.photography.dto.viewModels;
 
+import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.*;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-
 public class PhotographerXmlSameCamera {
     @XmlTransient
     private String firstName;
@@ -64,11 +64,16 @@ public class PhotographerXmlSameCamera {
     }
 
     public List<LensExportXmlDto> getLenses() {
-        return lenses;
+        return lenses.size() == 0 ? null : lenses;
     }
 
     public void setLenses(List<LensExportXmlDto> lenses) {
         this.lenses = lenses;
+    }
+
+    private void beforeMarshal(Marshaller marshaller) {
+        if (lenses != null && lenses.isEmpty())
+            lenses = null;
     }
 
 }

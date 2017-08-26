@@ -22,7 +22,8 @@ public interface PhotographerRepository extends JpaRepository<Photographer, Long
             "ORDER BY p.firstName, p.lastName DESC")
     List<Photographer> landscapePhotographers();
 
-    @Query("SELECT p FROM Photographer AS p INNER JOIN p.lenses AS l " +
+    @Query("SELECT DISTINCT p FROM Photographer AS p " +
+            "LEFT  JOIN p.lenses AS l " +
             "INNER JOIN p.primaryCamera " +
             "WHERE p.primaryCamera.make = p.secondaryCamera.make")
     List<Photographer> photographersWithSameCameras();

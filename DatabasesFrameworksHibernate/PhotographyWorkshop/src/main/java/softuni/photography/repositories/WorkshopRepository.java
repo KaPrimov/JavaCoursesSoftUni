@@ -18,6 +18,6 @@ public interface WorkshopRepository extends JpaRepository<Workshop, Long> {
     @Query("SELECT DISTINCT w.location FROM Workshop AS w")
     List<String> returnAllLocations();
 
-    @Query("SELECT w FROM Workshop AS w WHERE w.location = :location AND w.participants.size > 0")
+    @Query("SELECT w FROM Workshop AS w WHERE w.location = :location AND w.participants.size > 4")
     List<Workshop> findAllWorkshopAndPaticipantsByLocation(@Param("location") String location);
 }
