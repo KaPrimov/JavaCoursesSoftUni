@@ -24,6 +24,7 @@ public class JsonParser implements Serializer {
                 .excludeFieldsWithoutExposeAnnotation()
                 .setPrettyPrinting()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+                .disableHtmlEscaping()
                 .registerTypeAdapter(Gender.class, new AttributeScopeDeserializer())
                 .create();
         this.fileParser = new FileParser();

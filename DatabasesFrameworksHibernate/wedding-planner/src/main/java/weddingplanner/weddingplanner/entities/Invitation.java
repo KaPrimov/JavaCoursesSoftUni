@@ -49,7 +49,7 @@ public class Invitation {
         this.guest = guest;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "present_id", referencedColumnName = "id")
     public Present getPresent() {
         return present;

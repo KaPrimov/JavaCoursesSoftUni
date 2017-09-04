@@ -9,15 +9,15 @@ import java.math.BigDecimal;
 public class AddPresentDto {
 
     @XmlAttribute(name = "type")
-    private String type;
+    private String type = null;
     @XmlAttribute(name = "invitation-id")
-    private Long invitationId;
+    private Long invitationId = null;
     @XmlAttribute(name = "amount")
-    private BigDecimal amount;
+    private BigDecimal amount = null;
     @XmlAttribute(name = "present-name")
-    private String presentName;
+    private String presentName = null;
     @XmlAttribute(name = "size")
-    private String size;
+    private String size = null;
 
     public AddPresentDto() {
     }

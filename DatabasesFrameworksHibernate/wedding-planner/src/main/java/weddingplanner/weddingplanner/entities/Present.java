@@ -24,7 +24,7 @@ public abstract class Present {
         this.id = id;
     }
 
-    @ManyToOne
+    @OneToOne()
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     public Person getOwner() {
         return Owner;

@@ -11,16 +11,16 @@ import java.util.List;
 public class AddPresentXmlWrapper {
 
     @XmlElement(name = "present")
-    private List<AddPresentDto> presentDtoList;
+    private List<AddPresentDto> presentsXmls;
 
     public AddPresentXmlWrapper() {
     }
 
     public List<AddPresentDto> getPresentDtoList() {
-        return presentDtoList;
+        return presentsXmls;
     }
 
-    public void setPresentDtoList(List<AddPresentDto> presentDtoList) {
-        this.presentDtoList = presentDtoList;
+    public void setPresentDtoList(List<AddPresentDto> presents) {
+        this.presentsXmls = presents;
     }
 }

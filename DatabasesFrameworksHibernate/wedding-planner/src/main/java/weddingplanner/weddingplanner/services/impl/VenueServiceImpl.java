@@ -5,11 +5,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import weddingplanner.weddingplanner.dto.binding.xml.AddVenueXml;
 import weddingplanner.weddingplanner.dto.binding.xml.AddVenuesXmlWrapper;
+import weddingplanner.weddingplanner.dto.view.xml.VenuesInSofiaDto;
+import weddingplanner.weddingplanner.dto.view.xml.VenuesInSofiaXmlWrapper;
 import weddingplanner.weddingplanner.entities.Venue;
 import weddingplanner.weddingplanner.repositories.VenueRepository;
 import weddingplanner.weddingplanner.services.api.VenueService;
 import weddingplanner.weddingplanner.utils.DTOConvertUtil;
 import weddingplanner.weddingplanner.utils.DTOValidator;
+
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -36,5 +42,21 @@ public class VenueServiceImpl implements VenueService {
                 System.out.println("Error!");
             }
         }
+    }
+
+    @Override
+    public VenuesInSofiaXmlWrapper findAllVenuesInSofia() {
+        List<Object[]> venues = this.venueRepository.weddingsInSofia();
+        VenuesInSofiaXmlWrapper xmlWrapper = new VenuesInSofiaXmlWrapper();
+        List<VenuesInSofiaDto> venuesDtos = new ArrayList<>();
+        for (Object[] venue : venues) {
+            String name = venue[0].toString();
+            BigInteger capacity = BigInteger.valueOf(Long.parseLong(venue[1].toString().substring(0, venue[1].toString().lastIndexOf("."))));
+            Integer count = Integer.valueOf(venue[2].toString());
+            VenuesInSofiaDto venuesInSofiaDto = new VenuesInSofiaDto(name, capacity, count);
+            venuesDtos.add(venuesInSofiaDto);
+        }
+        xmlWrapper.setVenuesDtos(venuesDtos);
+        return xmlWrapper;
     }
 }

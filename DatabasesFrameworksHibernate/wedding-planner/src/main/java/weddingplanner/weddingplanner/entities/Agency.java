@@ -2,6 +2,7 @@ package weddingplanner.weddingplanner.entities;
 
 import javax.persistence.*;
 import java.math.BigInteger;
+import java.util.List;
 
 @Entity
 @Table(name = "agencies")
@@ -11,6 +12,7 @@ public class Agency {
     private String name;
     private BigInteger employeesCount;
     private String town;
+    private List<Wedding> weddings;
 
     public Agency() {
     }
@@ -50,5 +52,14 @@ public class Agency {
 
     public void setTown(String town) {
         this.town = town;
+    }
+
+    @OneToMany(mappedBy = "agency")
+    public List<Wedding> getWeddings() {
+        return weddings;
+    }
+
+    public void setWeddings(List<Wedding> weddings) {
+        this.weddings = weddings;
     }
 }

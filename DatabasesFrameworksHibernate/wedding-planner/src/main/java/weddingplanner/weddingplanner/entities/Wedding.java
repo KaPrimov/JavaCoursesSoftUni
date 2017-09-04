@@ -62,7 +62,7 @@ public class Wedding {
     }
 
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "agency_id", referencedColumnName = "id")
     public Agency getAgency() {
         return agency;
