@@ -10,7 +10,6 @@ import weddingplanner.weddingplanner.entities.*;
 import weddingplanner.weddingplanner.repositories.*;
 import weddingplanner.weddingplanner.services.api.WeddingService;
 import weddingplanner.weddingplanner.utils.DTOConvertUtil;
-import weddingplanner.weddingplanner.utils.DTOValidator;
 
 import java.util.ArrayList;
 import java.util.Comparator;

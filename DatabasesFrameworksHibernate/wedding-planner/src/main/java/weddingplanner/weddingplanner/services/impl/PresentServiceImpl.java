@@ -14,7 +14,6 @@ import weddingplanner.weddingplanner.repositories.InvitationRepository;
 import weddingplanner.weddingplanner.repositories.PresentRepository;
 import weddingplanner.weddingplanner.services.api.PresentService;
 import weddingplanner.weddingplanner.utils.DTOConvertUtil;
-import weddingplanner.weddingplanner.utils.DTOValidator;
 
 @Service
 @Transactional

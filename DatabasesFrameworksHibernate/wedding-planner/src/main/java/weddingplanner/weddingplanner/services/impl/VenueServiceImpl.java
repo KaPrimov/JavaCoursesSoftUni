@@ -11,7 +11,6 @@ import weddingplanner.weddingplanner.entities.Venue;
 import weddingplanner.weddingplanner.repositories.VenueRepository;
 import weddingplanner.weddingplanner.services.api.VenueService;
 import weddingplanner.weddingplanner.utils.DTOConvertUtil;
-import weddingplanner.weddingplanner.utils.DTOValidator;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
