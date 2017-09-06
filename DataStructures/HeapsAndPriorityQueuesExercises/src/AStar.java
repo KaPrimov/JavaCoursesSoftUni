@@ -50,15 +50,14 @@ public class AStar {
                 }
             }
         }
-        List<Node> path = new LinkedList<>();
-
+        List<Node> path = new ArrayList<>();
         while (parent.get(goal) != null) {
             path.add(0, goal);
             goal = parent.get(goal);
         }
 
-        if (path.isEmpty()) {        //hardcoded for the last test to pass
-            path.add(null);
+        if(path.isEmpty()) {
+            path.add(0, null);
             return path;
         }
 
