@@ -48,6 +48,78 @@ public class AVL<T extends Comparable<T>> {
         return node;
     }
 
+    private Node<T> search(Node<T> node, T item) {
+        if (node == null) {
+            return null;
+        }
+
+        int cmp = item.compareTo(node.value);
+        if (cmp < 0) {
+            return search(node.left, item);
+        } else if (cmp > 0) {
+            return search(node.right, item);
+        }
+
+        return node;
+    }
+
+    public void delete(T item) {
+        throw new UnsupportedOperationException();
+    }
+
+    public void deleteMin() {
+        if (this.root == null) {
+            return;
+        }
+        this.root = this.deleteMin(this.root, null);
+    }
+
+    private Node<T> deleteMin(Node<T> current, Node<T> parent) {
+
+        if(current.left != null) {
+            return deleteMin(current.left, current);
+        }
+
+        if (parent == null) {
+            return current.right;
+        }
+
+        if(current.right == null) {
+            parent.left = null;
+        } else {
+            parent.left = deleteMin(current.right, current);
+        }
+
+        this.balance(parent);
+        return parent;
+    }
+
+    // BONUS
+    public void deleteMax() {
+        if (this.root == null) {
+            return;
+        }
+        this.root = this.deleteMax(this.root, null);
+    }
+
+    private Node<T> deleteMax(Node<T> current, Node<T> parent) {
+        if (current.right != null) {
+            return deleteMax(current.right, current);
+        }
+
+        if (parent == null) {
+            return current.left;
+        }
+
+        if(current.left  == null) {
+            parent.right = null;
+        } else {
+            parent.right = deleteMax(current.left, current);
+        }
+        balance(parent);
+        return parent;
+    }
+
     private Node<T> balance(Node<T> node) {
         // right rotation
         int balance = this.getHeight(node.left) - this.getHeight(node.right);
@@ -73,20 +145,6 @@ public class AVL<T extends Comparable<T>> {
         node.height = Math.max(this.getHeight(node.left), this.getHeight(node.right)) + 1;
     }
 
-    private Node<T> search(Node<T> node, T item) {
-        if (node == null) {
-            return null;
-        }
-
-        int cmp = item.compareTo(node.value);
-        if (cmp < 0) {
-            return search(node.left, item);
-        } else if (cmp > 0) {
-            return search(node.right, item);
-        }
-
-        return node;
-    }
 
     private int getHeight(Node<T> node) {
         return node == null ? 0 : node.height;
@@ -111,5 +169,17 @@ public class AVL<T extends Comparable<T>> {
 
         return tempRight;
     }
+    private Node<T> findSmallestNode(Node<T> element) {
+        if(element.left == null) {
+            return element;
+        }
+        return findSmallestNode(element.left);
+    }
 
+    private Node<T> findBiggestNode(Node<T> element) {
+        if(element.right == null) {
+            return element;
+        }
+        return findSmallestNode(element.right);
+    }
 }
