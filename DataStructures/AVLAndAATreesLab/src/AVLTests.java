@@ -528,29 +528,4 @@ public class AVLTests {
         int[] expectedNodes = new int[] { };
         Assert.assertArrayEquals(expectedNodes, result);
     }
-
-    @Test
-    public void insert_Multiple_DeleteMax_Should_Work_Correctly() {
-        // Arrange
-        AVL<Integer> avl = new AVL<>();
-        avl.insert(10);
-        avl.insert(5);
-        avl.insert(20);
-        avl.insert(14);
-        avl.insert(2);
-        avl.insert(18);
-
-        // Act
-        avl.deleteMax();
-        List<Integer> nodes = new ArrayList<>();
-        avl.eachInOrder(nodes::add);
-        int[] result = new int[nodes.size()];
-        for (int i = 0; i < nodes.size(); i++) {
-            result[i] = nodes.get(i);
-        }
-
-        // Assert
-        int[] expectedNodes = new int[] {2, 5, 10, 14, 18 };
-        Assert.assertArrayEquals(expectedNodes, result);
-    }
 }
