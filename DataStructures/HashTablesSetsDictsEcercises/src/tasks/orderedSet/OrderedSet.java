@@ -1,8 +1,8 @@
-import java.util.Deque;
-import java.util.LinkedList;
+package tasks.orderedSet;
+
 import java.util.function.Consumer;
 
-public class RedBlackTree<T extends Comparable<T>> {
+public class OrderedSet<T extends Comparable<T>> {
 
     private static final boolean RED = true;
     private static final boolean BLACK = false;
@@ -10,10 +10,10 @@ public class RedBlackTree<T extends Comparable<T>> {
     private Node root;
     private int nodesCount;
 
-    public RedBlackTree() {
+    public OrderedSet() {
     }
 
-    private RedBlackTree(Node root) {
+    private OrderedSet(Node root) {
         this.preOrderCopy(root);
     }
 
@@ -87,7 +87,7 @@ public class RedBlackTree<T extends Comparable<T>> {
         return current != null;
     }
 
-    public RedBlackTree<T> search(T item) {
+    public OrderedSet<T> search(T item) {
         Node current = this.root;
         while (current != null) {
             if (item.compareTo(current.value) < 0) {
@@ -99,7 +99,7 @@ public class RedBlackTree<T extends Comparable<T>> {
             }
         }
 
-        return new RedBlackTree<>(current);
+        return new OrderedSet<>(current);
     }
 
     public void eachInOrder(Consumer<T> consumer) {
@@ -114,30 +114,6 @@ public class RedBlackTree<T extends Comparable<T>> {
         this.eachInOrder(node.getLeft(), consumer);
         consumer.accept(node.getValue());
         this.eachInOrder(node.getRight(), consumer);
-    }
-
-    public Iterable<T> range(T from, T to) {
-        Deque<T> queue = new LinkedList<>();
-        this.range(this.root, queue, from, to);
-        return queue;
-    }
-
-    private void range(Node node, Deque<T> queue, T startRange, T endRange) {
-        if (node == null) {
-            return;
-        }
-
-        int compareStart = startRange.compareTo(node.value);
-        int compareEnd = endRange.compareTo(node.value);
-        if (compareStart < 0) {
-            this.range(node.left, queue, startRange, endRange);
-        }
-        if (compareStart <= 0 && compareEnd >= 0) {
-            queue.addLast(node.value);
-        }
-        if (compareEnd > 0) {
-            this.range(node.right, queue, startRange, endRange);
-        }
     }
 
     private T minValue(Node root) {
@@ -193,14 +169,6 @@ public class RedBlackTree<T extends Comparable<T>> {
         }
     }
 
-    public T ceil(T element) {
-        return this.select(this.rank(element) + 1);
-    }
-
-    public T floor(T element) {
-        return this.select(this.rank(element) - 1);
-    }
-
     public void delete(T key) {
         this.root = deleteRecursive(this.root, key);
     }
@@ -228,28 +196,6 @@ public class RedBlackTree<T extends Comparable<T>> {
         }
 
         return root;
-    }
-
-    public int rank(T element) {
-        return this.rank(element, this.root);
-    }
-
-    private int rank(T element, Node node) {
-        if (node == null) {
-            return 0;
-        }
-
-        int compare = element.compareTo(node.value);
-
-        if (compare < 0) {
-            return this.rank(element, node.left);
-        }
-
-        if (compare > 0) {
-            return 1 + this.size(node.left) + this.rank(element, node.right);
-        }
-
-        return this.size(node.left);
     }
 
     public T select(int rank) {
@@ -350,10 +296,6 @@ public class RedBlackTree<T extends Comparable<T>> {
             return this.value;
         }
 
-        public void setValue(T value) {
-            this.value = value;
-        }
-
         public Node getLeft() {
             return this.left;
         }
@@ -376,10 +318,6 @@ public class RedBlackTree<T extends Comparable<T>> {
 
         public void setColor(boolean color) {
             this.color = color;
-        }
-
-        public int getChildrenCount() {
-            return childrenCount;
         }
 
         public void setChildrenCount(int childrenCount) {
