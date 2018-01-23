@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 
+import javache.io.Reader;
+import javache.io.Writer;
+
 public class ConnectionHandler extends Thread {
 	
 	private Socket clientSocket;
@@ -29,10 +32,17 @@ public class ConnectionHandler extends Thread {
 
 	@Override
 	public void run() {
-//		String requestContent = Reader.readAllLines(this.inputStream);
+		try {
+			String requestContent = Reader.readAllLines(this.inputStream);
+			byte[] responseContent = this.requestHandler.handleRequest(requestContent);
+			Writer.writeBytes(responseContent, this.outputStream);
+			this.inputStream.close();
+			this.outputStream.close();
+			this.clientSocket.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
-	
-
 }
