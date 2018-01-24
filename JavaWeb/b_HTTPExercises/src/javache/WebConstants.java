@@ -3,6 +3,7 @@ package javache;
 public final class WebConstants {
 	
 	public static final int SOCKET_TIMEOUT_MILISECONDS = 50000;
+	public static final int DEFAULT_SERVER_PORT = 8321;
 	
 	public static final String OK_STATUS = "OK";
 	public static final String FOUND_STATUS = "Found";
