@@ -5,24 +5,40 @@ import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HttpRequestImpl implements HttpRequest {
     private String method;
 
     private String requestUrl;
 
-    private HashMap<String, String> headers;
+    private Map<String, String> headers;
 
-    private HashMap<String, String> bodyParameters;
+    private Map<String, String> bodyParameters;
+    
+    private Map<String, String> cookies;
+    
 
     public HttpRequestImpl(String requestContent) {
         this.initMethod(requestContent);
         this.initRequestUrl(requestContent);
         this.initHeaders(requestContent);
         this.initBodyParameters(requestContent);
+        this.initCookies(requestContent);
     }
 
-    private void initMethod(String requestContent) {
+    private void initCookies(String requestContent) {
+    	this.cookies = new HashMap<>();
+		if(this.headers.containsKey("Cookie")) {
+			String[] cookieTokens = this.getHeaders().get("Cookie").split("; ");
+			for (String pair : cookieTokens) {
+				String[] pairTokens = pair.split("=");
+				this.cookies.put(pairTokens[0], pairTokens[1]);
+			}
+		} 
+	}
+
+	private void initMethod(String requestContent) {
         this.setMethod(requestContent.split("\\s")[0]);
     }
 
@@ -62,7 +78,6 @@ public class HttpRequestImpl implements HttpRequest {
                     try {
 						this.addBodyParameter(bodyKeyValuePair[0], URLDecoder.decode(bodyKeyValuePair[1], "UTF-8"));
 					} catch (UnsupportedEncodingException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
                 }
@@ -71,12 +86,12 @@ public class HttpRequestImpl implements HttpRequest {
     }
 
     @Override
-    public HashMap<String, String> getHeaders() {
+    public Map<String, String> getHeaders() {
         return this.headers;
     }
 
     @Override
-    public HashMap<String, String> getBodyParameters() {
+    public Map<String, String> getBodyParameters() {
         return this.bodyParameters;
     }
 
@@ -114,4 +129,9 @@ public class HttpRequestImpl implements HttpRequest {
     public boolean isResource() {
         return this.getRequestUrl().contains(".");
     }
+
+	@Override
+	public Map<String, String> getCookies() {
+		return this.cookies;
+	}
 }

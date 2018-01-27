@@ -70,4 +70,13 @@ public class HttpResponseImpl implements HttpResponse {
 
         return fullResponse;
     }
+
+	@Override
+	public void addCookie(String name, String value) {
+		if (!this.headers.containsKey("Set-Cookie"))	{
+			this.headers.put("Set-Cookie", name + "=" + value);
+		} else {
+			this.headers.put("Set-Cookie", this.headers.get("Set-Cookie") + "; " + name + "=" + value);
+		}
+	}
 }

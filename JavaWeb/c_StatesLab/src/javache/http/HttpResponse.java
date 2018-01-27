@@ -41,4 +41,6 @@ public interface HttpResponse {
     void setContent(byte[] content);
 
     void addHeader(String header, String value);
+    
+    void addCookie(String name, String value);
 }

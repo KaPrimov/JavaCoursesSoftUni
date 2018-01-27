@@ -1,11 +1,13 @@
 package javache.http;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public interface HttpRequest {
-    HashMap<String, String> getHeaders();
+    Map<String, String> getHeaders();
 
-    HashMap<String, String> getBodyParameters();
+    Map<String, String> getBodyParameters();    
+
+    Map<String, String> getCookies();
 
     String getMethod();
 

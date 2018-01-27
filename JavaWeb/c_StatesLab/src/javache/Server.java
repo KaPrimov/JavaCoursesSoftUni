@@ -1,8 +1,13 @@
 package javache;
 
-import java.io.*;
-import java.net.*;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.concurrent.FutureTask;
+
+import javache.http.HttpSession;
+import javache.http.HttpSessionImpl;
 
 public class Server {
     private static final String LISTENING_MESSAGE = "Listening on port: ";
@@ -27,13 +32,15 @@ public class Server {
         System.out.println(LISTENING_MESSAGE + this.port);
 
         this.server.setSoTimeout(SOCKET_TIMEOUT_MILLISECONDS);
-
+        
+        HttpSession session = new HttpSessionImpl();
+        
         while(true) {
             try(Socket clientSocket = this.server.accept()) {
                 clientSocket.setSoTimeout(SOCKET_TIMEOUT_MILLISECONDS);
 
                 ConnectionHandler connectionHandler
-                        = new ConnectionHandler(clientSocket, new RequestHandler());
+                        = new ConnectionHandler(clientSocket, new RequestHandler(session));
 
                 FutureTask<?> task = new FutureTask<>(connectionHandler, null);
                 task.run();
