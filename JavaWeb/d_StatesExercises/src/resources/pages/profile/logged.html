@@ -7,6 +7,8 @@
 <body class="container">
 	<h1>Hello %s. Your password is %s</h1>
 	<hr />
+	<form action="/logout?sessionId=%s" method="post"><button type="submit" class="btn btn-link navbar-btn navbar-link">Log off</button></form>
+	
 	<h4>Go to <a href="/home?username=%s">Home</a></h4>
 </body>
 </html>

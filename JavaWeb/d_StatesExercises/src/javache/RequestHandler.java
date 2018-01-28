@@ -107,6 +107,15 @@ public class RequestHandler {
         case "/users/profile":
         	if (this.httpRequest.getCookies().containsKey(SESSION_KEY)) {
         		String sessionId = this.httpRequest.getCookies().get(SESSION_KEY);
+        		if (this.session.getSessionData(sessionId) == null) {
+					try {
+						byte[] guestPage = Files.readAllBytes(Paths.get(RESOURCES_FOLDER + "pages\\profile\\guest.html"));
+						return this.Ok(guestPage);
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+        		}
         		String userId = (String) this.session.getSessionData(sessionId).get("userId");
 				try {
 					User user = UserRepositoryImpl.findUserDataById(userId);
@@ -116,7 +125,7 @@ public class RequestHandler {
 					}
 					
 					String loggedContent = Reader.readAllLines(new FileInputStream(RESOURCES_FOLDER + "pages\\profile\\logged.html"));
-					String loggedResponse = String.format(loggedContent, user.getName(), user.getPassword(), user.getName());
+					String loggedResponse = String.format(loggedContent, user.getName(), user.getPassword(), sessionId, user.getName());
 				
 					return this.Ok(loggedResponse.getBytes());
 				} catch (IOException e) {
@@ -153,6 +162,14 @@ public class RequestHandler {
 				e1.printStackTrace();
     			return this.BadRequest("<h1>Error 400: Malformed Request...</h1>".getBytes());
 			}
+        case "/logout":
+        	String urlTokens[] = this.httpRequest.getRequestUrl().split("\\?");
+        	String[] sessionrData = urlTokens[1].split("=");
+        	String sessionId = sessionrData[1];
+        	this.session.terminateSession(sessionId);
+//        	this.httpResponse.addCookie(SESSION_KEY, "");
+    		this.httpResponse.addHeader("Location", "/html/login.html");
+        	return this.Redirect(new byte[0]);
     	default:
     		File file = new File(ASSETS_FOLDER + url);
     		if (!file.exists() || file.isDirectory()) {
@@ -165,7 +182,7 @@ public class RequestHandler {
 				}
 				byte[] contents = Files.readAllBytes(Paths.get(ASSETS_FOLDER + this.httpRequest.getRequestUrl()));
 				return this.Ok(contents);
-    		} catch (IOException e) {
+    		} catch (Exception e) {
     			return this.BadRequest("<h1>Error 400: Malformed Request...</h1>".getBytes());
 			}
         }
