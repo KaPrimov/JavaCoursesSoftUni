@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Casebook</title>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css"/>
+</head>
+<body class="container">
+<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+		 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		   <span class="navbar-toggler-icon"></span>
+		 </button>
+		 <a class="navbar-brand" href="/">Home</a>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		    <ul class="navbar-nav mr-auto">
+			    <li class="nav-item active">
+					<a class="nav-link" href="/html/login.html">Login</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="/html/register.html">Register</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<main>
+		<form method="POST" action="/users/register">
+		  <fieldset>
+		    <legend>Register</legend>
+		    <div class="form-group row">
+		      <label for="email" class="col-sm-2 col-form-label">Email</label>
+		      <div class="col-sm-10">
+		        <input type="text" name="email" class="form-control-plaintext" id="email" >
+		      </div>
+		    </div>
+		    <div class="form-group row">
+		      <label for="password" class="col-sm-2 col-form-label">Password</label>
+		      <div class="col-sm-10">
+		        <input type="password" name="password" class="form-control-plaintext" id="password" >
+		      </div>
+		    </div>
+		      <div class="form-group row">
+		      <label for="confirm" class="col-sm-2 col-form-label">Confirm Password</label>
+		      <div class="col-sm-10">
+		        <input type="password" name="confirm" class="form-control-plaintext" id="confirm" >
+		      </div>
+		    </div>
+		    <button type="submit" class="btn btn-primary">Register</button>
+		  </fieldset>
+		</form>
+	</main>
+</body>
+</html>
