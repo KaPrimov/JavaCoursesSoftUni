@@ -11,7 +11,7 @@ public interface Application {
 	
 	Map<String, Function<HttpContext, byte[]>> getRoutes();
 
-	HttpSession getSession(HttpSession session);
+	HttpSession getSession();
 	
 	void setSession(HttpSession session);
 
