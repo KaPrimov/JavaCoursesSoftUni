@@ -1,6 +1,10 @@
 package org.softuni.main;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.softuni.main.casebook.CasebookApplication;
 import org.softuni.main.javache.Application;
@@ -8,9 +12,9 @@ import org.softuni.main.javache.Server;
 import org.softuni.main.javache.WebConstants;
 
 public class StartUp {
-    public static void main(String[] args) {
+    public static void main(String[] args) {	
 
-         start(args);
+    	start(args);
     }
 
     private static void start(String[] args) {
