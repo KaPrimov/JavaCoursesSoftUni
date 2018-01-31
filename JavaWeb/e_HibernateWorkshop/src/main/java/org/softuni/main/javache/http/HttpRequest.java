@@ -1,4 +1,5 @@
 package org.softuni.main.javache.http;
+
 import java.util.HashMap;
 
 public interface HttpRequest {

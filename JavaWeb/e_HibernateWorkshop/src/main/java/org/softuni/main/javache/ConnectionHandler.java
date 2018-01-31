@@ -2,6 +2,7 @@ package org.softuni.main.javache;
 
 import org.softuni.main.javache.io.Reader;
 import org.softuni.main.javache.io.Writer;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -33,20 +34,22 @@ public class ConnectionHandler extends Thread {
     public void run() {
         try {
             String requestContent = null;
-            
-            while (true) {
-            	requestContent = Reader.readAllLines(this.clientSocketInputStream);
-            	
-            	if (requestContent.length() > 0) {
-            		break;
-            	}
+
+            while(true) {
+                requestContent = Reader.readAllLines(this.clientSocketInputStream);
+
+                if(requestContent.length() > 0) {
+                    break;
+                }
             }
+
             byte[] responseContent = this.requestHandler.handleRequest(requestContent);
             Writer.writeBytes(responseContent, this.clientSocketOutputStream);
+
             this.clientSocketInputStream.close();
             this.clientSocketOutputStream.close();
             this.clientSocket.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }

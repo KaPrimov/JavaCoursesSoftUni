@@ -1,18 +1,18 @@
 package org.softuni.main.javache;
 
-import java.util.Map;
-import java.util.function.Function;
-
 import org.softuni.main.javache.http.HttpContext;
 import org.softuni.main.javache.http.HttpSession;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
+
 public interface Application {
-	byte[] handleRequest(HttpContext httpContext);
-	
-	Map<String, Function<HttpContext, byte[]>> getRoutes();
+    Map<String, HashMap<String, Function<HttpContext, byte[]>>> getRoutes();
 
-	HttpSession getSession();
-	
-	void setSession(HttpSession session);
+    byte[] handleRequest(HttpContext httpContext);
 
+    HttpSession getSession();
+
+    void setSession(HttpSession session);
 }

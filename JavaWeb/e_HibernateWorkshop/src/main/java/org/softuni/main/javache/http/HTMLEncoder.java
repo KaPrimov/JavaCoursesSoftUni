@@ -1,7 +1,8 @@
 package org.softuni.main.javache.http;
 
 
-public class HTMLEncoder {
+public final class HTMLEncoder {
+    private HTMLEncoder() { }
 
     public static String escapeHTML(String s) {
         StringBuilder out = new StringBuilder(Math.max(16, s.length()));

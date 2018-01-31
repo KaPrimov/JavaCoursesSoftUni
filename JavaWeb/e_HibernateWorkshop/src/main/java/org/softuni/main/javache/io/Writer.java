@@ -1,4 +1,5 @@
 package org.softuni.main.javache.io;
+
 import java.io.*;
 
 public final class Writer {

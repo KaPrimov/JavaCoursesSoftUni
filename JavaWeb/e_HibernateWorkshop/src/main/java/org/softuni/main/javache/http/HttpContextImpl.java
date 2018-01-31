@@ -2,29 +2,30 @@ package org.softuni.main.javache.http;
 
 public class HttpContextImpl implements HttpContext {
 
-	private HttpRequest httpRequest;
-	private HttpResponse httpResponse;	
-	
-	public HttpContextImpl(HttpRequest httpRequest, HttpResponse httpResponse) {
-		this.setHttpResponse(httpResponse);
-		this.setHttpRequest(httpRequest);
-	}
+    private HttpRequest httpRequest;
 
-	@Override
-	public HttpRequest getHttpRequest() {
-		return this.httpRequest;
-	}
+    private HttpResponse httpResponse;
 
-	@Override
-	public HttpResponse getHttpResponse() {
-		return this.httpResponse;
-	}
+    public HttpContextImpl(HttpRequest httpRequest, HttpResponse httpResponse) {
+        this.setHttpRequest(httpRequest);
+        this.setHttpResponse(httpResponse);
+    }
 
-	public void setHttpRequest(HttpRequest httpRequest) {
-		this.httpRequest = httpRequest;
-	}
+    @Override
+    public HttpRequest getHttpRequest() {
+        return this.httpRequest;
+    }
 
-	public void setHttpResponse(HttpResponse httpResponse) {
-		this.httpResponse = httpResponse;
-	}
+    private void setHttpRequest(HttpRequest httpRequest) {
+        this.httpRequest = httpRequest;
+    }
+
+    @Override
+    public HttpResponse getHttpResponse() {
+        return this.httpResponse;
+    }
+
+    private void setHttpResponse(HttpResponse httpResponse) {
+        this.httpResponse = httpResponse;
+    }
 }

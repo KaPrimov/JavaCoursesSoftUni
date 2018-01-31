@@ -1,4 +1,4 @@
-package org.softuni.main.casebook.utils;
+package org.softuni.main.casebook.utilities;
 
 import org.softuni.main.casebook.annotations.Get;
 import org.softuni.main.casebook.annotations.Post;
@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class HandlerLoader {
-    private static final String DYNAMIC_HANDLERS_FULL_PATH = System.getProperty("user.dir") + "\\src\\main\\java\\org\\softuni\\main\\casebook\\handlers\\dynamic";
+    private static final String DYNAMIC_HANDLERS_FULL_PATH = System.getProperty("user.dir") + "\\src\\org\\softuni\\main\\casebook\\handlers\\dynamic";
     private static final String DYNAMIC_HANDLERS_PACKAGE = "org.softuni.main.casebook.handlers.dynamic";
 
     private HashMap<String, HashMap<String, Method>> actionsMap;

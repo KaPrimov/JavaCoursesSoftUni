@@ -1,100 +1,105 @@
 package org.softuni.main.casebook;
 
-import java.lang.reflect.InvocationTargetException;
+import org.softuni.main.casebook.handlers.utility.ErrorHandler;
+import org.softuni.main.casebook.handlers.utility.ResourceHandler;
+import org.softuni.main.casebook.utils.HandlerLoader;
+import org.softuni.main.javache.Application;
+import org.softuni.main.javache.http.HttpContext;
+import org.softuni.main.javache.http.HttpResponse;
+import org.softuni.main.javache.http.HttpSession;
+
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-import org.softuni.main.casebook.utils.HandlerLoader;
-import org.softuni.main.javache.Application;
-import org.softuni.main.javache.http.HttpContext;
-import org.softuni.main.javache.http.HttpResponse;
-import org.softuni.main.javache.http.HttpSession;
-import org.softuni.main.javache.http.HttpStatus;
-
 public class CasebookApplication implements Application {
-	
-	private HttpSession session;
-	
-	private Map<String, Function<HttpContext, byte[]>> routesTable;
+    private HttpSession session;
 
-	public CasebookApplication() {
-		this.initializeRoutes();
-	}
+    private HashMap<String, HashMap<String, Function<HttpContext, byte[]>>> routesTable;
 
-	private void initializeRoutes() {
-		this.routesTable = new HashMap<>();
+    private final ErrorHandler errorHandler = new ErrorHandler();
 
-		HandlerLoader loader = new HandlerLoader();
-		Map<String, Method> getActions = loader.retrieveActions("GET");
-		
-		for (Map.Entry<String, Method> kvp : getActions.entrySet()) {
-			try {
-				Object handlerObj = kvp.getValue()
-						.getDeclaringClass()
-						.getConstructor()
-						.newInstance();
-				
-				this.routesTable.put(kvp.getKey(), 
-						(HttpContext httpContext) -> {
-							if (httpContext.getHttpRequest().getMethod().equalsIgnoreCase("GET")) {
-								
-							}
-							try {
-								return ((HttpResponse) kvp
-									.getValue()
-									.invoke(handlerObj, httpContext.getHttpRequest(), httpContext.getHttpResponse())).getBytes();
-							} catch (Exception e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-							return null;
-						});
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
-	
-	@Override
-	public byte[] handleRequest(HttpContext httpContext) {
-		String requestUrl = httpContext.getHttpRequest().getRequestUrl();
-		String method = httpContext.getHttpRequest().getMethod();
-		
-		if(!this.getRoutes().containsKey(requestUrl)) {
-			return this.notFound(httpContext).getContent();
-		}
-		
-		return this.getRoutes().get(requestUrl).apply(httpContext);
-	}	
+    private final ResourceHandler resourceHandler = new ResourceHandler();
 
-	private HttpResponse notFound(HttpContext httpContext) {
-		HttpResponse response = httpContext.getHttpResponse();
-		response.setStatusCode(HttpStatus.NOT_FOUND);
-		response.addHeader("Content-Type", "text/html");
-		response.setContent("<h1>404 Not Found</h1>".getBytes());
-		
-		return response;
-	}
+    public CasebookApplication() {
+        this.initializeRoutes();
+    }
 
-	@Override
-	public Map<String, Function<HttpContext, byte[]>> getRoutes() {
-		return Collections.unmodifiableMap(this.routesTable);
-	}
+    private void loadActionsForMethod(String method, HandlerLoader handlerLoader) {
+        Map<String, Method> actions = handlerLoader.retrieveActionsMap(method);
 
-	@Override
-	public HttpSession getSession() {
-		return this.session;
-	}
+        for (Map.Entry<String, Method> actionEntry : actions.entrySet()) {
+            try {
+                Object handlerObject = actionEntry.getValue()
+                        .getDeclaringClass()
+                        .getConstructor()
+                        .newInstance();
 
-	@Override
-	public void setSession(HttpSession session) {
-		this.session = session;
-		
-	}
+                this.routesTable.putIfAbsent(actionEntry.getKey(), new HashMap<>());
 
+                this.routesTable.get(actionEntry.getKey()).put(method, (HttpContext httpContext) -> {
+                    try {
+                        return ((HttpResponse) actionEntry
+                                .getValue()
+                                .invoke(handlerObject,
+                                        httpContext.getHttpRequest(),
+                                        httpContext.getHttpResponse())).getBytes();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    return null;
+                });
+            } catch (Exception e) { e.printStackTrace();}
+        }
+    }
+
+    private void initializeRoutes() {
+        this.routesTable = new HashMap<>();
+
+        HandlerLoader handlerLoader = new HandlerLoader();
+
+        this.loadActionsForMethod("GET", handlerLoader);
+        this.loadActionsForMethod("POST", handlerLoader);
+    }
+
+    @Override
+    public Map<String, HashMap<String, Function<HttpContext, byte[]>>> getRoutes() {
+        return Collections.unmodifiableMap(this.routesTable);
+    }
+
+    @Override
+    public byte[] handleRequest(HttpContext httpContext) {
+        String requestMethod = httpContext.getHttpRequest().getMethod();
+        String requestUrl = httpContext.getHttpRequest().getRequestUrl();
+
+        if (this.getRoutes().containsKey(requestUrl) &&
+                this.getRoutes().get(requestUrl).containsKey(requestMethod)) {
+            return this.getRoutes().get(requestUrl).get(requestMethod).apply(httpContext);
+        } else {
+            HttpResponse httpResponse = this
+                    .resourceHandler
+                    .getResource(httpContext.getHttpRequest(), httpContext.getHttpResponse());
+
+            if(httpResponse == null) {
+                return this.errorHandler
+                        .notFound(httpContext.getHttpRequest(), httpContext.getHttpResponse())
+                        .getBytes();
+            }
+
+            return httpResponse.getBytes();
+        }
+    }
+
+    @Override
+    public HttpSession getSession() {
+        return this.session;
+    }
+
+    @Override
+    public void setSession(HttpSession session) {
+        this.session = session;
+    }
 }

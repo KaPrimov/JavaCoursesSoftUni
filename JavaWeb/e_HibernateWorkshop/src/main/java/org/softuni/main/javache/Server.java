@@ -1,11 +1,13 @@
 package org.softuni.main.javache;
 
-import java.io.*;
-import java.net.*;
-import java.util.concurrent.FutureTask;
-
 import org.softuni.main.javache.http.HttpSession;
 import org.softuni.main.javache.http.HttpSessionImpl;
+
+import java.io.*;
+import java.net.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.FutureTask;
 
 public class Server {
     private static final String LISTENING_MESSAGE = "Listening on port: ";
@@ -19,7 +21,7 @@ public class Server {
     private int timeouts;
 
     private ServerSocket server;
-    
+
     private Application application;
 
     public Server(int port, Application application) {
@@ -36,6 +38,7 @@ public class Server {
 
         HttpSession session = new HttpSessionImpl();
         application.setSession(session);
+
         while(true) {
             try(Socket clientSocket = this.server.accept()) {
                 clientSocket.setSoTimeout(SOCKET_TIMEOUT_MILLISECONDS);
