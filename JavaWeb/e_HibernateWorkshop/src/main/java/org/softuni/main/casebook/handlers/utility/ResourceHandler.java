@@ -1,21 +1,27 @@
 package org.softuni.main.casebook.handlers.utility;
 
-import org.softuni.main.javache.http.HttpRequest;
-import org.softuni.main.javache.http.HttpResponse;
-import org.softuni.main.javache.http.HttpStatus;
-
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-public class ResourceHandler {
+import org.softuni.main.casebook.handlers.BaseHandler;
+import org.softuni.main.javache.http.HttpRequest;
+import org.softuni.main.javache.http.HttpResponse;
+import org.softuni.main.javache.http.HttpSessionStorage;
+import org.softuni.main.javache.http.HttpStatus;
+
+public class ResourceHandler extends BaseHandler {
     private static final String STATIC_RESOURCES_FULL_PATH =
             System.getProperty("user.dir")
-                    + "\\src\\org\\softuni\\main\\casebook\\resources\\public\\";
+                    + "\\src\\main\\java\\org\\softuni\\main\\casebook\\resources\\public\\";
+    
+    public ResourceHandler(HttpSessionStorage sessionStorage) {
+        super(sessionStorage);
+    }
 
-    public final HttpResponse getResource(HttpRequest httpRequest, HttpResponse httpResponse) {
+    public final HttpResponse getResource(HttpRequest request, HttpResponse response) {
         try {
-            String resourceUrl = httpRequest.getRequestUrl();
+            String resourceUrl = request.getRequestUrl();
             String resourceExtension = resourceUrl.substring(resourceUrl.lastIndexOf(".") + 1);
 
             byte[] content =
@@ -23,17 +29,17 @@ public class ResourceHandler {
                             STATIC_RESOURCES_FULL_PATH
                                     + resourceUrl));
 
-            httpResponse.setStatusCode(HttpStatus.OK);
+            response.setStatusCode(HttpStatus.OK);
 
-            httpResponse.addHeader("Content-Type", this.getContentType(resourceExtension));
-            httpResponse.addHeader("Content-Length", content.length + "");
-            httpResponse.addHeader("Content-Disposition", "inline");
+            response.addHeader("Content-Type", this.getContentType(resourceExtension));
+            response.addHeader("Content-Length", content.length + "");
+            response.addHeader("Content-Disposition", "inline");
 
-            httpResponse.setContent(content);
+            response.setContent(content);
 
-            return httpResponse;
+            return response;
         } catch (IOException e) {
-            return null;
+            return this.notFound(request, response);
         }
     }
 

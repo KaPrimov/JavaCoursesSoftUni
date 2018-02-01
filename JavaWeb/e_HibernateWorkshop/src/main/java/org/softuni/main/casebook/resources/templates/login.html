@@ -2,17 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Casebook</title>
     <link rel="stylesheet" href="bootstrap.min.css" type="text/css">
 </head>
 <body>
 <h1>Hello From Casebook</h1>
 <hr/>
 <div class="container">
-<h2>This is Login</h2>
-<form method="post">
-    <button class="btn btn-primary" type="submit">BOOM!!!</button>
-</form>
+    <h2>This is Login</h2>
+    <form method="post">
+        <div class="form-group">
+            <label for="loginUsername">Username:</label>
+            <input type="text" id="loginUsername" class="form-control" name="username" />
+        </div>
+        <div class="form-group">
+            <label for="loginPassword">Password:</label>
+            <input type="password" id="loginPassword" class="form-control" name="password" />
+        </div>
+        <button class="btn btn-primary" type="submit">Login</button>
+    </form>
 </div>
 </body>
 </html>

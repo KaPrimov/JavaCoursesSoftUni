@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HttpRequestImpl implements HttpRequest {
-    private String method;
+	 private String method;
 
     private String requestUrl;
 
@@ -15,7 +15,7 @@ public class HttpRequestImpl implements HttpRequest {
 
     private HashMap<String, String> bodyParameters;
 
-    private HashMap<String, String> cookies;
+    private HashMap<String, HttpCookie> cookies;
 
     public HttpRequestImpl(String requestContent) {
         this.initMethod(requestContent);
@@ -27,6 +27,7 @@ public class HttpRequestImpl implements HttpRequest {
 
     private void initCookies() {
         this.cookies = new HashMap<>();
+
         if (!this.headers.containsKey("Cookie")) {
             return;
         }
@@ -35,7 +36,7 @@ public class HttpRequestImpl implements HttpRequest {
         String[] cookiePairs = cookieHeader.split("; ");
         for (String cookiePair : cookiePairs) {
             String[] pair = cookiePair.split("=");
-            this.cookies.put(pair[0], pair[1]);
+            this.cookies.put(pair[0], new HttpCookieImpl(pair[0], pair[1]));
         }
     }
 
@@ -97,7 +98,7 @@ public class HttpRequestImpl implements HttpRequest {
     }
 
     @Override
-    public HashMap<String, String> getCookies() {
+    public HashMap<String, HttpCookie> getCookies() {
         return this.cookies;
     }
 

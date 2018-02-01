@@ -38,8 +38,7 @@ abstract class BaseRepository implements Repository {
             transaction = this.entityManager.getTransaction();
             transaction.begin();
 
-            result = this.methods.get(action)
-            .invoke(this, args);
+            result = this.methods.get(action).invoke(this, args);
 
             transaction.commit();
         } catch (Exception e) {

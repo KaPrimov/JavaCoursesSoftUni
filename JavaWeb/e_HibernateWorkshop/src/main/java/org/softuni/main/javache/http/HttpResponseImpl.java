@@ -2,17 +2,21 @@ package org.softuni.main.javache.http;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class HttpResponseImpl implements HttpResponse {
     private HttpStatus statusCode;
 
     private HashMap<String, String> headers;
 
+    private HashMap<String, HttpCookie> cookies;
+
     private byte[] content;
 
     public HttpResponseImpl() {
         this.setContent(new byte[0]);
         this.headers = new HashMap<>();
+        this.cookies = new HashMap<>();
     }
 
     private byte[] getHeadersBytes() {
@@ -21,6 +25,18 @@ public class HttpResponseImpl implements HttpResponse {
 
         for (Map.Entry<String,String> header : this.getHeaders().entrySet()) {
             result.append(header.getKey()).append(": ").append(header.getValue()).append(System.lineSeparator());
+        }
+
+        if(this.getCookies().size() > 0) {
+            result.append("Set-Cookie")
+                    .append(": ")
+                    .append(
+                            String.join("; ", this.getCookies()
+                                    .entrySet()
+                                    .stream()
+                                    .map(x -> x.getValue().toString())
+                                    .collect(Collectors.toList())))
+                    .append(System.lineSeparator());
         }
 
         result.append(System.lineSeparator());
@@ -32,6 +48,9 @@ public class HttpResponseImpl implements HttpResponse {
     public HashMap<String, String> getHeaders() {
         return this.headers;
     }
+
+    @Override
+    public HashMap<String, HttpCookie> getCookies() { return this.cookies; }
 
     @Override
     public HttpStatus getStatusCode() {
@@ -59,13 +78,8 @@ public class HttpResponseImpl implements HttpResponse {
     }
 
     @Override
-    public void addCookie(String cookie, String value) {
-        String cookieString = cookie + "=" + value;
-        if (!this.headers.containsKey("Set-Cookie")) {
-            this.headers.put("Set-Cookie", cookieString);
-        } else {
-            this.headers.put("Set-Cookie", this.headers.get("Set-Cookie") + "; " + cookie);
-        }
+    public void addCookie(HttpCookie cookie) {
+        this.cookies.putIfAbsent(cookie.getName(), cookie);
     }
 
     @Override

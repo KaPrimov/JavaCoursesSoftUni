@@ -1,8 +1,8 @@
 package org.softuni.main.database.repositories;
 
-import org.softuni.main.database.models.User;
-
 import java.util.List;
+
+import org.softuni.main.database.models.User;
 
 public class UserRepository extends BaseRepository {
     private boolean create(String username, String password) {
@@ -16,5 +16,13 @@ public class UserRepository extends BaseRepository {
                 .getResultList();
 
         return resultList.toArray(new User[resultList.size()]);
+    }
+    
+    private User findByUsername(String username) {
+        User resultingObject = (User) this.entityManager
+                .createNativeQuery("SELECT * FROM users as u WHERE u.username = \'" + username + "\'", User.class)
+                .getSingleResult();
+
+        return resultingObject;
     }
 }
