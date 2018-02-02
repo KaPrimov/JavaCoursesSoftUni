@@ -17,7 +17,7 @@ public abstract class BaseHandler {
     protected BaseHandler(HttpSessionStorage sessionStorage) {
         this.sessionStorage = sessionStorage;
     }
-
+    
     protected final boolean isLoggedIn(HttpRequest request) {
         if(!request.getCookies().containsKey(WebConstants.SERVER_SESSION_TOKEN)) {
             return false;

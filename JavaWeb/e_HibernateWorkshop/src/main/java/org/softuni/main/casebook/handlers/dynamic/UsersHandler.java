@@ -1,5 +1,7 @@
 package org.softuni.main.casebook.handlers.dynamic;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import org.softuni.main.casebook.annotations.ApplicationRequestHandler;
@@ -83,5 +85,22 @@ public class UsersHandler extends BaseDynamicHandler {
         response.addCookie(new HttpCookieImpl("Javache", "token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"));
 
         return this.redirect("/", request, response);
+    }
+    
+    @Get(route = "/profile")
+    public HttpResponse profile(HttpRequest request, HttpResponse response) {
+    	if (!this.isLoggedIn(request)) {
+    		return this.redirect("/login", request, response);
+    	}
+    	UserRepository userRepository = new UserRepository();
+    	
+    	HttpCookie cookie = request.getCookies().get(WebConstants.SERVER_SESSION_TOKEN);
+    	String userId = this.sessionStorage.getSessionData(cookie.getValue()).getAttributes().get("user-id").toString();
+    	
+    	System.out.println(userId);
+    	User user = (User) userRepository.doAction("findById", userId);
+    	this.viewData.putIfAbsent("username", user.getUsername());
+    	userRepository.dismiss();
+    	return this.view("profile", request, response);
     }
 }

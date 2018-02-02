@@ -25,4 +25,12 @@ public class UserRepository extends BaseRepository {
 
         return resultingObject;
     }
+    
+    private User findById(String id) {
+        User resultingObject = (User) this.entityManager
+                .createNativeQuery("SELECT * FROM users as u WHERE u.id = \'" + id + "\'", User.class)
+                .getSingleResult();
+
+        return resultingObject;
+    }
 }

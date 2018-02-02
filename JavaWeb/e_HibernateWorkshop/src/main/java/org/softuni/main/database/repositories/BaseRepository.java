@@ -8,7 +8,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 abstract class BaseRepository implements Repository {
-    private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
+    private EntityManagerFactory ENTITY_MANAGER_FACTORY =
             Persistence.createEntityManagerFactory("Casebook");
 
     private HashMap<String, Method> methods;
@@ -16,6 +16,9 @@ abstract class BaseRepository implements Repository {
     protected EntityManager entityManager;
 
     protected BaseRepository() {
+    	if (!ENTITY_MANAGER_FACTORY.isOpen()) {
+    		ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("Casebook");
+    	}
         this.entityManager = ENTITY_MANAGER_FACTORY.createEntityManager();
         this.initializeMethods();
     }
