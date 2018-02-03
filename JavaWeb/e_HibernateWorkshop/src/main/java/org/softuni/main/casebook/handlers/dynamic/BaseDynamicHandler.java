@@ -9,6 +9,10 @@ import java.util.Map;
 
 import org.softuni.main.casebook.handlers.BaseHandler;
 import org.softuni.main.casebook.utilities.TemplateEngine;
+import org.softuni.main.database.models.User;
+import org.softuni.main.database.repositories.UserRepository;
+import org.softuni.main.javache.WebConstants;
+import org.softuni.main.javache.http.HttpCookie;
 import org.softuni.main.javache.http.HttpRequest;
 import org.softuni.main.javache.http.HttpResponse;
 import org.softuni.main.javache.http.HttpSessionStorage;
@@ -105,4 +109,14 @@ abstract class BaseDynamicHandler extends BaseHandler {
     	
     	return response;
     }
+	
+	protected User getCurrentUser(HttpRequest request, UserRepository userRepository) {
+    	
+    	HttpCookie cookie = request.getCookies().get(WebConstants.SERVER_SESSION_TOKEN);
+    	String userId = this.sessionStorage.getSessionData(cookie.getValue()).getAttributes().get("user-id").toString();
+    	
+    	User user = (User) userRepository.doAction("findById", userId);
+    	
+    	return user;    	
+	}
 }

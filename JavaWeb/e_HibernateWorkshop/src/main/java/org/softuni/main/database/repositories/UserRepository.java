@@ -33,4 +33,12 @@ public class UserRepository extends BaseRepository {
 
         return resultingObject;
     }
+    
+    private void addFriend(String username, String friendName) {
+    	User user = this.findByUsername(username);
+    	User friend = this.findByUsername(friendName);
+    	user.addFriend(friend);
+    	
+    	this.entityManager.merge(user);
+    }
 }

@@ -31,8 +31,12 @@ public class HomeHandler extends BaseDynamicHandler {
 	        User[] allUsers = (User[]) userRepository.doAction("findAll");
 	        StringBuilder usersHtml = new StringBuilder();
 	        usersHtml.append("<ul class=\"list-group\">");
+	        User currentUser = this.getCurrentUser(request, userRepository); 
 	        
 	        for (User user : allUsers) {
+	        	if (currentUser.getId().equals(user.getId()) || currentUser.getFriends().contains(user)) {
+	        		continue;
+	        	}
 				usersHtml.append("<li class=\"list-group-item\">")
 					.append("<form method=\"post\" action=\"/add-friend\" class=\"col-sm-12\">")
 					.append("<label class=\"float-left\" for=\"friendName\">").append(user.getUsername()).append("</label>")
@@ -42,33 +46,11 @@ public class HomeHandler extends BaseDynamicHandler {
 					.append("</li>");
 			}
 	        usersHtml.append("</ul>");
-	        
+	        this.viewData.remove("people");
 	        this.viewData.putIfAbsent("people", usersHtml.toString());
 	        
 	        userRepository.dismiss();
 	        
 	        return this.view("home", request, response);
-	    }
-
-	    @Get(route = "/all")
-	    public HttpResponse all(HttpRequest request, HttpResponse response) {
-	        if(!this.isLoggedIn(request)) {
-	            return this.redirect("/login", request, response);
-	        }
-
-	        response.setStatusCode(HttpStatus.OK);
-
-	        response.addHeader("Content-Type", "text/html");
-
-	        StringBuilder asd = new StringBuilder();
-
-	        asd.append("<h1>Pesho</h1>").append(System.lineSeparator());
-	        asd.append("<h1>Gosho</h1>").append(System.lineSeparator());
-	        asd.append("<h1>Tosho</h1>").append(System.lineSeparator());
-	        asd.append("<h1>Sasho</h1>").append(System.lineSeparator());
-
-	        response.setContent(asd.toString().getBytes());
-
-	        return response;
 	    }
 }

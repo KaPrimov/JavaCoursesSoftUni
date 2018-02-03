@@ -80,8 +80,10 @@ public class UsersHandler extends BaseDynamicHandler {
         }
 
         HttpCookie cookie = request.getCookies().get(WebConstants.SERVER_SESSION_TOKEN);
+        
+        this.sessionStorage.getSessionData(cookie.getValue()).invalidate();
         this.sessionStorage.removeSession(cookie.getValue());
-
+        
         response.addCookie(new HttpCookieImpl("Javache", "token=deleted; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT"));
 
         return this.redirect("/", request, response);
@@ -92,15 +94,39 @@ public class UsersHandler extends BaseDynamicHandler {
     	if (!this.isLoggedIn(request)) {
     		return this.redirect("/login", request, response);
     	}
-    	UserRepository userRepository = new UserRepository();
     	
-    	HttpCookie cookie = request.getCookies().get(WebConstants.SERVER_SESSION_TOKEN);
-    	String userId = this.sessionStorage.getSessionData(cookie.getValue()).getAttributes().get("user-id").toString();
     	
-    	System.out.println(userId);
-    	User user = (User) userRepository.doAction("findById", userId);
+    	UserRepository repository = new UserRepository();
+    	User user = this.getCurrentUser(request, repository);
+    	
+    	StringBuilder friendsHtml = new StringBuilder();
+    	friendsHtml.append("<ul class=\"list-group\">");
+    	for (User friend : user.getFriends()) {
+			friendsHtml.append("<li class=\"list-group-item\">").append(friend.getUsername()).append("</li>");
+		}
+    	friendsHtml.append("</ul>");
+    	
+    	this.viewData.remove("username");
+    	this.viewData.remove("friends");
     	this.viewData.putIfAbsent("username", user.getUsername());
-    	userRepository.dismiss();
+    	this.viewData.putIfAbsent("friends", friendsHtml.toString());
+    	repository.dismiss();
+    	
     	return this.view("profile", request, response);
+    }
+    
+    @Post(route = "/add-friend")
+    public HttpResponse addFriend(HttpRequest request, HttpResponse response) {
+    	if (!this.isLoggedIn(request)) {
+    		return this.redirect("/login", request, response);
+    	}    	
+    	 
+        UserRepository userRepository = new UserRepository();
+        User currentUser = this.getCurrentUser(request, userRepository); 
+        
+        userRepository.doAction("addFriend", currentUser.getUsername(), request.getBodyParameters().get("friend"));
+        userRepository.dismiss();
+        
+        return this.redirect("/profile", request, response);
     }
 }

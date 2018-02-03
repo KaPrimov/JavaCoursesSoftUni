@@ -51,12 +51,13 @@ abstract class BaseRepository implements Repository {
 
             e.printStackTrace();
         }
-
         return result;
     }
 
     public void dismiss() {
+    	this.entityManager.clear();
         this.entityManager.close();
-        ENTITY_MANAGER_FACTORY.close();
+        this.ENTITY_MANAGER_FACTORY.getCache().evictAll();
+        this.ENTITY_MANAGER_FACTORY.close();
     }
 }
