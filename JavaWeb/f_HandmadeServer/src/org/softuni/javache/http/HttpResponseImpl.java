@@ -92,7 +92,6 @@ public class HttpResponseImpl implements HttpResponse {
 
         System.arraycopy(headersBytes, 0, fullResponse, 0, headersBytes.length);
         System.arraycopy(bodyBytes, 0, fullResponse, headersBytes.length, bodyBytes.length);
-
         return fullResponse;
     }
 }
