@@ -25,7 +25,7 @@ public class BroccoCustomHandler implements RequestHandler {
 			
 			httpResponse.setStatusCode(HttpStatus.OK);
 			httpResponse.addHeader("Content-Type", "text/html");
-			httpResponse.setContent("<h1>Hello from broccolina!!!</h1>".getBytes());
+			httpResponse.setContent(("<h1>Hello from broccolina!!!</h1>" + this.serverRootPath).getBytes());
 			
 			Writer.writeBytes(httpResponse.getBytes(), outputStream);
 		} catch (IOException e) {

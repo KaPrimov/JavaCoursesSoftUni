@@ -5,7 +5,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.Set;
+import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import org.softuni.javache.http.HttpSessionStorage;
 import org.softuni.javache.http.HttpSessionStorageImpl;
@@ -25,20 +28,37 @@ public class Server {
     
     private Set<RequestHandler> requestHandlers;
 
-    public Server(int port, Set<RequestHandler> requestHandlers) {
+    public Server(int port) {
         this.port = port;
         this.timeouts = 0;
-        this.requestHandlers = requestHandlers;
+        this.initRequestHandlers();
+        this.startLoadingProcess();
     }
 
-    public void run() throws IOException {
+    private void startLoadingProcess() {
+
+        ScheduledExecutorService exec = Executors.newSingleThreadScheduledExecutor();
+        exec.scheduleAtFixedRate(new Runnable() {
+          @Override
+          public void run() {
+            initRequestHandlers();
+            System.out.println("loaded");
+          }
+        }, 0, 10, TimeUnit.SECONDS);		
+	}
+
+	private void initRequestHandlers() {
+		this.requestHandlers = new RequestHandlerLoader().loadRequestHandlers();
+	}
+
+	public void run() throws IOException {
         this.server = new ServerSocket(this.port);
         System.out.println(LISTENING_MESSAGE + this.port);
 
         this.server.setSoTimeout(SOCKET_TIMEOUT_MILLISECONDS);
 
         HttpSessionStorage sessionStorage = new HttpSessionStorageImpl();
-
+               
         while(true) {
             try(Socket clientSocket = this.server.accept()) {
                 clientSocket.setSoTimeout(SOCKET_TIMEOUT_MILLISECONDS);

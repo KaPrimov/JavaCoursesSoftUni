@@ -14,8 +14,7 @@ public class StartUp {
         if (args.length > 1) {
             port = Integer.parseInt(args[1]);
         }
-        Set<RequestHandler> requestHandlers = new RequestHandlerLoader().loadRequestHandlers();	
-        Server server = new Server(port, requestHandlers);
+        Server server = new Server(port);
 
         try {
             server.run();

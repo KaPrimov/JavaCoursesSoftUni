@@ -41,8 +41,11 @@ public class ConnectionHandler extends Thread {
     }
 
 	private void processRequest() {
-		for (RequestHandler requestHandler : this.requestHandlers) {
+		for (RequestHandler requestHandler : this.requestHandlers) {			
 			requestHandler.handleRequest(clientSocketInputStream, clientSocketOutputStream);
+			if (requestHandler.hasIntercepted()) {
+				break;
+			}			
 		}
 		
 	}

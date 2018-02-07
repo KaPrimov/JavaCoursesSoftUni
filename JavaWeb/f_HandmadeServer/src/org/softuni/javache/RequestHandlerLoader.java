@@ -41,7 +41,7 @@ public class RequestHandlerLoader {
 					Class<?> clazz = urlClassLoader.loadClass(fileOrDir.getName().replace(".class", ""));
 					urlClassLoader.close();
 					if (RequestHandler.class.isAssignableFrom(clazz)) {
-						RequestHandler classInstance = (RequestHandler) clazz.getConstructor(String.class).newInstance(Server.class.getResource("").getPath());
+						RequestHandler classInstance = (RequestHandler) clazz.getConstructor(String.class).newInstance(WebConstants.SERVER_ROOT_PATH);
 						requestHandlers.add(classInstance);
 					}
 				} catch (ClassNotFoundException e) {
