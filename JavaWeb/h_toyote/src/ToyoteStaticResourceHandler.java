@@ -45,6 +45,8 @@ public class ToyoteStaticResourceHandler implements RequestHandler {
 				
 				httpResponse.setStatusCode(HttpStatus.OK);
 				httpResponse.addHeader("Content-Type", this.getContentType(resourceExtension));
+				httpResponse.addHeader("Content-Length", "" + content.length);
+				httpResponse.addHeader("Content-Disposition", "inline");
 				httpResponse.setContent(content);
 				
 				Writer.writeBytes(httpResponse.getBytes(), output);

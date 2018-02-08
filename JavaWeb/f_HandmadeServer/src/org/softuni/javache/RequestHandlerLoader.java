@@ -1,71 +1,74 @@
 package org.softuni.javache;
 
 import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.Collections;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class RequestHandlerLoader {
 	private static final String SERVER_FOLDER_PATH = "org/softuni/javache";
-	private static final String LIB_DIRECTORY_PATH = RequestHandlerLoader.class.getResource("").getPath().replace(SERVER_FOLDER_PATH, "lib");
+	private static final String LIB_DIRECTORY_PATH = WebConstants.SERVER_ROOT_PATH + "lib";
 	
-	public Set<RequestHandler> loadRequestHandlers() {
+	private Map<String, RequestHandler> requestHandlers;
+	
+	public Map<String, RequestHandler> loadRequestHandlers() {
 		
-		Set<RequestHandler> requestHandlers = new HashSet<>();		
-		this.loadFile(LIB_DIRECTORY_PATH.substring(1), requestHandlers);
+		this.requestHandlers = new HashMap<>();		
+		this.loadLibraries(LIB_DIRECTORY_PATH, requestHandlers);
 		return requestHandlers;
+	}	
+
+	public Map<String, RequestHandler> getRequestHandlers() {
+		return Collections.unmodifiableMap(requestHandlers);
 	}
-		
 
-	private void loadFile(String path, Set<RequestHandler> requestHandlers) {
-
-		File currentFileOrDir = new File(path);
+	private void loadLibraries(String libDirectoryPath, Map<String, RequestHandler> requestHandlers) {
+		File libDirectory = new File(libDirectoryPath);
 		
-		if (!currentFileOrDir.exists()) {
-			return;
-		}
-		
-		for (File fileOrDir : currentFileOrDir.listFiles()) {
-			if (fileOrDir.isDirectory()) {
-				this.loadFile(path + "/" + fileOrDir.getName(), requestHandlers);
-			} else {
+		if (libDirectory.exists() && libDirectory.isDirectory()) {
+			for (File file : libDirectory.listFiles()) {
+				if (!this.isLibraryFile(file)) {
+					continue;
+				}
 				try {
-					URL fileUrl = fileOrDir.getParentFile().toURI().toURL();
-					
-					URLClassLoader urlClassLoader = new URLClassLoader(new URL[] {fileUrl});
-					
-					Class<?> clazz = urlClassLoader.loadClass(fileOrDir.getName().replace(".class", ""));
-					urlClassLoader.close();
-					if (RequestHandler.class.isAssignableFrom(clazz)) {
-						RequestHandler classInstance = (RequestHandler) clazz.getConstructor(String.class).newInstance(WebConstants.SERVER_ROOT_PATH);
-						requestHandlers.add(classInstance);
+					JarFile jarFile = new JarFile(file.getCanonicalPath());
+					Enumeration<JarEntry> e = jarFile.entries();
+	
+					URL[] urls = { new URL("jar:file:" + file.getCanonicalPath() +"!/") };
+					URLClassLoader cl = URLClassLoader.newInstance(urls);
+	
+					while (e.hasMoreElements()) {
+					    JarEntry je = e.nextElement();
+					    if(je.isDirectory() || !je.getName().endsWith(".class")){
+					        continue;
+					    }
+					    
+					    String className = je.getName().substring(0, je.getName().length() - 6);
+					    className = className.replace('/', '.');
+					    Class<?> handlerClass = cl.loadClass(className);
+					    
+					    if (RequestHandler.class.isAssignableFrom(handlerClass)) {
+					    	RequestHandler requestHandler = (RequestHandler) handlerClass.getConstructor(String.class)
+					    			.newInstance(WebConstants.SERVER_ROOT_PATH);
+					    	
+					    	requestHandlers.putIfAbsent(requestHandler.getClass().getSimpleName(), requestHandler);
+					    }
 					}
-				} catch (ClassNotFoundException e) {
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (IllegalArgumentException e) {
-					e.printStackTrace();
-				} catch (InvocationTargetException e) {
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					e.printStackTrace();
-				} catch (SecurityException e) {
-					e.printStackTrace();
-				} catch (MalformedURLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
 			}
 		}
+		
+	}
+
+	private boolean isLibraryFile(File file) {
+		return file.getName().endsWith(".jar");
 	}
 }

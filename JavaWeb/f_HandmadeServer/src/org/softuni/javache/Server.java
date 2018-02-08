@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,11 +26,15 @@ public class Server {
 
     private ServerSocket server;
     
-    private Set<RequestHandler> requestHandlers;
+    private RequestHandlerLoader requestHandlerLoader;
+    
+    private ServerConfig serverConfig;
 
     public Server(int port) {
         this.port = port;
         this.timeouts = 0;
+        this.serverConfig = new ServerConfig();
+        this.requestHandlerLoader = new RequestHandlerLoader();
         this.initRequestHandlers();
         this.startLoadingProcess();
     }
@@ -48,11 +52,12 @@ public class Server {
 	}
 
 	private void initRequestHandlers() {
-		this.requestHandlers = new RequestHandlerLoader().loadRequestHandlers();
+		this.requestHandlerLoader.loadRequestHandlers();
 	}
 
 	public void run() throws IOException {
         this.server = new ServerSocket(this.port);
+        this.serverConfig.initializeConfig();
         System.out.println(LISTENING_MESSAGE + this.port);
 
         this.server.setSoTimeout(SOCKET_TIMEOUT_MILLISECONDS);
@@ -64,7 +69,7 @@ public class Server {
                 clientSocket.setSoTimeout(SOCKET_TIMEOUT_MILLISECONDS);
 
                 ConnectionHandler connectionHandler
-                        = new ConnectionHandler(clientSocket, this.requestHandlers);
+                        = new ConnectionHandler(clientSocket, this.requestHandlerLoader.getRequestHandlers(), this.serverConfig.getHandlers());
 
                 FutureTask<?> task = new FutureTask<>(connectionHandler, null);
                 task.run();
