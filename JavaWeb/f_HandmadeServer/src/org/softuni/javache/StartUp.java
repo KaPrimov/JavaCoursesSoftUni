@@ -1,7 +1,6 @@
 package org.softuni.javache;
 
 import java.io.IOException;
-import java.util.Set;
 
 public class StartUp {
     public static void main(String[] args) {
