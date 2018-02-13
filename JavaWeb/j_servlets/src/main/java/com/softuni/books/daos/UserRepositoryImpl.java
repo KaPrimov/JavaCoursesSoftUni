@@ -30,7 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
 	@Override
 	public User findByUsernameAndPassword(String username, String password) {
 		if (this.users.containsKey(username)) {			
-			return this.users.get(username).equals(password) ? this.users.get(username) : null;
+			return this.users.get(username).getPassword().equals(password) ? this.users.get(username) : null;
 		}
 		return null;
 	}

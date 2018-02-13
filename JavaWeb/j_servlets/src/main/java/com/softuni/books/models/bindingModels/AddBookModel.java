@@ -3,8 +3,11 @@ package com.softuni.books.models.bindingModels;
 public class AddBookModel {
 	private String title;
 	private String author;
-	private Integer pages;
+	private Integer pages;	
 	
+	public AddBookModel() {
+		super();
+	}
 	public AddBookModel(String title, String author, Integer pages) {
 		this.title = title;
 		this.author = author;

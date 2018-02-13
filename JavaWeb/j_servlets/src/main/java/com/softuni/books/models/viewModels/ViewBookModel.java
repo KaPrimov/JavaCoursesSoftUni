@@ -6,6 +6,10 @@ public class ViewBookModel {
 	private String author;
 	private String pages;
 	
+	public ViewBookModel() {
+		super();
+	}
+
 	public ViewBookModel(String title, String author) {
 		this.title = title;
 		this.author = author;

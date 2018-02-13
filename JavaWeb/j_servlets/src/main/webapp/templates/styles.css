@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+ul.list-style {
+    text-decoration: none;
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+}
+
+a {
+    text-decoration: none;
+    color: #0f3890;
+    font-weight: 900;
+}
+
+table, th, td {
+    border: 1px solid red;
+    border-collapse: collapse;
+}
