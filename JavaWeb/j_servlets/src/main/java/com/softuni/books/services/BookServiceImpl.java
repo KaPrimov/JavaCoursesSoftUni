@@ -22,7 +22,11 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public ViewBookModel findBookByTitle(String title) {
-		return DTOConvertUtil.convert(BookRepositoryImpl.getInstance().findBookByTitle(title), ViewBookModel.class);
+		Book book = BookRepositoryImpl.getInstance().findBookByTitle(title);
+		if (book == null) {
+			return null;
+		}
+		return DTOConvertUtil.convert(book, ViewBookModel.class);
 	}
 
 	@Override

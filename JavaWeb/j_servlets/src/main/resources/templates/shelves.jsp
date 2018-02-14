@@ -28,10 +28,10 @@
 		                	<c:out value="${book.pages}"/>
 	                	</td>
 		                <td>
-		                    <a href="./shelves/edit/${book.title}">Edit</a>
+		                    <a href="#/shelves/edit/${book.title}">Edit</a>
 		                </td>
 		                <td>
-		                    <a href="./shelves/delete/${book.title}">Delete</a>
+		                    <a href="#/shelves/delete/${book.title}">Delete</a>
 		                </td>
 		            </tr>
 		        </c:forEach>
