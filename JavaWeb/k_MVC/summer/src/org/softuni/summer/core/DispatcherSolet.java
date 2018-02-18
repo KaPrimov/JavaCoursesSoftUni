@@ -1,13 +1,14 @@
 package org.softuni.summer.core;
 
-import org.softuni.broccolina.solet.BaseHttpSolet;
-import org.softuni.broccolina.solet.HttpSoletRequest;
-import org.softuni.broccolina.solet.HttpSoletResponse;
-import org.softuni.broccolina.solet.WebSolet;
+import org.softuni.broccolina.solet.*;
 import org.softuni.javache.http.HttpStatus;
 
 @WebSolet(route = "/*")
 public class DispatcherSolet extends BaseHttpSolet {
+
+    protected DispatcherSolet(SoletConfig soletConfig) {
+        super(soletConfig);
+    }
 
     @Override
     public void init() {

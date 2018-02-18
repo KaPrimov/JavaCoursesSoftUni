@@ -5,6 +5,8 @@ public interface HttpSolet {
 
     boolean isInitialized();
 
+    SoletConfig getSoletConfig();
+
     void service(HttpSoletRequest request, HttpSoletResponse response);
 
     void doGet(HttpSoletRequest request, HttpSoletResponse response);

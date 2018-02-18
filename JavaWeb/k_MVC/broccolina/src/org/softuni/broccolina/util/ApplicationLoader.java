@@ -13,7 +13,6 @@ import java.net.URLClassLoader;
 import java.util.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.stream.Stream;
 
 public class ApplicationLoader {
     private static final String ROOT_APPLICATION_FOLDER_NAME = "ROOT";
@@ -47,6 +46,13 @@ public class ApplicationLoader {
                         .getSimpleName()
                         .equals(HttpSolet.class.getSimpleName()))
                 && !Modifier.isAbstract(clazzFile.getModifiers())) {
+
+
+            Class[] requiredParams = Arrays.stream(clazzFile.getMethods())
+                    .filter(x -> x.getName().equals("service"))
+                    .findFirst()
+                    .get()
+                    .getParameterTypes();
 
             Object soletObject =
                      clazzFile.getConstructor()
