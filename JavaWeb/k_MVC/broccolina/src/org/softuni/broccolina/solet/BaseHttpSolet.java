@@ -6,6 +6,7 @@ public abstract class BaseHttpSolet implements HttpSolet {
     private static final String NOT_FOUND_MESSAGE = "<h1>Error: %s Not Found</h1>";
 
     private boolean initialized;
+
     private SoletConfig soletConfig;
 
     protected BaseHttpSolet(SoletConfig soletConfig) {
@@ -20,6 +21,11 @@ public abstract class BaseHttpSolet implements HttpSolet {
     @Override
     public boolean isInitialized() {
         return this.initialized;
+    }
+
+    @Override
+    public SoletConfig getSoletConfig() {
+        return this.soletConfig;
     }
 
     @Override
@@ -69,10 +75,5 @@ public abstract class BaseHttpSolet implements HttpSolet {
         response.addHeader("Content-Type", "text/html");
 
         response.setContent(String.format(NOT_FOUND_MESSAGE, "DELETE Action").getBytes());
-    }
-
-    @Override
-    public SoletConfig getSoletConfig() {
-        return this.soletConfig;
     }
 }

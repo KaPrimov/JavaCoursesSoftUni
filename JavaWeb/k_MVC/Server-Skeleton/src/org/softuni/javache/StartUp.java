@@ -1,11 +1,12 @@
 package org.softuni.javache;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 
 public class StartUp {
     public static void main(String[] args) {
-         start(args);
+        start(args);
     }
 
     private static void start(String[] args) {

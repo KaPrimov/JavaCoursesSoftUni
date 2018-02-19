@@ -1,20 +1,18 @@
 package org.softuni.broccolina;
 
-import org.softuni.broccolina.solet.HttpSoletRequest;
-import org.softuni.broccolina.solet.HttpSoletRequestImpl;
-import org.softuni.broccolina.solet.HttpSoletResponse;
-import org.softuni.broccolina.solet.HttpSoletResponseImpl;
+import org.softuni.broccolina.solet.*;
 import org.softuni.broccolina.util.ApplicationLoader;
 import org.softuni.javache.RequestHandler;
 import org.softuni.javache.io.Reader;
 import org.softuni.javache.io.Writer;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.Arrays;
+import java.util.Map;
 
 public class SoletDispatcher implements RequestHandler {
 
@@ -29,6 +27,9 @@ public class SoletDispatcher implements RequestHandler {
         this.intercepted = false;
         this.applicationLoader = new ApplicationLoader(SERVER_ROOT_PATH);
         this.applicationLoader.loadApplications();
+        for (Map.Entry<String,Object> stringObjectEntry : this.applicationLoader.getSolets().entrySet()) {
+            System.out.println(stringObjectEntry.getValue().getClass().getSimpleName());
+        }
     }
 
     @Override
@@ -40,13 +41,16 @@ public class SoletDispatcher implements RequestHandler {
             HttpSoletResponse response = new HttpSoletResponseImpl(outputStream);
 
             Object soletCandidate = null;
+
             String genericRequestPath = request
                     .getRequestUrl()
                     .substring(0, request
                             .getRequestUrl()
-                            .indexOf("/", request.getRequestUrl().indexOf("/") + 1) + 1) + "*";
+                            .indexOf("/",
+                                    request.getRequestUrl().indexOf("/") + 1) + 1)
+                    + "*";
 
-            if (!genericRequestPath.contains("/")) genericRequestPath = "/" + genericRequestPath;
+            if(!genericRequestPath.contains("/")) genericRequestPath = "/" + genericRequestPath;
 
             String requestPath = request.getRequestUrl();
 

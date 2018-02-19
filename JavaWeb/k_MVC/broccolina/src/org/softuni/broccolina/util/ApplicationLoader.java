@@ -1,12 +1,15 @@
 package org.softuni.broccolina.util;
 
 import org.softuni.broccolina.solet.HttpSolet;
+import org.softuni.broccolina.solet.SoletConfig;
+import org.softuni.broccolina.solet.SoletConfigImpl;
 import org.softuni.broccolina.solet.WebSolet;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Proxy;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -37,6 +40,32 @@ public class ApplicationLoader {
         this.jarUnzipUtil.unzipJar(jarFile.getCanonicalPath());
     }
 
+    private Object getSoletConfig(Class soletClass, String applicationPath) {
+        SoletConfig soletConfigImpl = new SoletConfigImpl();
+
+        soletConfigImpl.setAttribute("application-path", applicationPath);
+
+        Class[] requiredParameters = Arrays.stream(soletClass
+                .getDeclaredConstructors())
+                .filter((x) -> x.getParameterCount() == 1)
+                .findFirst()
+                .get()
+                .getParameterTypes();
+
+        Object proxySoletConfig = Proxy.newProxyInstance(
+                soletClass.getClassLoader(),
+                new Class[]{requiredParameters[0]},
+                (proxy, method, args) -> Arrays.stream(soletConfigImpl
+                        .getClass()
+                        .getMethods())
+                        .filter((x) -> x.getName().equals(method.getName()))
+                        .findFirst()
+                        .get()
+                        .invoke(soletConfigImpl, args));
+
+        return proxySoletConfig;
+    }
+
     private void loadIfSolet(Class clazzFile, String applicationName) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         Class parentClass = clazzFile.getSuperclass();
 
@@ -47,16 +76,15 @@ public class ApplicationLoader {
                         .equals(HttpSolet.class.getSimpleName()))
                 && !Modifier.isAbstract(clazzFile.getModifiers())) {
 
-
-            Class[] requiredParams = Arrays.stream(clazzFile.getMethods())
-                    .filter(x -> x.getName().equals("service"))
-                    .findFirst()
-                    .get()
-                    .getParameterTypes();
+            Object soletConfigObject = this.getSoletConfig(clazzFile, this.APPLICATION_FOLDER_PATH + File.separator + applicationName);
 
             Object soletObject =
-                     clazzFile.getConstructor()
-                            .newInstance();
+                    Arrays.stream(clazzFile
+                            .getDeclaredConstructors())
+                            .filter(x -> x.getParameterCount() == 1)
+                            .findFirst()
+                            .get()
+                            .newInstance(soletConfigObject);
 
             Object annotation = Arrays.stream(clazzFile.getDeclaredAnnotations())
                     .filter((x) -> x
