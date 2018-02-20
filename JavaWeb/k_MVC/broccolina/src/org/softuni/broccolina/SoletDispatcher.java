@@ -27,9 +27,6 @@ public class SoletDispatcher implements RequestHandler {
         this.intercepted = false;
         this.applicationLoader = new ApplicationLoader(SERVER_ROOT_PATH);
         this.applicationLoader.loadApplications();
-        for (Map.Entry<String,Object> stringObjectEntry : this.applicationLoader.getSolets().entrySet()) {
-            System.out.println(stringObjectEntry.getValue().getClass().getSimpleName());
-        }
     }
 
     @Override
@@ -42,7 +39,7 @@ public class SoletDispatcher implements RequestHandler {
 
             Object soletCandidate = null;
 
-            String genericRequestPath = request
+            String genericApplicationRequestPath = request
                     .getRequestUrl()
                     .substring(0, request
                             .getRequestUrl()
@@ -50,14 +47,16 @@ public class SoletDispatcher implements RequestHandler {
                                     request.getRequestUrl().indexOf("/") + 1) + 1)
                     + "*";
 
-            if(!genericRequestPath.contains("/")) genericRequestPath = "/" + genericRequestPath;
+            if(!genericApplicationRequestPath.contains("/")) genericApplicationRequestPath = "/" + genericApplicationRequestPath;
 
             String requestPath = request.getRequestUrl();
 
-            if (this.applicationLoader.getSolets().containsKey(genericRequestPath)) {
-                soletCandidate = this.applicationLoader.getSolets().get(genericRequestPath);
-            } else if (this.applicationLoader.getSolets().containsKey(requestPath)) {
+            if (this.applicationLoader.getSolets().containsKey(requestPath)) {
                 soletCandidate = this.applicationLoader.getSolets().get(requestPath);
+            } else if (this.applicationLoader.getSolets().containsKey(genericApplicationRequestPath)) {
+                soletCandidate = this.applicationLoader.getSolets().get(genericApplicationRequestPath);
+            } else if(this.applicationLoader.getSolets().containsKey("/*")) {
+                soletCandidate = this.applicationLoader.getSolets().get("/*");
             }
 
             if (!(boolean)soletCandidate

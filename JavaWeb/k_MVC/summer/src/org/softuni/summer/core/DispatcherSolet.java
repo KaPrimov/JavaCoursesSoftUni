@@ -3,13 +3,15 @@ package org.softuni.summer.core;
 import org.softuni.broccolina.solet.*;
 import org.softuni.javache.http.HttpStatus;
 import org.softuni.summer.api.Controller;
-import org.softuni.summer.api.GetMapping;
+
+import org.softuni.summer.util.PathFormatter;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -17,23 +19,24 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @WebSolet(route = "/*", loadOnStartUp = true)
 public class DispatcherSolet extends BaseHttpSolet {
-    private HashMap<String, ControllerActionPair> getMappingTable;
-
-    private HashMap<String, ControllerActionPair> postMappingTable;
-
-    private HashMap<String, ControllerActionPair> putMappingTable;
-
-    private HashMap<String, ControllerActionPair> deleteMappingTable;
+    private HashMap<String, HashMap<String, ControllerActionPair>> mappingTablesByMappingType;
 
     public DispatcherSolet(SoletConfig soletConfig) {
         super(soletConfig);
-        this.getMappingTable = new HashMap<>();
-        this.postMappingTable = new HashMap<>();
-        this.putMappingTable = new HashMap<>();
-        this.deleteMappingTable = new HashMap<>();
+        this.initMappingTables();
+    }
+
+    private void initMappingTables() {
+        this.mappingTablesByMappingType = new HashMap<>();
+
+        this.mappingTablesByMappingType.putIfAbsent("GET", new HashMap<>());
+        this.mappingTablesByMappingType.putIfAbsent("POST", new HashMap<>());
     }
 
     private void loadClass(File classFile) {
@@ -58,20 +61,36 @@ public class DispatcherSolet extends BaseHttpSolet {
 
                 Class clazzFile = ucl.loadClass(className);
 
-                Object controllerInstance = clazzFile.getDeclaredConstructor().newInstance();
-
-                if(Arrays.stream(clazzFile.getAnnotations())
+                if (Arrays.stream(clazzFile.getAnnotations())
                         .anyMatch(x -> x
                                 .annotationType()
                                 .getSimpleName()
-                        .equals(Controller.class.getSimpleName()))) {
+                                .equals(Controller.class.getSimpleName()))) {
+                    Object controllerInstance = clazzFile.getDeclaredConstructor().newInstance();
+
                     for (Method method : clazzFile.getDeclaredMethods()) {
                         for (Annotation annotation : method.getAnnotations()) {
-                            if(annotation.annotationType().getSimpleName().equals(GetMapping.class.getSimpleName())) {
-                                this.getMappingTable.putIfAbsent(((GetMapping)annotation).route(), new ControllerActionPair(controllerInstance, method));
+                            String annotationName = annotation.annotationType().getSimpleName();
+                            String annotationMapping = annotationName.replace("Mapping", "").toUpperCase();
+
+                            if (Pattern
+                                    .compile("^(Get|Post)Mapping")
+                                    .matcher(annotationName)
+                                    .find()
+                                    && this.mappingTablesByMappingType
+                                    .containsKey(annotationMapping)) {
+                                String annotationRoute =
+                                        annotation
+                                                .getClass()
+                                                .getDeclaredMethod("route")
+                                                .invoke(annotation)
+                                                .toString();
+
+                                this.mappingTablesByMappingType.get(annotationMapping)
+                                        .putIfAbsent(annotationRoute, new ControllerActionPair(controllerInstance, method));
                             }
                         }
-                    }   
+                    }
                 }
             } catch (MalformedURLException | ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
                 e.printStackTrace();
@@ -105,6 +124,39 @@ public class DispatcherSolet extends BaseHttpSolet {
         return templateContent;
     }
 
+    private ControllerActionPair getControllerActionPair(String requestMethod
+            , String requestUrl) {
+        PathFormatter pathFormatter = new PathFormatter();
+
+        for (Map.Entry<String, ControllerActionPair> capEntry : this.mappingTablesByMappingType.get(requestMethod).entrySet()) {
+            String pathPattern = pathFormatter.formatPattern(capEntry.getKey());
+
+            Matcher matcher = Pattern.compile(pathPattern).matcher(requestUrl);
+
+            if (matcher.find()) {
+                Parameter[] actionParams = capEntry.getValue().getAction().getParameters();
+
+                for (int i = 0; i < matcher.groupCount() && i < actionParams.length; i++) {
+                    String parameterValue = matcher.group(i + 1);
+
+                    if (actionParams[i].getParameterizedType().equals(String.class)) {
+                        capEntry.getValue().addParameter(parameterValue);
+                    } else if (actionParams[i].getParameterizedType().equals(int.class)) {
+                        capEntry.getValue().addParameter(Integer.parseInt(parameterValue));
+                    } else {
+                        System.out.println(actionParams[i].getParameterizedType());
+                        System.out.println(int.class);
+                        System.out.println(parameterValue);
+                    }
+                }
+
+                return capEntry.getValue();
+            }
+        }
+
+        return null;
+    }
+
     @Override
     public void init() {
         super.init();
@@ -116,37 +168,59 @@ public class DispatcherSolet extends BaseHttpSolet {
 
     @Override
     public void service(HttpSoletRequest request, HttpSoletResponse response) {
-        response.setStatusCode(HttpStatus.OK);
+        String requestMethod = request.getMethod();
+        String requestUrl = request.getRequestUrl();
 
-        if(request.getMethod().equals("GET")) {
-            ControllerActionPair cap = this.getMappingTable.get(request.getRequestUrl());
+        ControllerActionPair cap = this.getControllerActionPair(requestMethod, requestUrl);
 
+        if (cap != null) {
             String result = null;
 
-            if(cap == null) {
-                result = "Not Found";
-            } else {
+            try {
+
                 try {
-                    result = (String) cap
-                            .getAction()
-                            .invoke(cap.getController());
-
-                    if(this.isTemplate(result)) {
-                        response.addHeader("Content-Type", "text/html");
-
-                        result = this.loadTemplate(result.split(":")[1]);
+                    for (Object o : cap.getParameters()) {
+                        System.out.println(o);
                     }
 
-                } catch (IllegalAccessException | InvocationTargetException | IOException e) {
-                    response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
-
+                    result = cap
+                            .getAction()
+                            .invoke(cap.getController(), new Object[] {cap.getParameters().toArray()})
+                            .toString();
+                } catch(Exception e) {
                     e.printStackTrace();
-
-                    result = "VSICHKO GRUMNA";
                 }
-            }
 
-            response.setContent(result.getBytes());
+                result = cap
+                        .getAction()
+                        .invoke(cap.getController(), cap.getParameters().toArray())
+                        .toString();
+
+                response.setStatusCode(HttpStatus.OK);
+
+                if (isTemplate(result)) {
+                    response.addHeader("Content-Type", "text/html");
+
+                    try {
+                        result = this.loadTemplate(result.split("\\:")[1]);
+                    } catch (IOException e) {
+                        response.setStatusCode(HttpStatus.NOT_FOUND);
+                        result = "<h1>Template not found!</h1>";
+                    }
+                } else {
+                    response.addHeader("Content-Type", "text/plain");
+                }
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                response.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+                response.addHeader("Content-Type", "text/plain");
+                result = e.toString();
+            } finally {
+                response.setContent(result.getBytes());
+            }
+        } else {
+            response.setStatusCode(HttpStatus.NOT_FOUND);
+            response.addHeader("Content-Type", "text/plain");
+            response.setContent("No such functionality found...".getBytes());
         }
     }
 }
