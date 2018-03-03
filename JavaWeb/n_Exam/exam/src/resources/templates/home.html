@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Casebook</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div class="container-fluid">
+    $(loggedInHeader)
+    <div class="alert alert-$(type)" role="alert" $(display)>
+        $(message)
+    </div>
+    <hr class="my-2"/>
+    <div class="text-center mb-3">
+        <h4><a class="text-info" href="/profile/$(id)">Welcome, $(username)</a></h4>
+    </div>
+    <hr class="my-2">
+    <div class="container">
+        $(users)
+    </div>
+    <hr class="my-3"/>
+    $(footer)
+</div>
+</body>
+</html>

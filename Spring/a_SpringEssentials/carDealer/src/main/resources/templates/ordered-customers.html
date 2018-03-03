@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+                     xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<ul>
+	<th:block th:each="customer : ${customers}" th:object="${customer}">
+		<li th:text="|Name: *{name}; Date: *{#dates.format(birthDate, 'dd-MMM-yyyy')}; is young driver: *{getYoungDriver()}|" ></li>
+	</th:block>
+	</ul>
+</body>
+</html>

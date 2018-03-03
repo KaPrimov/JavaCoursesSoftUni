@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sboj.gb</title>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+<div class="container-fluid">
+    <nav class="navbar navbar-toggleable-md navbar-dark bg-color-dark">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand text-info h4" href="/">Sboj.gb</a>
+
+        <div class="collapse navbar-collapse row" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto row col-md-7 justify-content-end">
+                <li class="nav-item active col-md-2">
+                    <a class="nav-link text-info h5" href="/">Home</a>
+                </li>
+                <li class="nav-item active col-md-2">
+                    <a class="nav-link text-info h5" href="/jobs/add">Add Job</a>
+                </li>
+				<li class="nav-item active col-md-2">
+                    <a class="nav-link text-info h5" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <hr class="my-2"/>
+    <div class="text-center mb-4">
+        <h1>Job Details</h1>
+    </div>
+    <hr class="my-2">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+				<div class="label mt-2">
+					<h2 class="text-center">Sector</h2>
+					<h4 class="text-center">$(sector)</h4>
+				</div>
+				<div class="label mt-4">
+					<h2 class="text-center">Profession</h2>
+					<h4 class="text-center">$(profession)</h4>
+				</div>
+				<div class="label mt-4">
+					<h2 class="text-center">Salary</h2>
+					<h4 class="text-center">$$(salary)</h4>
+				</div>
+				<div class="label mt-4">
+					<h2 class="text-center">Description</h2>
+					<p class="text-center">$(description)</p>
+				</div>
+            </div>
+        </div>
+    </div>
+    <hr class="my-3"/>
+    <footer class="footer">
+        <div class="mb-3">
+            <div class="text-muted container-fluid text-center">&copy; CopyRight Sanity Web Design Studios 2018. All
+                rights
+                reserved.
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>
