@@ -50,7 +50,9 @@ public class CarServiceImpl implements CarService<Car, Long> {
         List<CarDto> carDtos = new ArrayList<>();
 
         for (Car car : cars) {
-            carDtos.add(ModelParser.getInstance().map(car, CarDto.class));
+            CarDto carDto = ModelParser.getInstance().map(car, CarDto.class);
+            carDto.setName(car.getMake() + " - " + car.getModel());
+			carDtos.add(carDto);
         }
 
         return carDtos;

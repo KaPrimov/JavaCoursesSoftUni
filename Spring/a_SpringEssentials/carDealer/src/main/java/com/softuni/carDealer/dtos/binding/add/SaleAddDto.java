@@ -5,8 +5,8 @@ import com.softuni.carDealer.dtos.binding.relations.CustomerDto;
 
 public class SaleAddDto {
     private Double discount;
-    private CustomerDto customer;
-    private CarDto car;
+    private Long customer;
+    private Long car;
 
     public SaleAddDto() {
     }
@@ -19,19 +19,19 @@ public class SaleAddDto {
         this.discount = discount;
     }
 
-    public CustomerDto getCustomer() {
+    public Long getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerDto customer) {
+    public void setCustomer(Long customer) {
         this.customer = customer;
     }
 
-    public CarDto getCar() {
+    public Long getCar() {
         return car;
     }
 
-    public void setCar(CarDto car) {
+    public void setCar(Long car) {
         this.car = car;
     }
 }

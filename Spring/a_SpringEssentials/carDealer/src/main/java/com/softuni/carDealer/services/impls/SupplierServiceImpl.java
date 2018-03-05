@@ -17,7 +17,7 @@ import com.softuni.carDealer.utils.ModelParser;
 
 @Service
 @Transactional
-public class SupplierServiceImpl implements SupplierService {
+public class SupplierServiceImpl implements SupplierService<Supplier, Long> {
     private final SupplierRepository supplierRepository;
 
     @Autowired

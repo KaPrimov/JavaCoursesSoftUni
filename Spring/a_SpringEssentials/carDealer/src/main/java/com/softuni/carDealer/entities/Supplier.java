@@ -43,7 +43,7 @@ public class Supplier {
         isImporter = importer;
     }
 
-    @OneToMany(mappedBy = "supplier")
+    @OneToMany(mappedBy = "supplier", orphanRemoval = true)
     public Set<Part> getParts() {
         return parts;
     }

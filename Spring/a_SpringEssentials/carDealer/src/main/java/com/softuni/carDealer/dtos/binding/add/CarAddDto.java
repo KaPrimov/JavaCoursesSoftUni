@@ -4,8 +4,6 @@ package com.softuni.carDealer.dtos.binding.add;
 import java.math.BigDecimal;
 import java.util.Set;
 
-import com.softuni.carDealer.dtos.binding.relations.PartDto;
-
 public class CarAddDto {
 
     private String make;

@@ -2,6 +2,8 @@ package com.softuni.carDealer.controllers;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.softuni.carDealer.dtos.binding.add.CarAddDto;
-import com.softuni.carDealer.dtos.binding.add.PartAddDto;
 import com.softuni.carDealer.dtos.binding.relations.PartDto;
-import com.softuni.carDealer.dtos.binding.relations.SupplierDto;
 import com.softuni.carDealer.dtos.view.CarMakerView;
 import com.softuni.carDealer.dtos.view.CarPartsView;
 import com.softuni.carDealer.entities.Car;
@@ -56,17 +56,27 @@ public class CarController {
 	}
 	
 	@GetMapping("/add")
-	public ModelAndView showAddCar() {
+	public ModelAndView showAddCar(HttpSession session) {
 		ModelAndView mav = new ModelAndView();
-		List<PartDto> parts = this.partService.findAllPartDtos();
-		mav.setViewName("add-car");
-		mav.addObject("parts", parts);
+		if (session.getAttribute("username") == null) {
+			mav.setViewName("redirect:/users/login");
+		} else {
+			List<PartDto> parts = this.partService.findAllPartDtos();
+			mav.setViewName("add-car");
+			mav.addObject("parts", parts);
+		}
 		return mav;
 	}
 	
 	@PostMapping("/add")
-	public String saveCar(@ModelAttribute CarAddDto carAddDto) {
-		this.carService.saveDto(carAddDto);		
-		return "redirect:/";
+	public ModelAndView saveCar(@ModelAttribute CarAddDto carAddDto, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		if (session.getAttribute("username") == null) {
+			mav.setViewName("redirect:/users/login");
+		} else {
+			this.carService.saveDto(carAddDto);		
+			mav.setViewName("redirect:/");
+		}
+		return mav;
 	}
 }

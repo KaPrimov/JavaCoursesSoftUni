@@ -1,6 +1,5 @@
 package com.softuni.carDealer.controllers;
 
-import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.softuni.carDealer.dtos.binding.add.CustomerAddDto;
 import com.softuni.carDealer.dtos.binding.add.PartAddDto;
 import com.softuni.carDealer.dtos.binding.relations.PartDto;
 import com.softuni.carDealer.dtos.binding.relations.SupplierDto;

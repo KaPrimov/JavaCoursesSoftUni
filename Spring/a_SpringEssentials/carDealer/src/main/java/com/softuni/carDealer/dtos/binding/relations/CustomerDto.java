@@ -2,10 +2,9 @@ package com.softuni.carDealer.dtos.binding.relations;
 
 public class CustomerDto {
     private Long id;
+    private String name;
 
-    public CustomerDto() {
-    }
-
+    public CustomerDto() { }
 
     public Long getId() {
         return id;
@@ -14,4 +13,12 @@ public class CustomerDto {
     public void setId(Long id) {
         this.id = id;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}    
 }

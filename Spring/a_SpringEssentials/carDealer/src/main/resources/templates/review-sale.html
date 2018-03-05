@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid" th:object="${sale}">
+	<div th:replace="~{fragments/header}"></div>
+	<form th:action="@{/sales/review}" th:method="post">
+		<div class="form-group">
+		   <label for="customer">Customer</label>
+		   <input th:disabled="disabled" type="text" name="customer" class="form-control" id="customer" th:value="*{customer}" />
+		</div>
+		<div class="form-group">
+		   <label for="car">Car</label>
+		   <input th:disabled="disabled" type="text" name="car" class="form-control" id="car" th:value="*{car}"/>
+		</div>
+		<div class="form-group">
+		    <label for="discount">Discount</label>
+		    <input th:disabled="disabled" type="text" name="discount" class="form-control" th:value="|*{discount} %|" />
+		</div>
+		<div class="form-group">
+		   <label for="carPrice">Car Price</label>
+		   <input th:disabled="disabled" type="number" name="carPrice" class="form-control" id="carPrice" th:value="*{carPrice}" />
+		</div>
+		<div class="form-group">
+		   <label for="finalPrice">Final Price</label>
+		   <input th:disabled="disabled" type="number" name="finalPrice" class="form-control" id="finalPrice" th:value="*{finalPrice}" />
+		</div>
+	  <button type="submit" class="btn btn-info">Finalize</button>
+	  <input type="hidden" name="carId" th:value="*{carId}"/>
+	  <input type="hidden" name="customerId" th:value="*{customerId}"/>
+	  <input type="hidden" name="discount" th:value="*{discount}"/>
+	  <a href="/" class="btn btn-danger">Cancel</a>
+	</form>
+</body>
+</html>

@@ -21,7 +21,7 @@ public class SupplierAddDto {
         return isImporter;
     }
 
-    public void setImporter(Boolean importer) {
-        isImporter = importer;
+    public void setImporter(Boolean isImporter) {
+        this.isImporter = isImporter;
     }
 }

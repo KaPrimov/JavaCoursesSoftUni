@@ -18,13 +18,23 @@
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Add
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="/cars/add">Car</a></li>
+          <li th:if="${session.username != null}"><a href="/cars/add">Car</a></li>
           <li><a href="/customers/add">Customer</a></li>
           <li><a href="/parts/add">Part</a></li>
+          <li th:if="${session.username != null}"><a href="/sales/add">Sale</a></li>
         </ul>
       </li>
       <li><a href="/cars/all">Cars</a></li>
       <li><a href="/parts/all">Parts</a></li>
+      <th:block th:if="${session.username == null}">
+    	<li><a href="/users/login">Login</a></li>
+    	<li><a href="/users/register">Register</a></li>
+      </th:block>
+      <li th:if="${session.username != null}">      	
+	       <form name="logoutForm" th:action="@{/users/logout}" method="post">
+		      <input type="submit" value="Sign Out"/>
+		   </form> 
+	   </li>
     </ul>
   </div>
 </nav>

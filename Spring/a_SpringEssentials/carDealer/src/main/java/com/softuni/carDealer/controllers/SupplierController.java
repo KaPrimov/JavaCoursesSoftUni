@@ -5,10 +5,15 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.softuni.carDealer.dtos.binding.add.PartAddDto;
+import com.softuni.carDealer.dtos.binding.add.SupplierAddDto;
+import com.softuni.carDealer.dtos.binding.relations.SupplierDto;
 import com.softuni.carDealer.dtos.view.LocalSupplierView;
 import com.softuni.carDealer.entities.Supplier;
 import com.softuni.carDealer.services.apis.SupplierService;
@@ -34,5 +39,16 @@ public class SupplierController {
 		return mav;
 	}
 	
+	
+	@GetMapping("/add")
+	public String showAddSupplier() {
+		return "add-supplier";
+	}
+	
+	@PostMapping("/add")
+	public String savePart(@ModelAttribute SupplierAddDto supplierToAdd) {
+		this.supplierService.save(supplierToAdd);		
+		return "redirect:/";
+	}
 	
 }
