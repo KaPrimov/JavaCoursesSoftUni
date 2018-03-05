@@ -1,7 +1,9 @@
 package com.softuni.carDealer.services.impls;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,24 +14,33 @@ import com.softuni.carDealer.dtos.binding.relations.CarDto;
 import com.softuni.carDealer.dtos.view.CarMakerView;
 import com.softuni.carDealer.dtos.view.CarPartsView;
 import com.softuni.carDealer.entities.Car;
+import com.softuni.carDealer.entities.Part;
 import com.softuni.carDealer.repositories.CarRepository;
+import com.softuni.carDealer.repositories.PartRepository;
 import com.softuni.carDealer.services.apis.CarService;
 import com.softuni.carDealer.utils.ModelParser;
 
 @Service
 @Transactional
 public class CarServiceImpl implements CarService<Car, Long> {
-    private final CarRepository carRepository;
-
+    
+	private final CarRepository carRepository;
+	private final PartRepository partRepository;
+	
     @Autowired
-    public CarServiceImpl(CarRepository carRepository) {
+    public CarServiceImpl(CarRepository carRepository, PartRepository partRepository) {
         this.carRepository = carRepository;
+        this.partRepository = partRepository;
     }
 
     @Override
     public void saveDto(CarAddDto carAddDto) {
         Car car = ModelParser.getInstance().map(carAddDto, Car.class);
-        String deb = "";
+        Set<Part> parts = new LinkedHashSet<>();
+        for (Long partId : carAddDto.getCheckedParts()) {
+			parts.add(partRepository.getOne(partId));
+		}
+        car.setParts(parts);
         this.carRepository.saveAndFlush(car);
     }
 

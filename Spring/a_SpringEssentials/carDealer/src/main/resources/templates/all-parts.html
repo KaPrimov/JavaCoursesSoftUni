@@ -5,10 +5,11 @@
 <body class="container-fluid">
 	<div th:replace="~{fragments/header}"></div>
 	<ul class="list-group">
-		<th:block th:each="customer : ${customers}" th:object="${customer}">
+		<th:block th:each="part : ${parts}" th:object="${part}">
 			<li class="list-group-item" >
-				<span th:text="|Name: *{name}; Date: *{#dates.format(birthDate, 'dd-MMM-yyyy')}; is young driver: *{getYoungDriver()}|" th:remove="tag"></span>
-	    		<a th:href="@{/customers/edit/{id}(id=*{id})}" class='close' aria-hidden='true'>Edit</a>
+				<span th:text="|Name: *{name} |" th:remove="tag"></span>
+	    		<a th:href="@{/parts/edit/{id}(id=*{id})}" class='btn-info' aria-hidden='true'>Edit</a>
+	    		<a th:href="@{/parts/delete/{id}(id=*{id})}" class='btn-danger' aria-hidden='true'>Delete</a>
 			</li>
 		</th:block>
 	</ul>

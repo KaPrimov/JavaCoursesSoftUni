@@ -1,8 +1,14 @@
 package com.softuni.carDealer.services.impls;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +35,42 @@ public class CustomerServiceImpl implements CustomerService<Customer, Long> {
     }
 
     @Override
-    public void save(CustomerAddDto customerAddDto) {
-        Customer customer = ModelParser.getInstance().map(customerAddDto, Customer.class);
-
-        this.customerRepository.save(customer);
+    public void save(CustomerAddDto customerAddDto) throws ParseException {
+		Customer customer = new Customer();
+        this.customerRepository.save(convertCustomer(customerAddDto, customer));
     }
+
+	private Customer convertCustomer(CustomerAddDto customerAddDto, Customer customer) throws ParseException {
+        Calendar cal = Calendar.getInstance();
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        customer.setName(customerAddDto.getName());
+        if (customerAddDto.getBirthDate().trim().length() == 0) {
+        	if (customer.getBirthDate() == null) {
+        		customer.setBirthDate(new Date());
+        	} 
+        } else {
+        	Date birthDate = df.parse(customerAddDto.getBirthDate());
+            cal.setTime(new Date());
+            cal.add(Calendar.YEAR, -2);
+            if (birthDate.before(cal.getTime())) {
+            	customer.setYoungDriver(false);
+            } else {
+            	customer.setYoungDriver(true);
+            }
+            customer.setBirthDate(birthDate);
+        }
+        
+		return customer;
+	}
+    
+
+
+	@Override
+	public void updateCustomer(final CustomerAddDto customerToAdd) throws ParseException {
+		Customer savedCustomer = this.customerRepository.getOne(customerToAdd.getId());
+		this.customerRepository.save(this.convertCustomer(customerToAdd, savedCustomer));
+		
+	}
 
     @Override
     public List<CustomerDto> findAllCustomerDtos() {
@@ -72,8 +109,14 @@ public class CustomerServiceImpl implements CustomerService<Customer, Long> {
         return customerViews;
     }
 
+	@Override
+	public CustomerView getById(Long id) {
+		Customer customer = this.customerRepository.getOne(id);
+		return ModelParser.getInstance().map(customer, CustomerView.class);
+	}
+
     @Override
-    public List<TotalCustomerSalesView> totalCustomerSales() {
-        return this.customerRepository.totalCustomerSales();
+    public TotalCustomerSalesView totalCustomerSales(final Long id) {
+        return this.customerRepository.totalCustomerSales(id);
     }
 }

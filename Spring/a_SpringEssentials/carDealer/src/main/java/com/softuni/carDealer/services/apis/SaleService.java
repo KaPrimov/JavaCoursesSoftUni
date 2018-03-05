@@ -9,4 +9,10 @@ public interface SaleService<Sale, Long> {
     void saveSaleDto(SaleAddDto saleAddDto);
 
     List<SaleWithCarView> saleWithCars();
+    
+    List<SaleWithCarView> saleWithId(final Long id);
+    
+    List<SaleWithCarView> salesWithAnyDiscount();
+    
+    List<SaleWithCarView> salesWithExactDiscount(final Long discount);
 }

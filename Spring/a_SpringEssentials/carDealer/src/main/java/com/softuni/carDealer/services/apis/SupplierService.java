@@ -12,4 +12,8 @@ public interface SupplierService<Supplier, Long> {
     List<SupplierDto> findAllDtos();
 
     List<LocalSupplierView> findAllLocalSuppliers();
+    
+    List<LocalSupplierView> findAllImportSuppliers();
+
+	SupplierDto getById(java.lang.Long supplierId);
 }

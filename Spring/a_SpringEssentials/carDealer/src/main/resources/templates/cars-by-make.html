@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body>
+	<div th:replace="~{fragments/header}"></div>
+	<ul>
+		<th:block th:each="car : ${cars}" th:object="${car}">
+			<li th:text="|Make: *{make}; Model: *{model}; Distance: *{travelledDistance}|" ></li>
+		</th:block>
+	</ul>
+</body>
+</html>

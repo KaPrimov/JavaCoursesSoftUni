@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid" th:object="${part}">
+	<div th:replace="~{fragments/header}"></div>
+	<form th:action="@{/parts/delete/{id}(id=*{id})}" th:method="post">
+		<div class="form-group">
+		   <label for="name">Name</label>
+		   <input th:disabled="disabled" type="text" name="name" class="form-control" id="name" th:value="*{name}" placeholder="Enter name" />
+		</div>
+		<div class="form-group">
+		   <label for="price">Price</label>
+		   <input th:disabled="disabled" type="number" name="price" class="form-control" id="price" th:value="*{price}" placeholder="Enter price date" />
+		</div>
+		<div class="form-group">
+		    <label for="supplier">Supplier</label>
+		    <input th:disabled="disabled" type="text" name="supplier" class="form-control" th:value="${supplier.name}" />
+		</div>
+		<div class="form-group">
+		   <label for="quantity">Quantity</label>
+		   <input th:disabled="disabled" type="number" name="quantity" class="form-control" id="quantity" th:value="*{quantity}" placeholder="Enter quantity" />
+		</div>
+	  <button type="submit" class="btn btn-danger">Delete</button>
+	</form>
+</body>
+</html>

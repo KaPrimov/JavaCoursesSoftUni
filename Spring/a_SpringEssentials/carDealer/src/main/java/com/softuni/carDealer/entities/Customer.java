@@ -1,8 +1,18 @@
 package com.softuni.carDealer.entities;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "customers")
@@ -34,6 +44,7 @@ public class Customer {
     }
 
     @Column(name = "birth_date", columnDefinition = "DATE")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public Date getBirthDate() {
         return birthDate;
     }

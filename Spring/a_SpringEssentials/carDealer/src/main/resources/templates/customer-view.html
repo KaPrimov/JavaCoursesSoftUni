@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body >
+	<div th:replace="~{fragments/header}"></div>
+	<h3 th:text="*{fullName}"></h3>
+	<h4 th:text="|Bought cars: *{boughtCars}|"></h4>
+	<h4 th:text="|Total spent: *{spentMoney}|"></h4>
+</body>
+</html>

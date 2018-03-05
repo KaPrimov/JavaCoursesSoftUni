@@ -10,5 +10,4 @@ import com.softuni.carDealer.entities.Car;
 @Repository
 public interface CarRepository extends JpaRepository<Car, Long> {
     List<Car> findAllByMakeOrderByModelAscTravelledDistanceDesc(String make);
-
 }

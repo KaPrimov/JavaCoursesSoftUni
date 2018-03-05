@@ -46,4 +46,14 @@ public class SupplierServiceImpl implements SupplierService {
     public List<LocalSupplierView> findAllLocalSuppliers() {
         return this.supplierRepository.findAllLocalSuppliers();
     }
+
+	@Override
+	public List<LocalSupplierView> findAllImportSuppliers() {
+		return this.supplierRepository.findAllImportSuppliers();
+	}
+
+	@Override
+	public SupplierDto getById(Long supplierId) {		
+		return ModelParser.getInstance().map(this.supplierRepository.getOne(supplierId), SupplierDto.class);
+	}
 }

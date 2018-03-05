@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid" th:object="${part}">
+	<div th:replace="~{fragments/header}"></div>
+	<form th:action="@{/parts/edit}" th:method="post">
+		<div class="form-group">
+		   <label for="name">Name</label>
+		   <input th:required="required" type="text" name="name" class="form-control" id="name" th:value="*{name}" placeholder="Enter name" />
+		</div>
+		<div class="form-group">
+		   <label for="price">Price</label>
+		   <input th:required="required" type="number" name="price" class="form-control" id="price" th:value="*{price}" placeholder="Enter price date" />
+		</div>
+		<div class="form-group">
+		    <label for="supplier">Supplier</label>
+		    <select class="form-control" id="supplier" name="supplier" th:required="required">
+		        <option value="">Select Test Supplier</option>
+		        <option th:each="supplier : ${suppliers}"
+		                th:value="${supplier.id}"
+		                th:text="${supplier.name}"
+		                th:selected="${supplier.id == part.supplierId}"></option>
+		                
+		    </select>
+		</div>
+		<div class="form-group">
+		   <label for="quantity">Quantity</label>
+		   <input th:required="required" type="number" name="quantity" class="form-control" id="quantity" th:value="*{quantity}" placeholder="Enter quantity" />
+		</div>
+		<input type="hidden" name="id" th:value="*{id}"/>
+	  <button type="submit" class="btn btn-primary">Edit</button>
+	</form>
+</body>
+</html>

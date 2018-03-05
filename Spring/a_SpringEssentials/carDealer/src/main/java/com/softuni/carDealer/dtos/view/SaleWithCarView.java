@@ -6,7 +6,6 @@ import java.math.BigDecimal;
 public class SaleWithCarView {
 
     private CarSaleView car;
-
     private String customerName;
     private Double discount;
     private BigDecimal carPrice;

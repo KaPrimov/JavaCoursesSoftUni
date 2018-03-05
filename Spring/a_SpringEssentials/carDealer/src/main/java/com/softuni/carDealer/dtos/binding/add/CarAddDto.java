@@ -16,7 +16,7 @@ public class CarAddDto {
 
     private BigDecimal price;
 
-    private Set<PartDto> parts;
+    private Set<Long> checkedParts;
 
     public CarAddDto() {
     }
@@ -53,13 +53,12 @@ public class CarAddDto {
         this.price = price;
     }
 
-    public Set<PartDto> getParts() {
-        return parts;
-    }
+	public Set<Long> getCheckedParts() {
+		return checkedParts;
+	}
 
-    public void setParts(Set<PartDto> parts) {
-        this.parts = parts;
-    }
-
+	public void setCheckedParts(Set<Long> checkedParts) {
+		this.checkedParts = checkedParts;
+	}
 
 }

@@ -1,13 +1,10 @@
 package com.softuni.carDealer.dtos.binding.add;
 
-
-
-import java.util.Date;
-
 public class CustomerAddDto {
     private String name;
-    private Date birthDate;
+    private String birthDate;
     private Boolean isYoungDriver;
+    private Long id;
 
     public CustomerAddDto() {
     }
@@ -20,11 +17,11 @@ public class CustomerAddDto {
         this.name = name;
     }
 
-    public Date getBirthDate() {
+    public String getBirthDate() {
         return birthDate;
     }
 
-    public void setBirthDate(Date birthDate) {
+    public void setBirthDate(String birthDate) {
         this.birthDate = birthDate;
     }
 
@@ -35,4 +32,22 @@ public class CustomerAddDto {
     public void setYoungDriver(Boolean youngDriver) {
         isYoungDriver = youngDriver;
     }
+
+	public Boolean getIsYoungDriver() {
+		return isYoungDriver;
+	}
+
+	public void setIsYoungDriver(Boolean isYoungDriver) {
+		this.isYoungDriver = isYoungDriver;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
+    
 }

@@ -34,13 +34,35 @@ public class SaleServiceImpl implements SaleService<Sale, Long> {
     @Override
     public List<SaleWithCarView> saleWithCars() {
         List<Sale> cars = this.saleRepository.findAll();
-        List<SaleWithCarView> saleWithCarViews = new ArrayList<>();
+        return convertSalesToDTOs(cars);
+    }
+    
+    @Override
+	public List<SaleWithCarView> saleWithId(Long id) {
+    	List<Sale> cars = this.saleRepository.findAllById(id);
+        return convertSalesToDTOs(cars);
+	}
+
+	@Override
+	public List<SaleWithCarView> salesWithAnyDiscount() {
+		List<Sale> cars = this.saleRepository.salesWithAnyDiscount();
+        return convertSalesToDTOs(cars);
+	}
+	
+	@Override
+	public List<SaleWithCarView> salesWithExactDiscount(final Long discount) {
+		List<Sale> cars = this.saleRepository.salesWithExactDiscount(discount / 100.0);
+        return convertSalesToDTOs(cars);
+	}
+    
+	private List<SaleWithCarView> convertSalesToDTOs(List<Sale> cars) {
+		List<SaleWithCarView> saleWithCarViews = new ArrayList<>();
         for (Sale car : cars) {
             SaleWithCarView saleWithCarView = ModelParser.getInstance().map(car, SaleWithCarView.class);
             BigDecimal price = saleWithCarView.getCarPrice().multiply(BigDecimal.valueOf(1 - saleWithCarView.getDiscount()));
             saleWithCarView.setPriceWithDiscount(price);
             saleWithCarViews.add(saleWithCarView);
         }
-        return saleWithCarViews;
-    }
+		return saleWithCarViews;
+	}	
 }

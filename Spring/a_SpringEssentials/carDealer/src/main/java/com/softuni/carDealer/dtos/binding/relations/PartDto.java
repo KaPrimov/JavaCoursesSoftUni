@@ -8,6 +8,12 @@ public class PartDto {
     private Long id;
 
     private BigDecimal price;
+    
+    private String name;
+    
+    private Long quantity;
+    
+    private Long supplierId;
 
     public PartDto() {
     }
@@ -27,4 +33,30 @@ public class PartDto {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Long getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
+
+	public Long getSupplierId() {
+		return supplierId;
+	}
+
+	public void setSupplierId(Long supplierId) {
+		this.supplierId = supplierId;
+	}	
+	
+	
 }

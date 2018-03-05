@@ -8,4 +8,10 @@ public interface PartService<Part, Long> {
     void save(PartAddDto partAddDto);
 
     List<PartDto> findAllPartDtos();
+
+	PartDto getById(final Long id);
+
+	void updatePart(PartAddDto partAddDto);
+
+	void delete(Long id);
 }

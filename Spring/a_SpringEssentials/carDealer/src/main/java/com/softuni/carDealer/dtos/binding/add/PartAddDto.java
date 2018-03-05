@@ -2,17 +2,17 @@ package com.softuni.carDealer.dtos.binding.add;
 
 import java.math.BigDecimal;
 
-import com.softuni.carDealer.dtos.binding.relations.SupplierDto;
-
 public class PartAddDto {
-
+	
+	private Long id;
+	
     private String name;
 
     private BigDecimal price;
 
     private Long quantity;
 
-    private SupplierDto supplier;
+    private Long supplier;
 
     public PartAddDto() {
     }
@@ -41,11 +41,20 @@ public class PartAddDto {
         this.quantity = quantity;
     }
 
-    public SupplierDto getSupplier() {
+    public Long getSupplier() {
         return supplier;
     }
 
-    public void setSupplier(SupplierDto supplier) {
+    public void setSupplier(Long supplier) {
         this.supplier = supplier;
     }
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+    
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid" >
+	<div th:replace="~{fragments/header}"></div>
+	<form th:action="@{/cars/add}" th:method="post">
+		<div class="form-group">
+		   <label for="make">Make</label>
+		   <input type="text" name="make" class="form-control" id="make" placeholder="Enter make" />
+		</div>
+		<div class="form-group">
+		   <label for="model">Model</label>
+		   <input type="text" name="model" class="form-control" id="model" placeholder="Enter model" />
+		</div>
+		<div class="form-group">
+		   <label for="travelledDistance">Distance</label>
+		   <input type="number" name="travelledDistance" class="form-control" id="travelledDistance" placeholder="Enter travelled distance" />
+		</div>
+		<th:block th:each="part : ${parts}" th:object="${part}">
+			<label th:text="*{name}"></label>
+			<input name="checkedParts" type="checkbox" th:value="*{id}"/>			
+		</th:block>
+	  <button type="submit" class="btn btn-primary">Add</button>
+	</form>
+</body>
+</html>

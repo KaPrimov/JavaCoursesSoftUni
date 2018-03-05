@@ -4,10 +4,13 @@ package com.softuni.carDealer.dtos.view;
 import java.util.Date;
 import java.util.Set;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class CustomerView {
 
     private Long id;
     private String name;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birthDate;
     private Boolean isYoungDriver;
     private Set<SaleView> sales;
@@ -23,6 +26,7 @@ public class CustomerView {
         this.id = id;
     }
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     public String getName() {
         return name;
     }
