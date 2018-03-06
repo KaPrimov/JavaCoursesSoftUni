@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid">
+	<div th:replace="~{fragments/header}"></div>
+	<a href="/suppliers/add" class="btn btn-info">Add Supplier</a>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Importer</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="supplier : ${suppliers}" th:object="${supplier}">
+				<tr >
+					<td th:text="*{name}" ></td>
+					<td th:text="*{isImporter} ? true : false"></td>
+					<td>
+						<a th:href="@{/suppliers/edit/{id}(id=*{id})}" class='btn btn-info' aria-hidden='true'>Edit</a>
+			    		<a th:href="@{/suppliers/delete/{id}(id=*{id})}" class='btn btn-danger' aria-hidden='true'>Delete</a>
+					</td>		    		
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+	<ul class="list-group">
+		
+	</ul>
+</body>
+</html>

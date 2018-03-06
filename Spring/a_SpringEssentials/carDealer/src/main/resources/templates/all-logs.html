@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid">
+	<div th:replace="~{fragments/header}"></div>
+	<form action="/logs/search" method="GET">
+		<div class="row">
+			<div class="col-xs-6 col-md-4">
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search"
+						id="txtSearch" name="text" />
+					<div class="input-group-btn">
+						<button class="btn btn-primary" type="submit">
+							<span class="glyphicon glyphicon-search"></span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<form action="/logs/delete-all" method="POST">
+		<div class="row">
+			<div class="col-xs-6 col-md-4">
+				<div class="input-group-btn">
+					<button class="btn btn-danger" type="submit">
+						CLEAR ALL LOGS
+					</button>
+				</div>
+			</div>
+		</div>
+	</form>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>User</th>
+				<th>Operation</th>
+				<th>Table</th>
+				<th>Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="log : ${logs}" th:object="${log}">
+				<tr>
+					<td th:text="*{user.username}"></td>
+					<td th:text="*{operation}"></td>
+					<td th:text="*{tableName}"></td>
+					<td th:text="*{date}"></td>
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+	<ul class="list-group">
+
+	</ul>
+</body>
+</html>

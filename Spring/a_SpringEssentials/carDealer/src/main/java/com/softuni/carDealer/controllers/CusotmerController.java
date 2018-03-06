@@ -78,7 +78,6 @@ public class CusotmerController {
 		try {
 			this.customerService.updateCustomer(customerToAdd);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "redirect:/";

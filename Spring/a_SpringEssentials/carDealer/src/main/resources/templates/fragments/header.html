@@ -24,6 +24,8 @@
           <li th:if="${session.username != null}"><a href="/sales/add">Sale</a></li>
         </ul>
       </li>
+      <li th:if="${session.username != null}"><a href="/suppliers/all">Suppliers</a></li>
+      <li th:if="${session.username != null}"><a href="/logs/all">Logs</a></li>
       <li><a href="/cars/all">Cars</a></li>
       <li><a href="/parts/all">Parts</a></li>
       <th:block th:if="${session.username == null}">

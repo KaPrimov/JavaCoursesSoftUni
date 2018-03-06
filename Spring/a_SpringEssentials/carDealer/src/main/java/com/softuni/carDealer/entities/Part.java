@@ -1,6 +1,9 @@
 package com.softuni.carDealer.entities;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -64,7 +67,8 @@ public class Part {
         this.cars = cars;
     }
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @Cascade(org.hibernate.annotations.CascadeType.DELETE)
     @JoinColumn(name = "supplier_id", referencedColumnName = "id")
     public Supplier getSupplier() {
         return supplier;

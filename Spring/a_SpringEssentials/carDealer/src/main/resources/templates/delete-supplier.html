@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid" th:object="${supplier}">
+	<div th:replace="~{fragments/header}"></div>
+	<form th:action="@{/suppliers/delete/{id}(id=*{id})}" th:method="post">
+		<div class="form-group">
+		   <label for="name">Name</label>
+		   <input th:disabled="disabled" type="text" name="name" class="form-control" id="name" th:value="*{name}" placeholder="Enter name" />
+		</div>		
+	  <button type="submit" class="btn btn-danger">Delete</button>
+	</form>
+</body>
+</html>

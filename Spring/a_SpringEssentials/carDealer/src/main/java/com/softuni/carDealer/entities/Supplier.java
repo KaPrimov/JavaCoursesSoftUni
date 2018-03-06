@@ -1,6 +1,9 @@
 package com.softuni.carDealer.entities;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.Cascade;
+
 import java.util.Set;
 
 @Entity
@@ -33,17 +36,18 @@ public class Supplier {
     public void setName(String name) {
         this.name = name;
     }
-
+    
     @Column(name = "is_importer")
-    public Boolean getImporter() {
-        return isImporter;
-    }
+    public Boolean getIsImporter() {
+		return isImporter;
+	}
 
-    public void setImporter(Boolean importer) {
-        isImporter = importer;
-    }
+	public void setIsImporter(Boolean isImporter) {
+		this.isImporter = isImporter;
+	}
 
-    @OneToMany(mappedBy = "supplier", orphanRemoval = true)
+	@OneToMany(mappedBy = "supplier", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+	@Cascade(org.hibernate.annotations.CascadeType.DELETE)
     public Set<Part> getParts() {
         return parts;
     }

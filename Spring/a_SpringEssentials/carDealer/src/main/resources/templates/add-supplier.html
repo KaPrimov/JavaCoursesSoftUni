@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"     
+      xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{fragments/head}"></div>
+<body class="container-fluid" >
+	<div th:replace="~{fragments/header}"></div>
+	<form th:action="@{/suppliers/add}" th:method="post">
+		<div class="form-group">
+		   <label for="name">Name</label>
+		   <input type="text" name="name" class="form-control" id="name" placeholder="Enter name" />
+		</div>
+		
+		<th:block th:each="part : ${parts}" th:object="${part}">
+			<label th:text="*{name}"></label>
+			<input name="parts" type="checkbox" th:value="*{id}"/>			
+		</th:block>
+	  <button type="submit" class="btn btn-primary">Add</button>
+	</form>
+</body>
+</html>

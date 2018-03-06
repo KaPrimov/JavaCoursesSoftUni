@@ -13,10 +13,10 @@ import com.softuni.carDealer.entities.Supplier;
 public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
     @Query("SELECT DISTINCT new com.softuni.carDealer.dtos.view.LocalSupplierView(s.id, s.name, s.parts.size) FROM Supplier AS s INNER JOIN s.parts " +
-            "WHERE s.importer=false ")
+            "WHERE s.isImporter=false ")
     List<LocalSupplierView> findAllLocalSuppliers();
     
     @Query("SELECT DISTINCT new com.softuni.carDealer.dtos.view.LocalSupplierView(s.id, s.name, s.parts.size) FROM Supplier AS s INNER JOIN s.parts " +
-            "WHERE s.importer=true")
+            "WHERE s.isImporter=true")
     List<LocalSupplierView> findAllImportSuppliers();
 }
