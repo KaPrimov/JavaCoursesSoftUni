@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/head}"></div>
+<body class="container">
+	<div th:replace="~{fragments/header}"></div>
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>Name</th>
+				<th>Magnitude</th>
+				<th>Released On</th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<th:block th:each="virus,iter : ${viruses}" th:object="${virus}">
+				<tr>
+					<td th:text="${iter.index} + 1"></td>
+					<td th:text="*{name}"></td>
+					<td th:text="*{magnitude}"></td>
+					<td th:text="*{releasedOn}"></td>
+					<td><a href="/viruses/edit" class="btn btn-primary">Edit</a></td>
+					<td><a href="/viruses/delete" class="btn btn-danger">Delete</a></td>
+				</tr>
+			</th:block>
+		</tbody>
+	</table>
+</body>
+</html>

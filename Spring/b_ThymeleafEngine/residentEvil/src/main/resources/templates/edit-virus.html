@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/head}"></div>
+<body class="container">
+	<div th:replace="~{fragments/header}"></div>
+	<h2 class="mb-4 mt-4">Spread a new Virus!</h2>
+	<form class="mb-4" th:action="@{/viruses/add}" method="post" th:object="${virusModel}">
+		<div class="form-group" >
+			<label for="name">Name</label> <input name="name" type="text"
+				class="form-control" id="name" />
+		</div>
+		<div class="form-group" th:classappend="${#fields.hasErrors('description')}? 'has-danger'">
+			<label for="description">Description</label>
+			<textarea style="resize: none" name="description"
+				class="form-control" id="description" rows="3"></textarea>
+		</div>
+		<div class="form-group" th:classappend="${#fields.hasErrors('sideEffect')}? 'has-danger'">
+			<label for="side-effect">Side Effect</label> <input
+				name="sideEffect" type="text" class="form-control" id="side-effect" />
+		</div>
+		<div class="form-group" th:classappend="${#fields.hasErrors('creator')}? 'has-danger'">
+			<label for="creator">Creator</label> <input name="creator"
+				type="text" class="form-control" id="creator" />
+		</div>
+		<div class="form-check" th:classappend="${#fields.hasErrors('isDeadly')}? 'has-danger'">
+			<label class="form-check-label"> <input name="isDeadly"
+				type="checkbox" class="form-check-input"> Is Deadly?
+			</label>
+		</div>
+		<div class="form-check">
+			<label class="form-check-label"> <input name="isCurable"
+				type="checkbox" class="form-check-input"> Is Curable?
+			</label>
+		</div>
+		<fieldset class="form-group" th:classappend="${#fields.hasErrors('mutation')}? 'has-danger'">
+			<legend>Mutation</legend>
+			<div class="form-check">
+				<label class="form-check-label"> <input type="radio"
+					class="form-check-input" name="mutation" id="mutation"
+					value="ZOMBIE"> ZOMBIE
+				</label>
+			</div>
+			<div class="form-check">
+				<label class="form-check-label"> <input type="radio"
+					class="form-check-input" name="mutation" id="mutation"
+					value="T_078_TYRANT"> T_078_TYRANT
+				</label>
+			</div>
+			<div class="form-check">
+				<label class="form-check-label"> <input type="radio"
+					class="form-check-input" name="mutation" id="mutation"
+					value="GIANT_SPIDER"> GIANT_SPIDER
+				</label>
+			</div>
+		</fieldset>
+		<div class="form-group" th:classappend="${#fields.hasErrors('turnoverRate')}? 'has-danger'">
+			<label for="turnover-rate">Turnover rate</label> <input
+				name="turnoverRate" type="number" class="form-control"
+				id="turnover-rate" />
+		</div>
+		<div class="form-group" th:classappend="${#fields.hasErrors('hoursUntilTurn')}? 'has-danger'">
+			<label for="hoursUntilTurn">Hours Until Turn</label> <input
+				name="hoursUntilTurn" type="number" class="form-control"
+				id="hoursUntilTurn" />
+		</div>
+		<div class="form-group" th:classappend="${#fields.hasErrors('magnitude')}? 'has-danger'">
+			<label for="magnitude">Magnitude</label> <select class="form-control"
+				id="magnitude" name="magnitude">
+				<option value="LOW">LOW</option>
+				<option value="MEDIUM">MEDIUM</option>
+				<option value="HIGH">HIGH</option>
+			</select>
+		</div>
+		<div class="form-group" th:classappend="${#fields.hasErrors('releasedOn')}? 'has-danger'">
+			<label for="released-on">Release Date</label> <input
+				class="form-control" type="date" name="releasedOn" id="released-on" />
+		</div>
+		<div class="form-group" >
+			<label for="capitals">Affected Capitals</label> 
+			<select	multiple class="form-control" id="capitals" name="capitals">
+				<th:block th:each="capital : ${capitals}" th:object="${capital}">
+					<option th:text="*{name}" th:value="*{name}"></option>
+				</th:block>
+			</select>
+		</div>
+		<input type="submit" value="Spread Contamination" class="btn btn-danger"/>
+	</form>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<div th:replace="~{fragments/head}"></div>
+<body class="container">
+	<div th:replace="~{fragments/header}"></div>
+	<h2 class="mb-4 mt-4">Spread a new Virus!</h2>
+	<form class="mb-4" th:action="@{/viruses/add}" method="post" th:object="${virusModel}">
+		<div class="form-group" >
+			<label for="name">Name</label> <input name="name" type="text"
+				class="form-control" id="name" th:classappend="${#fields.hasErrors('name')} ? 'is-invalid'"/>
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('name')}" th:text="${error}">
+	      	Error Message
+    	</small>
+
+		<div class="form-group" >
+			<label for="description">Description</label>
+			<textarea style="resize: none" name="description" th:classappend="${#fields.hasErrors('description')} ? 'is-invalid'"
+				class="form-control" id="description" rows="3"></textarea>
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('description')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-group" >
+			<label for="side-effect">Side Effect</label> <input th:classappend="${#fields.hasErrors('sideEffect')}? 'is-invalid'"
+				name="sideEffect" type="text" class="form-control" id="side-effect" />
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('sideEffect')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-group" >
+			<label for="creator">Creator</label> <input name="creator" th:classappend="${#fields.hasErrors('creator')}? 'is-invalid'"
+				type="text" class="form-control" id="creator" />
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('creator')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-check" >
+			<label class="form-check-label"> <input name="isDeadly" th:classappend="${#fields.hasErrors('isDeadly')}? 'is-invalid'"
+				type="checkbox" class="form-check-input"> Is Deadly?
+			</label>
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('isDeadly')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-check">
+			<label class="form-check-label"> <input name="isCurable"
+				type="checkbox" class="form-check-input"> Is Curable?
+			</label>
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('isCurable')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<fieldset class="form-group" th:classappend="${#fields.hasErrors('mutation')}? 'is-invalid'">
+			<legend>Mutation</legend>
+			<div class="form-check">
+				<label class="form-check-label"> <input type="radio"
+					class="form-check-input" name="mutation" id="mutation"
+					value="ZOMBIE"> ZOMBIE
+				</label>
+			</div>
+			<div class="form-check">
+				<label class="form-check-label"> <input type="radio"
+					class="form-check-input" name="mutation" id="mutation"
+					value="T_078_TYRANT"> T_078_TYRANT
+				</label>
+			</div>
+			<div class="form-check">
+				<label class="form-check-label"> <input type="radio"
+					class="form-check-input" name="mutation" id="mutation"
+					value="GIANT_SPIDER"> GIANT_SPIDER
+				</label>
+			</div>
+		</fieldset>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('mutation')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-group" >
+			<label for="turnover-rate">Turnover rate</label> 
+			<input value="*{turnoverRate}" th:classappend="${#fields.hasErrors('turnoverRate')}? 'is-invalid'"
+				name="turnoverRate" type="number" class="form-control"
+				id="turnover-rate" />
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('turnoverRate')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-group" >
+			<label for="hoursUntilTurn">Hours Until Turn</label> 
+			<input value="*{hoursUntilTurn}" th:classappend="${#fields.hasErrors('hoursUntilTurn')}? 'is-invalid'"
+				name="hoursUntilTurn" type="number" class="form-control"
+				id="hoursUntilTurn" />
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('*{hoursUntilTurn}')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-group" th:classappend="${#fields.hasErrors('magnitude')}? 'is-invalid'">
+			<label for="magnitude">Magnitude</label> <select class="form-control"
+				id="magnitude" name="magnitude">
+				<option value="LOW">LOW</option>
+				<option value="MEDIUM">MEDIUM</option>
+				<option value="HIGH">HIGH</option>
+			</select>
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('magnitude')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-group" th:classappend="${#fields.hasErrors('releasedOn')}? 'is-invalid'">
+			<label for="released-on">Release Date</label> <input
+				class="form-control" type="date" name="releasedOn" id="released-on" />
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('releasedOn')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<div class="form-group" th:classappend="${#fields.hasErrors('capitals')}? 'is-invalid'">
+			<label for="capitals">Affected Capitals</label> 
+			<select	multiple class="form-control" id="capitals" name="capitals">
+				<th:block th:each="capital : ${capitals}" th:object="${capital}">
+					<option th:text="*{name}" th:value="*{name}"></option>
+				</th:block>
+			</select>
+		</div>
+		<small id="nameHelp" class="error-message"
+	    	th:each="error : ${#fields.errors('capitals')}" th:text="${error}">
+	      	Error Message
+    	</small>
+		<input type="submit" value="Spread Contamination" class="btn btn-danger"/>
+	</form>
+</body>
+</html>

@@ -1,0 +1,34 @@
+@charset "UTF-8";
+.main-header {
+	background: #900C45;
+	color: white;
+}
+
+.navbar-link {
+	color: white!important;
+}
+
+.dropdown.open {
+	background: #900C45!important;	
+}
+
+ul.dropdown-menu {	
+	background: #900C45!important;
+}
+
+.dropdown-toggle.navbar-link {
+	background: #900C45!important;
+}
+
+.dropdown-menu .navbar-link:hover {
+	background: #200001;
+}
+
+.error-messag {
+	color: red;
+	margin-top: -5px;
+}
+
+.is-invalid {
+	border: 1px solid red;
+}
