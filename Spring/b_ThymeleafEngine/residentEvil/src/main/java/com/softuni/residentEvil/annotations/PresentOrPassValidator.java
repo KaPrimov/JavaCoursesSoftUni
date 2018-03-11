@@ -10,7 +10,7 @@ public class PresentOrPassValidator implements ConstraintValidator<PresentOrPass
 	@Override
 	public boolean isValid(Date date, ConstraintValidatorContext arg1) {
 		if (date == null) {
-			return false;
+			return true;
 		}
 		return date.before(new Date());
 	}

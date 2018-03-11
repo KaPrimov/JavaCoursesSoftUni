@@ -3,6 +3,9 @@ package com.softuni.residentEvil.services;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,7 +50,7 @@ public class VirusServiceImpl implements VirusService {
 		virus.setMagnitude(MagnitudeEnum.valueOf(virusDTO.getMagnitude()));
 		virus.setMutation(MutationEnum.valueOf(virusDTO.getMutation()));
 		virus.setIsCurable(virusDTO.getIsCurable() == null ? false : true);
-		virus.setIsCurable(virusDTO.getIsDeadly() == null ? false : true);
+		virus.setIsDeadly(virusDTO.getIsDeadly() == null ? false : true);
 		Set<Capital> capitals = new LinkedHashSet<>();
 		for (String capitalName : virusDTO.getCapitals()) {
 			Capital capital = this.capitalRepository.findByName(capitalName);
@@ -58,6 +61,51 @@ public class VirusServiceImpl implements VirusService {
 		virus.setCapitals(capitals);
 		
 		this.virusRepository.save(virus);		
+	}
+
+	@Override
+	public FullVirusDTO findByName(String name) {
+		Virus virus = this.virusRepository.findByName(name);
+		FullVirusDTO virusDTO = ModelParser.getInstance().map(virus, FullVirusDTO.class);
+		virusDTO.setCapitals(virus.getCapitals().stream().map(Capital::getName).collect(Collectors.toSet()));
+		return virusDTO;
+	}
+
+	@Override
+	public void editVirus(final @Valid FullVirusDTO virusDTO) {
+		Virus virus = virusRepository.getOne(virusDTO.getId());
+		virus.setMagnitude(MagnitudeEnum.valueOf(virusDTO.getMagnitude()));
+		virus.setMutation(MutationEnum.valueOf(virusDTO.getMutation()));
+		virus.setIsCurable(virusDTO.getIsCurable() == null ? false : true);
+		virus.setIsDeadly(virusDTO.getIsDeadly() == null ? false : true);
+		virus.setCreator(virusDTO.getCreator());
+		virus.setName(virusDTO.getName());
+		virus.setDescription(virusDTO.getDescription());
+		virus.setSideEffect(virusDTO.getSideEffect());
+		virus.setTurnoverRate(virusDTO.getTurnoverRate());
+		virus.setHoursUntilTurn(virusDTO.getHoursUntilTurn());
+		Set<Capital> capitals = new LinkedHashSet<>();
+		for (String capitalName : virusDTO.getCapitals()) {
+			Capital capital = this.capitalRepository.findByName(capitalName);
+			if (capital != null) {
+				capitals.add(capital);
+			}
+		}
+		virus.setCapitals(capitals);
+		this.virusRepository.save(virus);
+	}
+
+	@Override
+	public FullVirusDTO findById(final String id) {
+		Virus virus = this.virusRepository.getOne(id);
+		FullVirusDTO virusDTO = ModelParser.getInstance().map(virus, FullVirusDTO.class);
+		virusDTO.setCapitals(virus.getCapitals().stream().map(Capital::getName).collect(Collectors.toSet()));
+		return virusDTO;
+	}
+
+	@Override
+	public void deleteVirus(final String id) {
+		this.virusRepository.deleteById(id);
 	}
 
 }

@@ -7,5 +7,7 @@ import com.softuni.residentEvil.entities.Virus;
 
 @Repository
 public interface VirusRepository extends JpaRepository<Virus, String> {
+	
+	Virus findByName(String name);
 
 }

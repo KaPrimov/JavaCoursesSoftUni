@@ -15,6 +15,8 @@ import com.softuni.residentEvil.annotations.PresentOrPass;
 
 public class FullVirusDTO {
 	
+	private String id;
+	
 	@NotNull
 	@Size(min = 3, max = 10, message = "Invalid name")
 	private String name;
@@ -152,5 +154,13 @@ public class FullVirusDTO {
 
 	public void setCapitals(Set<String> capitals) {
 		this.capitals = capitals;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
 	}
 }

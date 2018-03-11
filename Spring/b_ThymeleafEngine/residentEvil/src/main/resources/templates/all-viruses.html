@@ -23,8 +23,8 @@
 					<td th:text="*{name}"></td>
 					<td th:text="*{magnitude}"></td>
 					<td th:text="*{releasedOn}"></td>
-					<td><a href="/viruses/edit" class="btn btn-primary">Edit</a></td>
-					<td><a href="/viruses/delete" class="btn btn-danger">Delete</a></td>
+					<td><a th:href="@{/viruses/edit/{id}(id=*{id})}" class="btn btn-primary">Edit</a></td>
+					<td><a th:href="@{/viruses/delete/{id}(id=*{id})}" class="btn btn-danger">Delete</a></td>
 				</tr>
 			</th:block>
 		</tbody>
