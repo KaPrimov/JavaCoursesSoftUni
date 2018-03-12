@@ -1,20 +1,17 @@
 package com.softuni.residentEvil.controllers;
 
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-
+import com.softuni.residentEvil.annotations.PreAuthenticate;
+import com.softuni.residentEvil.entities.enums.RoleEnum;
 import com.softuni.residentEvil.models.binding.FullVirusDTO;
 import com.softuni.residentEvil.services.CapitalService;
 import com.softuni.residentEvil.services.VirusService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/viruses")
@@ -30,6 +27,7 @@ public class VirusController {
 	}
 
 	@GetMapping("/add")
+	@PreAuthenticate(loggedIn = true, inRole = RoleEnum.USER)
 	public ModelAndView getAdd(@ModelAttribute("virusModel") FullVirusDTO virusModel) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("virusModel", virusModel);
@@ -37,8 +35,8 @@ public class VirusController {
 		mav.setViewName("add-virus");
 		return mav;
 	}
-	
-	@PostMapping("/add") 
+
+	@PostMapping("/add")
 	public String addVirus(@Valid @ModelAttribute("virusModel") FullVirusDTO virusModel, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 
@@ -47,7 +45,7 @@ public class VirusController {
 		this.virusService.saveVirus(virusModel);
 		return "redirect:/";
 	}
-	
+
 	@GetMapping("/show")
 	public ModelAndView allViruses() {
 		ModelAndView mav = new ModelAndView();
