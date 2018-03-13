@@ -5,7 +5,7 @@
 <div th:replace="~{fragments/head}"></div>
 <body class="container">
 	<div th:replace="~{fragments/header}"></div>
-	<h2 class="mb-4 mt-4">Spread a new Virus!</h2>
+	<h2 class="mb-4 mt-4">Spread new Virus!</h2>
 	<form class="mb-4" th:action="@{/viruses/add}" method="post" th:object="${virusModel}">
 		<div class="form-group" >
 			<label for="name">Name</label> <input name="name" type="text"
