@@ -35,7 +35,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
                         return false;
                     }
                     User user = this.userService.findByUsername(username.toString());
-                    if (user.getRoles().stream().anyMatch(r -> r.getRole() == methodAnnotation.inRole())) {
+                    if (user.getAuthorities().stream().anyMatch(r -> r.getAuthority().equals(methodAnnotation.inRole().name()))) {
                         return true;
                     } else {
                         return false;

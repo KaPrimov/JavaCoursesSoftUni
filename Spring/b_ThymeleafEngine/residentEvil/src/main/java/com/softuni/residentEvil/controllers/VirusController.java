@@ -1,7 +1,5 @@
 package com.softuni.residentEvil.controllers;
 
-import com.softuni.residentEvil.annotations.PreAuthenticate;
-import com.softuni.residentEvil.entities.enums.RoleEnum;
 import com.softuni.residentEvil.models.binding.FullVirusDTO;
 import com.softuni.residentEvil.services.CapitalService;
 import com.softuni.residentEvil.services.VirusService;
@@ -27,7 +25,6 @@ public class VirusController {
 	}
 
 	@GetMapping("/add")
-	@PreAuthenticate(loggedIn = true, inRole = RoleEnum.USER)
 	public ModelAndView getAdd(@ModelAttribute("virusModel") FullVirusDTO virusModel) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("virusModel", virusModel);

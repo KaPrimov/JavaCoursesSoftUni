@@ -1,4 +1,4 @@
-package com.softuni.residentEvil.config;
+package com.softuni.residentEvil.configurations;
 
 import com.softuni.residentEvil.interceptors.AuthenticationInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(this.authenticationInterceptor);
+//        registry.addInterceptor(this.authenticationInterceptor);
     }
+
+
 }

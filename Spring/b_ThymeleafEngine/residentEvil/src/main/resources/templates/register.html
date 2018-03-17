@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"     
-      xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <div th:replace="~{fragments/head}"></div>
 <body class="container" >
 	<div th:replace="~{fragments/header}"></div>
@@ -21,7 +21,8 @@
 			<label for="confirmPassword">Confirm Password</label>
 			<input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm password" />
 		</div>
-	  <button type="submit" class="btn btn-primary">Register</button>
+		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+		<button type="submit" class="btn btn-primary">Register</button>
 	</form>
 </body>
 </html>

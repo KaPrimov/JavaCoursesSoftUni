@@ -1,11 +1,10 @@
 package com.softuni.residentEvil.services;
 
-import java.util.Set;
-
-import javax.validation.Valid;
-
 import com.softuni.residentEvil.models.binding.FullVirusDTO;
 import com.softuni.residentEvil.models.view.ListViewVirusDTO;
+
+import javax.validation.Valid;
+import java.util.Set;
 
 public interface VirusService {
 
@@ -20,4 +19,6 @@ public interface VirusService {
 	FullVirusDTO findById(final String id);
 
 	void deleteVirus(final String id);
+
+    String findAllMapViruses();
 }

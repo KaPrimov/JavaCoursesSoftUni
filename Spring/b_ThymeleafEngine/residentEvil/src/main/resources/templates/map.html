@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>Viruses</title>
@@ -28,9 +29,6 @@
 <main>
     <div id="map"></div>
 </main>
-<script th:src="@{jquery/jquery.min.js}"></script>
-<script th:src="@{bootstrap/js/bootstrap.min.js}"></script>
-<script th:src="@{scripts/maps.js}"></script>
 <script th:inline="javascript">
 
     var geoJson = [[${geoJson}]];
@@ -146,7 +144,7 @@
 </script>
 
 <script async="true" defer="true"
-        src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&amp;callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBXDpnw91hDeECOQPW6JC24sZdwXBX_g-A&amp;callback=initMap">
 </script>
 </body>
 </html>

@@ -1,15 +1,5 @@
 package com.softuni.residentEvil.services;
 
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.softuni.residentEvil.entities.Capital;
 import com.softuni.residentEvil.entities.Virus;
 import com.softuni.residentEvil.entities.enums.MagnitudeEnum;
@@ -19,6 +9,14 @@ import com.softuni.residentEvil.models.view.ListViewVirusDTO;
 import com.softuni.residentEvil.repositories.CapitalRepository;
 import com.softuni.residentEvil.repositories.VirusRepository;
 import com.softuni.residentEvil.utils.ModelParser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.validation.Valid;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class VirusServiceImpl implements VirusService {
@@ -106,6 +104,38 @@ public class VirusServiceImpl implements VirusService {
 	@Override
 	public void deleteVirus(final String id) {
 		this.virusRepository.deleteById(id);
+	}
+
+	@Override
+	public String findAllMapViruses() {
+		StringBuilder json = new StringBuilder();
+		List<Virus> viruses = this.virusRepository.findAll();
+		json.append("{")
+				.append("\"type\": \"FeatureCollection\",")
+				.append("\"features\": [");
+
+		for (Virus virus : viruses) {
+			for (Capital capital : virus.getCapitals()) {
+				json.append("{")
+						.append("\"type\": \"Feature\",")
+						.append("\"properties\": {")
+						.append("\"mag\":").append(5 + virus.getMagnitude().ordinal()).append(",")
+						.append("\"color\": \"#f00\"")
+						.append("},")
+						.append("\"geometry\": {")
+						.append("\"type\": \"Point\",")
+						.append("\"coordinates\": [")
+							.append(capital.getLatitude()).append(",")
+							.append(capital.getLongitude())
+						.append("]")
+						.append("}")
+						.append("},");
+			}
+		}
+		json.delete(json.length() - 1, json.length());
+		json.append("]").append("}");
+		System.out.println(json);
+		return json.toString();
 	}
 
 }
