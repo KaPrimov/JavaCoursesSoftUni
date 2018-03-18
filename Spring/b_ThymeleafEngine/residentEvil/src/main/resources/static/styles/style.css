@@ -32,3 +32,16 @@ ul.dropdown-menu {
 .is-invalid {
 	border: 1px solid red;
 }
+
+.logout {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	vertical-align: center;
+	margin-top: 14px;
+}
+
+.logout input {
+	background: transparent;
+	border: none;
+}

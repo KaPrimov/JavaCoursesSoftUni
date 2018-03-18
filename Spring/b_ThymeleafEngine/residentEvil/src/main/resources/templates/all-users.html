@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
+<div th:replace="~{fragments/head}"></div>
+<body class="container">
+<div th:replace="~{fragments/header}"></div>
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <th:block th:each="user,iter : ${users}" th:object="${user}">
+        <tr>
+            <td th:text="${iter.index} + 1"></td>
+            <td th:text="*{username}"></td>
+            <td><a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-primary">Edit</a></td>
+        </tr>
+    </th:block>
+    </tbody>
+</table>
 </body>
 </html>

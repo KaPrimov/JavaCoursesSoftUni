@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="~{fragments/head}"></div>
+<body class="container">
+<div th:replace="~{fragments/header}"></div>
+<h2 class="mb-4 mt-4">Edit User</h2>
+<form class="mb-4" th:action="@{/users/edit/{id}(id=*{id})}" method="post" th:object="${user}">
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input name="username" type="text" th:value="*{username}" class="form-control" id="username"/>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input name="email" type="email" th:value="*{email}" class="form-control" id="email"/>
+    </div>
+    <div class="form-group">
+        <label for="addRoles">Add Roll</label>
+        <select multiple class="form-control" id="addRoles" name="addRoles">
+            <option th:if="*{!authorities.contains('ADMIN')}" th:value="ADMIN" th:text="ADMIN"></option>
+            <option th:if="*{!authorities.contains('MODERATOR')}" th:value="MODERATOR" th:text="MODERATOR"></option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="removeRoles">Remove Roll</label>
+        <select multiple class="form-control" id="removeRoles" name="removeRoles">
+            <option th:if="*{authorities.contains('ADMIN')}" th:value="ADMIN" th:text="ADMIN"></option>
+            <option th:if="*{authorities.contains('MODERATOR')}" th:value="MODERATOR" th:text="MODERATOR"></option>
+        </select>
+    </div>
+    <input type="submit" value="Edit User"
+           class="btn btn-danger"/>
+</form>
+</body>
+</html>

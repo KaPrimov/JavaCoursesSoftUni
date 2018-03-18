@@ -134,7 +134,6 @@ public class VirusServiceImpl implements VirusService {
 		}
 		json.delete(json.length() - 1, json.length());
 		json.append("]").append("}");
-		System.out.println(json);
 		return json.toString();
 	}
 

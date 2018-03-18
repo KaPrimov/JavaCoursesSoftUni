@@ -4,6 +4,7 @@ import com.softuni.residentEvil.models.binding.FullVirusDTO;
 import com.softuni.residentEvil.services.CapitalService;
 import com.softuni.residentEvil.services.VirusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +26,7 @@ public class VirusController {
 	}
 
 	@GetMapping("/add")
+	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public ModelAndView getAdd(@ModelAttribute("virusModel") FullVirusDTO virusModel) {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("virusModel", virusModel);
@@ -34,6 +36,7 @@ public class VirusController {
 	}
 
 	@PostMapping("/add")
+	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public String addVirus(@Valid @ModelAttribute("virusModel") FullVirusDTO virusModel, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 
@@ -44,6 +47,7 @@ public class VirusController {
 	}
 
 	@GetMapping("/show")
+	@PreAuthorize("isAuthenticated()")
 	public ModelAndView allViruses() {
 		ModelAndView mav = new ModelAndView();
 		mav.addObject("viruses", this.virusService.gelAll());
@@ -52,6 +56,7 @@ public class VirusController {
 	}
 	
 	@GetMapping("/edit/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public ModelAndView getEdit(@PathVariable String id) {
 		ModelAndView mav = new ModelAndView();
 		FullVirusDTO virusModel = this.virusService.findById(id);
@@ -61,7 +66,8 @@ public class VirusController {
 		return mav;
 	}
 	
-	@PostMapping("/edit/{id}") 
+	@PostMapping("/edit/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public String editVirus(@Valid @ModelAttribute("virusModel") FullVirusDTO virusModel, BindingResult bindingResult, @PathVariable String id) {
 		if (bindingResult.hasErrors()) {
 			return "redirect:/viruses/edit/" + id;
@@ -71,6 +77,7 @@ public class VirusController {
 	}
 	
 	@GetMapping("/delete/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public ModelAndView getDelete(@PathVariable String id) {
 		ModelAndView mav = new ModelAndView();
 		FullVirusDTO virusModel = this.virusService.findById(id);
@@ -80,7 +87,8 @@ public class VirusController {
 		return mav;
 	}
 	
-	@PostMapping("/delete/{id}") 
+	@PostMapping("/delete/{id}")
+	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public String deleteVirus(@PathVariable String id) {
 		this.virusService.deleteVirus(id);
 		return "redirect:/";

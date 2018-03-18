@@ -23,7 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage("/users/login")
                 .permitAll()
             .and()
-                .logout().logoutUrl("/users/logout").logoutSuccessUrl("/login?logout").permitAll()
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll()
             .and()
                 .exceptionHandling().accessDeniedPage("/unauthorized")
             .and()

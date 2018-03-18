@@ -1,12 +1,10 @@
 package com.softuni.residentEvil.entities;
 
 import org.springframework.data.annotation.Transient;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Collection;
 import java.util.Set;
 
 @Entity
@@ -16,7 +14,7 @@ public class User implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Long id;
 	
 	@Column(name = "password", nullable = false)
 	@Transient
@@ -26,6 +24,9 @@ public class User implements UserDetails {
 	@NotNull(message = "Please provide your username")
 	private String username;
 
+	@Column(name = "email", unique = true)
+	private String email;
+
 	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
@@ -34,16 +35,16 @@ public class User implements UserDetails {
 
     public User() {	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Set<Role> getAuthorities() {
         return authorities;
     }
 
@@ -85,5 +86,13 @@ public class User implements UserDetails {
 
 	public void setAuthorities(Set<Role> authorities) {
 		this.authorities = authorities;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
