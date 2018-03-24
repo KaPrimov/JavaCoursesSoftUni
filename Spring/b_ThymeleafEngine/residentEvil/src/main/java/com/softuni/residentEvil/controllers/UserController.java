@@ -43,7 +43,7 @@ public class UserController {
 	
 	@GetMapping(path = "/login")
     @PreAuthorize("isAnonymous()")
-	public String getLogin(@RequestParam(required = false) String error,Model model) {
+	public String getLogin(@RequestParam(required = false) String error, Model model) {
 		if (error != null) {
 			model.addAttribute("error", error);
 		}

@@ -1,0 +1,29 @@
+.navbar-white {
+    background-color: #D3D3D3;
+}
+
+.nav-link-black {
+    color: #090909;
+}
+
+.nav-link-black:hover {
+    color: #090909;
+}
+
+.nav-link-black:focus {
+    color: #090909;
+}
+
+.dropdown-toggle::after {
+    display:none
+}
+
+.logout-btn {
+    background: transparent;
+    border: none;
+    padding-bottom: 0;
+}
+
+.logout-btn:hover {
+    cursor: pointer;
+}

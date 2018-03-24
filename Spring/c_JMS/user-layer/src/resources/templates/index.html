@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <th:block th:replace="fragments/head"></th:block>
+</head>
+<body>
+<div class="container">
+    <th:block th:replace="fragments/navbar"></th:block>
+    <div sec:authorize="isAuthenticated()">
+        <h1 class="text-center" th:text="${#authentication.getPrincipal().getUser().getUsername()}"></h1>
+    </div>
+</div>
+</body>
+</html>

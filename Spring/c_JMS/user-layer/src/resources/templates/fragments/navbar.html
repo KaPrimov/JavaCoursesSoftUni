@@ -1,0 +1,35 @@
+<th:block th:fragment="navbar">
+    <nav class="navbar navbar-toggleable-md navbar-white">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand nav-link-black" href="/">Nuggets</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item disabled">
+                    <a class="nav-link nav-link-black" href="/home">Home</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="nav-item disabled">
+                    <a class="nav-link nav-link-black" href="/login">Login</a>
+                </li>
+                <li sec:authorize="!isAuthenticated()" class="nav-item disabled">
+                    <a class="nav-link nav-link-black" href="/register">Register</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item disabled">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button type="submit" class="nav-link nav-link-black logout-btn">Logout</button>
+                    </form>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item disabled">
+                    <a class="nav-link nav-link-black" href="/preferences">Preferences</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item disabled">
+                    <a class="nav-link nav-link-black" href="/all-nuggets">All Nuggets</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</th:block>
