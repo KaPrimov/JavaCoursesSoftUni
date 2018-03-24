@@ -28,15 +28,19 @@ public class ExtractNuggetsSubscriber {
 
     @JmsListener(destination = "register-user")
     public void onRegister(Message message) throws JMSException {
-//        if(message instanceof ActiveMQMapMessage) {
             MapMessage mappedMessage = (MapMessage)message;
             Map<String, Object> messageMap = new HashMap<>();
             messageMap.put("username", mappedMessage.getObject("username"));
             List<String> preferences = (List<String>) mappedMessage.getObject("preferences");
             List<String> nuggets = nuggetService.findNuggets(preferences);
-            messageMap.put("preferences", nuggets != null && !nuggets.isEmpty() ? nuggets.stream().collect(Collectors.joining(",")) : "" );
+            messageMap.put("preferences", (nuggets != null && !nuggets.isEmpty()) ? nuggets.stream().collect(Collectors.joining(",")) : "" );
 
             this.jmsTemplate.convertAndSend("nuggets-result", messageMap);
-//        }
+    }
+
+    @JmsListener(destination = "get-nuggets")
+    public void getAllNuggets() {
+        List<String> nuggets = this.nuggetService.allNuggets();
+        this.jmsTemplate.convertAndSend("send-all-nuggets", nuggets.stream().collect(Collectors.joining(",")));
     }
 }

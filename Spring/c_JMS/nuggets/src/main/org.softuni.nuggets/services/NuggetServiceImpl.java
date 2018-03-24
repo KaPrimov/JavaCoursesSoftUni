@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class NuggetServiceImpl implements NuggetService {
@@ -24,11 +25,16 @@ public class NuggetServiceImpl implements NuggetService {
         List<String> userNuggets = new LinkedList<>();
         for (String preference : preferences) {
             List<Nugget> nuggetIsFound = this.nuggetRepository.findIfNuggetIsFound("%" + preference.toLowerCase() + "%", PageRequest.of(0,1)).getContent();
-            if (nuggetIsFound != null && !nuggetIsFound.isEmpty()) {
+            if (!nuggetIsFound.isEmpty()) {
                 userNuggets.add(nuggetIsFound.get(0).getName());
             }
         }
 
         return userNuggets;
+    }
+
+    @Override
+    public List<String> allNuggets() {
+        return this.nuggetRepository.findAll().stream().map(Nugget::getName).collect(Collectors.toList());
     }
 }

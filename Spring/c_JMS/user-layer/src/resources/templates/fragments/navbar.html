@@ -19,15 +19,15 @@
                     <a class="nav-link nav-link-black" href="/register">Register</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item disabled">
-                    <form th:action="@{/logout}" th:method="POST">
-                        <button type="submit" class="nav-link nav-link-black logout-btn">Logout</button>
-                    </form>
-                </li>
-                <li sec:authorize="isAuthenticated()" class="nav-item disabled">
                     <a class="nav-link nav-link-black" href="/preferences">Preferences</a>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item disabled">
                     <a class="nav-link nav-link-black" href="/all-nuggets">All Nuggets</a>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item disabled">
+                    <form th:action="@{/logout}" th:method="POST">
+                        <button type="submit" class="nav-link nav-link-black logout-btn">Logout</button>
+                    </form>
                 </li>
             </ul>
         </div>

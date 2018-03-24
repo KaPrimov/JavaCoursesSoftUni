@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService{
         this.userRepository.save(user);
         Map<String, Object> messageMap = new HashMap<>();
 
-        messageMap.put("preferences", Arrays.stream(bindingModel.getPreferences().split("\\s*,\\s*")).collect(Collectors.toList()));
+        messageMap.put("preferences", Arrays.stream(bindingModel.getPreferences().split("\\s*,\\s*")).filter(p -> p.trim().length() != 0).collect(Collectors.toList()));
         messageMap.put("username", bindingModel.getUsername());
         this.jmsTemplate.convertAndSend("register-user", messageMap);
     }

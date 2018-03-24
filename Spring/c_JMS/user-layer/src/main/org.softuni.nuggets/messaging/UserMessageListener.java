@@ -15,24 +15,20 @@ import javax.transaction.Transactional;
 @Component
 public class UserMessageListener {
     private final UserRepository userRepository;
-    private final JmsTemplate jmsTemplate;
 
     @Autowired
     public UserMessageListener(UserRepository userRepository, JmsTemplate jmsTemplate) {
         this.userRepository = userRepository;
-        this.jmsTemplate = jmsTemplate;
     }
 
     @JmsListener(destination = "nuggets-result")
     @Transactional
     public void onRegister(Message message) throws JMSException {
-//        if(message instanceof ActiveMQMapMessage) {
             MapMessage mappedMessage = (MapMessage)message;
             String username = mappedMessage.getString("username");
             String preferences = mappedMessage.getString("preferences");
             User user = this.userRepository.findByUsername(username);
             user.setPreferences(preferences);
             this.userRepository.saveAndFlush(user);
-//        }
     }
 }

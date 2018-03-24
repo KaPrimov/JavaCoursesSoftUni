@@ -7,7 +7,8 @@
 <body>
 <div class="container-fluid">
     <th:block th:replace="fragments/navbar"></th:block>
-    <div>
+    <h1 th:if="${nuggets.length == 0}">Your preferences have not been loaded yet, or are not supported by our database.</h1>
+    <div th:if="${nuggets.length > 0}">
         <h1 class="text-center mt-3" th:text="${title}"></h1>
         <table class="table mt-5">
             <thead>
