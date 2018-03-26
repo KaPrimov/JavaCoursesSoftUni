@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-
+	<!--/*@thymesVar id="viruses" type="com.softuni.residentEvil.models.view.pagination.AllVirusesViewModel"*/-->
+	<!--/*@thymesVar id="virus" type="com.softuni.residentEvil.entities.Virus"*/-->
 <div th:replace="~{fragments/head}"></div>
 <body class="container">
 	<div th:replace="~{fragments/header}"></div>
@@ -15,9 +16,9 @@
 				<th></th>
 				<th></th>
 			</tr>
-		</thead>
 		<tbody>
-			<th:block th:each="virus,iter : ${viruses}" th:object="${virus}">
+		</thead>
+			<th:block th:each="virus,iter : ${viruses.getViruses()}" th:object="${virus}">
 				<tr>
 					<td th:text="${iter.index} + 1"></td>
 					<td th:text="*{name}"></td>
@@ -29,5 +30,11 @@
 			</th:block>
 		</tbody>
 	</table>
+	<nav>
+		<ul class="pagination">
+			<li class="page-item"><a class="page-link" th:if="${(#conversions.convert(#request.getParameter('page'), 'Integer')) - 1} >= 0" th:href="@{/viruses/show(page=${(#conversions.convert(#request.getParameter('page'), 'Integer')) - 1})}">Previous</a></li>
+			<li class="page-item"><a class="page-link" th:if="${(#conversions.convert(#request.getParameter('page'), 'Integer')) + 1 <= viruses.getTotalPageCount()}" th:href="@{/viruses/show(page=${(#conversions.convert(#request.getParameter('page'), 'Integer')) + 1})}">Next</a></li>
+		</ul>
+	</nav>
 </body>
 </html>

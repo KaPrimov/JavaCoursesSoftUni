@@ -9,7 +9,7 @@
         <a class="dropdown-toggle navbar-link" data-toggle="dropdown" href="#">Viruses
         <span class="caret"></span></a>
         <ul class="dropdown-menu">
-          <li><a href="/viruses/show" class="navbar-link">Show</a></li>
+          <li><a href="/viruses/show?page=0" class="navbar-link">Show</a></li>
           <li><a sec:authorize="hasAnyRole('MODERATOR', 'ADMIN')" href="/viruses/add" class="navbar-link">Add</a></li>
         </ul>
       </li>

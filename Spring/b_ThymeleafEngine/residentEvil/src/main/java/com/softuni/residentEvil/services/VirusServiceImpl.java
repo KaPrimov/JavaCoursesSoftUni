@@ -6,10 +6,12 @@ import com.softuni.residentEvil.entities.enums.MagnitudeEnum;
 import com.softuni.residentEvil.entities.enums.MutationEnum;
 import com.softuni.residentEvil.models.binding.FullVirusDTO;
 import com.softuni.residentEvil.models.view.ListViewVirusDTO;
+import com.softuni.residentEvil.models.view.pagination.AllVirusesViewModel;
 import com.softuni.residentEvil.repositories.CapitalRepository;
 import com.softuni.residentEvil.repositories.VirusRepository;
 import com.softuni.residentEvil.utils.ModelParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
@@ -40,6 +42,16 @@ public class VirusServiceImpl implements VirusService {
 			virusDTOs.add(virusDTO);
 		}
 		return virusDTOs;
+	}
+
+	@Override
+	public AllVirusesViewModel findAllByPage(Pageable pageable) {
+		AllVirusesViewModel viewModel = new AllVirusesViewModel();
+
+		viewModel.setViruses(this.virusRepository.findAll(pageable));
+		viewModel.setTotalPageCount(this.getTotalPages());
+
+		return viewModel;
 	}
 
 	@Override
@@ -135,6 +147,11 @@ public class VirusServiceImpl implements VirusService {
 		json.delete(json.length() - 1, json.length());
 		json.append("]").append("}");
 		return json.toString();
+	}
+
+	@Override
+	public long getTotalPages(int size) {
+		return this.virusRepository.count() / size;
 	}
 
 }

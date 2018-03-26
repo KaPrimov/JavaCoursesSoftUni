@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<!--/*@thymesVar id="error" type="java.lang.String"*/-->
+
+<div th:replace="~{fragments/head}"></div>
+<body class="container">
+<div th:replace="~{fragments/header}"></div>
+    <h1 th:text="${error}"></h1>
+</body>
+</html>

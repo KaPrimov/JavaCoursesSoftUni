@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/map")
-public class MapController {
+public class MapController extends AbstractController {
 	private final VirusService virusService;
 
 	@Autowired
@@ -21,10 +21,7 @@ public class MapController {
 	@GetMapping("")
     @PreAuthorize("isAuthenticated()")
 	public ModelAndView getMap() {
-	    ModelAndView mav = new ModelAndView();
         String geoJson = this.virusService.findAllMapViruses();
-        mav.addObject("geoJson", geoJson);
-	    mav.setViewName("map");
-		return mav;
+		return super.view("map", "geoJson", geoJson);
 	}
 }

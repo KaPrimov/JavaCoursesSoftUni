@@ -4,6 +4,8 @@ import com.softuni.residentEvil.models.binding.FullVirusDTO;
 import com.softuni.residentEvil.services.CapitalService;
 import com.softuni.residentEvil.services.VirusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,7 +16,7 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/viruses")
-public class VirusController {
+public class VirusController extends AbstractController {
 	
 	private VirusService virusService;
 	private CapitalService capitalService;
@@ -28,7 +30,7 @@ public class VirusController {
 	@GetMapping("/add")
 	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public ModelAndView getAdd(@ModelAttribute("virusModel") FullVirusDTO virusModel) {
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = super.view("add-virus");
 		mav.addObject("virusModel", virusModel);
 		mav.addObject("capitals", this.capitalService.getAllCapitals());
 		mav.setViewName("add-virus");
@@ -37,60 +39,55 @@ public class VirusController {
 
 	@PostMapping("/add")
 	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
-	public String addVirus(@Valid @ModelAttribute("virusModel") FullVirusDTO virusModel, BindingResult bindingResult) {
+	public ModelAndView addVirus(@Valid @ModelAttribute("virusModel") FullVirusDTO virusModel, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
 
-			return "add-virus";
+			return super.view("add-virus");
 		}
 		this.virusService.saveVirus(virusModel);
-		return "redirect:/";
+		return super.redirect("/");
 	}
 
 	@GetMapping("/show")
 	@PreAuthorize("isAuthenticated()")
-	public ModelAndView allViruses() {
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("viruses", this.virusService.gelAll());
-		mav.setViewName("all-viruses");
-		return mav;
+	public ModelAndView allViruses(@PageableDefault Pageable pageable) {
+		return super.view("all-viruses", "viruses", this.virusService.findAllByPage(pageable));
 	}
 	
 	@GetMapping("/edit/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public ModelAndView getEdit(@PathVariable String id) {
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = super.view("edit-virus");
 		FullVirusDTO virusModel = this.virusService.findById(id);
 		mav.addObject("virusModel", virusModel);
 		mav.addObject("allCapitals", this.capitalService.getAllCapitals());
-		mav.setViewName("edit-virus");
 		return mav;
 	}
 	
 	@PostMapping("/edit/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
-	public String editVirus(@Valid @ModelAttribute("virusModel") FullVirusDTO virusModel, BindingResult bindingResult, @PathVariable String id) {
+	public ModelAndView editVirus(@Valid @ModelAttribute("virusModel") FullVirusDTO virusModel, BindingResult bindingResult, @PathVariable String id) {
 		if (bindingResult.hasErrors()) {
-			return "redirect:/viruses/edit/" + id;
+			return super.redirect("/viruses/edit/" + id);
 		}
 		this.virusService.editVirus(virusModel);
-		return "redirect:/";
+		return super.redirect("/" + id);
 	}
 	
 	@GetMapping("/delete/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
 	public ModelAndView getDelete(@PathVariable String id) {
-		ModelAndView mav = new ModelAndView();
+		ModelAndView mav = super.view("delete-virus");
 		FullVirusDTO virusModel = this.virusService.findById(id);
 		mav.addObject("virusModel", virusModel);
 		mav.addObject("allCapitals", this.capitalService.getAllCapitals());
-		mav.setViewName("delete-virus");
 		return mav;
 	}
 	
 	@PostMapping("/delete/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN', 'MODERATOR')")
-	public String deleteVirus(@PathVariable String id) {
+	public ModelAndView deleteVirus(@PathVariable String id) {
 		this.virusService.deleteVirus(id);
-		return "redirect:/";
+		return super.redirect("/");
 	}
 }
